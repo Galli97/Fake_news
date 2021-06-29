@@ -25,7 +25,7 @@ if solver.net.use_tf_threading:
 im1=util.random_crop(im1,[128,128])
 exif_lbl = np.array(['a','b','c','d','e'])
 exif_lbl = np.transpose(exif_lbl)
-cls_lbl = np.array(['1','0','1','0','0'])
+cls_lbl = np.array(['1'])
 cls_lbl = np.transpose(cls_lbl)
 
 im1_merge = {'im_a':[im1,im1,im1,im1,im1,im1],'im_b':[im1,im1,im1,im1,im1,im1],'exif_lbl': exif_lbl,'cls_lbl': cls_lbl}
