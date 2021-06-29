@@ -24,10 +24,11 @@ if solver.net.use_tf_threading:
 
 im1=util.random_crop(im1,[128,128])
 exif_lbl = np.ones((1,83))
+cls_lbl = np.ones((1,1))
 
 
 
-im1_merge = {'im_a':[im1,im1,im1,im1,im1,im1],'im_b':[im1,im1,im1,im1,im1,im1],'exif_lbl': exif_lbl}
+im1_merge = {'im_a':[im1,im1,im1,im1,im1,im1],'im_b':[im1,im1,im1,im1,im1,im1],'exif_lbl': exif_lbl,'cls_lbl': cls_lbl}
 exif_solver.ExifSolver.setup_data(solver,im1,im1_merge)
 exif_solver.ExifSolver.train(solver)
 """
