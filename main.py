@@ -24,7 +24,7 @@ if solver.net.use_tf_threading:
 
 im1=util.random_crop(im1,[128,128])
 exif_lbl = np.ones((1,83))
-cls_lbl = np.array([83])
+cls_lbl = np.array(83)
 
 
 
