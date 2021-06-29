@@ -26,7 +26,8 @@ if solver.net.use_tf_threading:
 
 im1=util.random_crop(im1,[128,128])
 im2=util.random_crop(im2,[128,128])
-exif_lbl = np.ones((1,83))
+exif_lbl = np.ones((2,83))
+exif_lbl[1] = np.random.randint(0,2,(1,83))
 cls_lbl = np.zeros((1,1))
 cls_lbl[0][0]=83
 
