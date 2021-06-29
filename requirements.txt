@@ -1,0 +1,8 @@
+numpy==1.14.0
+opencv_python==3.4.10.37 #3.4.0.12 #
+tensorflow_gpu
+scikit-image==0.13.1
+scipy==1.0.0
+matplotlib
+scikit_learn==0.19.1
+Pillow==5.0.0
