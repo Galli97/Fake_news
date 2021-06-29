@@ -16,11 +16,10 @@ print("---------------------------------------------------------------------")
 print(im1.shape)
 print(im2.shape)
 print("---------------------------------------------------------------------")
-<<<<<<< HEAD
-solver = initialize_exif(ckpt='/content/drive/MyDrive/ckpt')  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
-=======
+
+solver = initialize_exif(ckpt='/content/drive/MyDrive/ckpt/eval_160000.ckpt.data-00000-of-00001')  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
+
 solver = initialize_exif()
->>>>>>> parent of 02ffdd9 (main20)
 solver.sess.run(tf.compat.v1.global_variables_initializer())
 if solver.net.use_tf_threading:
     solver.coord = tf.train.Coordinator()

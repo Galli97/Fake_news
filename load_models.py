@@ -12,12 +12,12 @@ def initialize_exif(ckpt='', init=True, use_gpu=0):
                 'im_size':128,
                 'batch_size':64,
                 'use_gpu':[use_gpu],
-                'use_tf_threading':True, ###era false
+                'use_tf_threading':False, ###era false
                 'learning_rate':1e-4}
 
     solver = exif_solver.initialize({'checkpoint':ckpt,
                                      'use_exif_summary':True, ###era false
-                                     'init_summary':True,
+                                     'init_summary':False,
                                      'exp_name':'eval'})
     if init:
         net = exif_net.initialize(net_args)
