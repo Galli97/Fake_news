@@ -31,9 +31,9 @@ cls_lbl = np.zeros((1,1))
 cls_lbl[0][0]=83
 
 
-
+data=[im1,im2]
 im1_merge = {'im_a':[im1,im2],'im_b':[im1,im1],'exif_lbl': exif_lbl,'cls_lbl': cls_lbl}
-exif_solver.ExifSolver.setup_data(solver,im1,im1_merge)
+exif_solver.ExifSolver.setup_data(solver,data,im1_merge)
 exif_solver.ExifSolver.train(solver)
 """
 im = np.zeros((256, 256, 3))
