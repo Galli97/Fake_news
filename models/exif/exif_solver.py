@@ -159,6 +159,9 @@ class ExifSolver(object):
 
             if self.i % self.save_iter == 0 and self.i != self.start_i:
                 io.make_ckpt(self.saver, self.sess, self.ckpt_path, self.i)
+        if self.i = self.train_iterations
+           self.use_exif_summary == True
+           self.test(writer=self.test_writer)
         return
 
     def _train(self):
