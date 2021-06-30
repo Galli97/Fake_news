@@ -17,7 +17,7 @@ print(im1.shape)
 print(im2.shape)
 print("---------------------------------------------------------------------")
 
-solver = initialize_exif(ckpt='/content/drive/MyDrive/ckpt.ckpt')  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
+solver = initialize_exif(ckpt='/content/drive/MyDrive/ckpt/eval_160000.ckpt')  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
 
 solver = initialize_exif()
 solver.sess.run(tf.compat.v1.global_variables_initializer())
