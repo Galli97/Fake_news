@@ -10,6 +10,7 @@ def initialize_exif(ckpt='', init=True, use_gpu=0):
                 'train_classifcation':True,
                 'freeze_base': True,
                 'im_size':128,
+                'train_runner'=train_runner
                 'batch_size':64,
                 'use_gpu':[use_gpu],
                 'use_tf_threading':False, ###era false
