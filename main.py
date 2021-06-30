@@ -25,11 +25,6 @@ if solver.net.use_tf_threading:
     solver.net.train_runner.start_p_threads(solver.sess)
     tf.train.start_queue_runners(sess=solver.sess, coord=solver.coord)
 
-ckpt='/content/drive/MyDrive/ckpt/eval_100.ckpt'
-solver = exif_solver.initialize({'checkpoint':ckpt,  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
-                                     'use_exif_summary':True, ###era false
-                                     'init_summary':True,
-                                     'exp_name':'eval'})
   
 #if  use_exif_summary:
 #    net_args = {'num_classes':80+3,
@@ -63,6 +58,12 @@ data=[im1,im2]
 im1_merge = {'im_a':[im1,im2],'im_b':[im1,im1],'exif_lbl': exif_lbl,'cls_lbl': cls_lbl}
 exif_solver.ExifSolver.setup_data(solver,data,im1_merge)
 exif_solver.ExifSolver.train(solver)
+
+ckpt='/content/drive/MyDrive/ckpt/eval_100.ckpt'
+solver = exif_solver.initialize({'checkpoint':ckpt,  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
+                                     'use_exif_summary':True, ###era false
+                                     'init_summary':True,
+                                     'exp_name':'eval'})
 """
 im = np.zeros((256, 256, 3))
 
