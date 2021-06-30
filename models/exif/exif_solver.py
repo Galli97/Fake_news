@@ -151,19 +151,22 @@ class ExifSolver(object):
             self.i += 1
 
             if self.i % self.show_iter == 0:
+                self.use_exif_summary = False
+                print(self.use_exif_summary)
                 self.show(writer=self.train_writer, phase='train')
 
             if self.i % self.test_iter == 0:
+                self.use_exif_summary = True
                 self.test(writer=self.test_writer)
                 self.show(writer=self.test_writer, phase='test')
 
             if self.i % self.save_iter == 0 and self.i != self.start_i:
                 io.make_ckpt(self.saver, self.sess, self.ckpt_path, self.i)
 
-            if self.i == self.train_iterations:
-               print('Mortacci Tua')
-               self.use_exif_summary == True
-               self.test(writer=self.test_writer)
+            #if self.i == self.train_iterations:
+              # print('Mortacci Tua')
+        
+               #self.test(writer=self.test_writer)
         return
 
     def _train(self):
