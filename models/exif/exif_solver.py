@@ -190,6 +190,7 @@ class ExifSolver(object):
 
     def test(self, writer):
         if self.use_exif_summary:
+            print('Mortacci Tua')
             exif_start = time.time()
             test_queue = self.net.train_runner.get_random_test(batch_size=self.net.batch_size)
             to_print = []
