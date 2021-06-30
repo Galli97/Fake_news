@@ -12,7 +12,7 @@ def initialize_exif(ckpt='', init=True, use_gpu=0):
                 'im_size':128,
                 'batch_size':64,
                 'use_gpu':[use_gpu],
-                'use_tf_threading':False, ###era false
+                'use_tf_threading':True, ###era false
                 'learning_rate':1e-4}
 
     solver = exif_solver.initialize({'checkpoint':ckpt,
