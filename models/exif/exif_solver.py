@@ -26,7 +26,7 @@ class ExifSolver(object):
         io.make_dir(self.ckpt_path)
 
         self.train_iterations = 100   #10000000
-        self.test_init = False
+        self.test_init = True
         self.show_iter = 1            #20
         self.test_iter = 2           #2000
         self.save_iter = 10   #10000
@@ -155,6 +155,7 @@ class ExifSolver(object):
 
             if self.i % self.test_iter == 0:
                 self.test(writer=self.test_writer)
+                self.show(writer=self.test_writer, phase='test')
 
             if self.i % self.save_iter == 0 and self.i != self.start_i:
                 io.make_ckpt(self.saver, self.sess, self.ckpt_path, self.i)
