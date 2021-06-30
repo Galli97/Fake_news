@@ -161,6 +161,7 @@ class ExifSolver(object):
                 io.make_ckpt(self.saver, self.sess, self.ckpt_path, self.i)
 
             if self.i == self.train_iterations:
+               print('Mortacci Tua')
                self.use_exif_summary == True
                self.test(writer=self.test_writer)
         return
@@ -190,7 +191,6 @@ class ExifSolver(object):
 
     def test(self, writer):
         if self.use_exif_summary:
-            print('Mortacci Tua')
             exif_start = time.time()
             test_queue = self.net.train_runner.get_random_test(batch_size=self.net.batch_size)
             to_print = []
