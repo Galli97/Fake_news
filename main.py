@@ -25,7 +25,7 @@ if solver.net.use_tf_threading:
     solver.net.train_runner.start_p_threads(solver.sess)
     tf.train.start_queue_runners(sess=solver.sess, coord=solver.coord)
 
-solver = initialize_exif(ckpt='/content/drive/MyDrive/ckpt/eval_160000.ckpt', init=False)  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
+#solver = initialize_exif(ckpt='/content/drive/MyDrive/ckpt/eval_160000.ckpt', init=False)  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
 
 
 im1=util.random_crop(im1,[128,128])

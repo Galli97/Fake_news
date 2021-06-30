@@ -16,7 +16,7 @@ def initialize_exif(ckpt='', init=True, use_gpu=0):
                 'learning_rate':1e-4}
 
     solver = exif_solver.initialize({'checkpoint':ckpt,
-                                     'use_exif_summary':True, ###era false
+                                     'use_exif_summary':False, ###era false
                                      'init_summary':True,
                                      'exp_name':'eval'})
     if init:
