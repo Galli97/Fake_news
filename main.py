@@ -25,7 +25,8 @@ if solver.net.use_tf_threading:
     solver.net.train_runner.start_p_threads(solver.sess)
     tf.train.start_queue_runners(sess=solver.sess, coord=solver.coord)
 
-solver = exif_solver.initialize({'checkpoint':ckpt='/content/drive/MyDrive/ckpt/eval_100.ckpt',  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
+ckpt='/content/drive/MyDrive/ckpt/eval_100.ckpt'
+solver = exif_solver.initialize({'checkpoint':ckpt,  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
                                      'use_exif_summary':True, ###era false
                                      'init_summary':True,
                                      'exp_name':'eval'})
