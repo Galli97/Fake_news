@@ -26,7 +26,7 @@ if solver.net.use_tf_threading:
     tf.train.start_queue_runners(sess=solver.sess, coord=solver.coord)
 
 initialize_exif(ckpt='/content/drive/MyDrive/ckpt/eval_100.ckpt', init=False)  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
-if init=False:
+if not init:
     net_args = {'num_classes':80+3,
                 'is_training':False,
                 'train_classifcation':True,
