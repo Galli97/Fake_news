@@ -17,7 +17,7 @@ print(im1.shape)
 print(im2.shape)
 print("---------------------------------------------------------------------")
 
-solver = initialize_exif()
+#solver = initialize_exif()
 
 solver.sess.run(tf.compat.v1.global_variables_initializer())
 if solver.net.use_tf_threading:
