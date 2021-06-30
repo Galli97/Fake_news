@@ -26,7 +26,16 @@ if solver.net.use_tf_threading:
     tf.train.start_queue_runners(sess=solver.sess, coord=solver.coord)
 
 initialize_exif(ckpt='/content/drive/MyDrive/ckpt/eval_100.ckpt', init=False)  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
-
+if init=False:
+    net_args = {'num_classes':80+3,
+                'is_training':False,
+                'train_classifcation':True,
+                'freeze_base': True,
+                'im_size':128,
+                'batch_size':64,
+                'use_gpu':[use_gpu],
+                'use_tf_threading':True, ###era false
+                'learning_rate':1e-4}
 
 im1=util.random_crop(im1,[128,128])
 im2=util.random_crop(im2,[128,128])
