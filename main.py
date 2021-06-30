@@ -26,16 +26,6 @@ if solver.net.use_tf_threading:
     tf.train.start_queue_runners(sess=solver.sess, coord=solver.coord)
 
   
-#if  use_exif_summary:
-#    net_args = {'num_classes':80+3,
-#                'is_training':False,
-#                'train_classifcation':True,
-#                'freeze_base': True,
-#                'im_size':128,
-#                'batch_size':64,
-#                'use_gpu':[use_gpu],
-#                'use_tf_threading':True, ###era false
-#               'learning_rate':1e-4}
     
 
 im1=util.random_crop(im1,[128,128])
@@ -59,11 +49,12 @@ im1_merge = {'im_a':[im1,im2],'im_b':[im1,im1],'exif_lbl': exif_lbl,'cls_lbl': c
 exif_solver.ExifSolver.setup_data(solver,data,im1_merge)
 exif_solver.ExifSolver.train(solver)
 
-ckpt='/content/drive/MyDrive/ckpt/eval_100.ckpt'
-solver = exif_solver.initialize({'checkpoint':ckpt,  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
-                                     'use_exif_summary':True, ###era false
-                                     'init_summary':True,
-                                     'exp_name':'eval'})
+#ckpt='/content/drive/MyDrive/ckpt/eval_100.ckpt'
+#solver = exif_solver.initialize({'checkpoint':ckpt,  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
+#                                     'use_exif_summary':True, ###era false
+ #                                    'init_summary':True,
+  #                                   'exp_name':'eval'})
+
 """
 im = np.zeros((256, 256, 3))
 

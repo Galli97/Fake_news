@@ -26,7 +26,7 @@ class ExifSolver(object):
         io.make_dir(self.ckpt_path)
 
         self.train_iterations = 100   #10000000
-        self.test_init = True
+        self.test_init = False
         self.show_iter = 1            #20
         self.test_iter = 2           #2000
         self.save_iter = 10   #10000
