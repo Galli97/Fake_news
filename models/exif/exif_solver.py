@@ -193,6 +193,7 @@ class ExifSolver(object):
         return
 
     def test(self, writer):
+        self.net.use_tf_threading=True
         if self.use_exif_summary:
             exif_start = time.time()
             test_queue = self.net.train_runner.get_random_test(batch_size=self.net.batch_size)
