@@ -19,12 +19,12 @@ print("---------------------------------------------------------------------")
 
 solver = initialize_exif(ckpt='/content/drive/MyDrive/ckpt/eval_160000.ckpt', init=False)  #(ckpt='eval_160000.ckpt.data-00000-of-00001')
 
-solver = initialize_exif()
-solver.sess.run(tf.compat.v1.global_variables_initializer())
-if solver.net.use_tf_threading:
-    solver.coord = tf.train.Coordinator()
-    solver.net.train_runner.start_p_threads(solver.sess)
-    tf.train.start_queue_runners(sess=solver.sess, coord=solver.coord)
+#solver = initialize_exif()
+#solver.sess.run(tf.compat.v1.global_variables_initializer())
+#if solver.net.use_tf_threading:
+#    solver.coord = tf.train.Coordinator()
+#    solver.net.train_runner.start_p_threads(solver.sess)
+#    tf.train.start_queue_runners(sess=solver.sess, coord=solver.coord)
 
 
 im1=util.random_crop(im1,[128,128])
