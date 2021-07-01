@@ -20,7 +20,7 @@ print("---------------------------------------------------------------------")
 solver = initialize_exif()
 
 solver.sess.run(tf.compat.v1.global_variables_initializer())
-tensorflow.compat.v1.train.start_queue_runners(sess=solver.sess, coord=solver.coord)
+tf.compat.v1.train.start_queue_runners(sess=solver.sess, coord=solver.coord)
 if solver.net.use_tf_threading:
     solver.coord = tf.train.Coordinator()
     solver.net.train_runner.start_p_threads(solver.sess)
