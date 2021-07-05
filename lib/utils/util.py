@@ -54,7 +54,7 @@ def random_crop(im, crop_size, return_crop_loc=False):
 
 def process_im(im):
     """ Normalizes images into the range [-1.0, 1.0] """
-    im = np.array(im).astype(np.float) ################################################################### aggiunto np.float
+    im = np.array(im)  ################################################################### aggiunto np.float
     if np.max(im) <= 1:
         # PNG format
         im = (2.0 * im) - 1.0
