@@ -95,4 +95,4 @@ exif_solver.ExifSolver.train(solver)
 #                                     'use_exif_summary':True, ###era false
  #                                    'init_summary':True,
   #                                   'exp_name':'eval'})
-
+'''
