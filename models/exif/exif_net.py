@@ -11,7 +11,7 @@ class EXIFNet():
     Given a patch from an image try to classify which camera model it came from
     """
     def __init__(self, num_classes=83, train_classifcation=False,
-                 use_tf_threading=False, train_runner=train_runner, batch_size=None,
+                 use_tf_threading=False, train_runner=None, batch_size=None,
                  im_size=128, is_training=True, freeze_base=False, use_gpu=0,
                  learning_rate=1e-4, use_classify_with_feat=False):
         """

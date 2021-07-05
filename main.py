@@ -33,13 +33,6 @@ if solver.net.use_tf_threading:
 im1=util.random_crop(im1,[128,128])
 im2=util.random_crop(im2,[128,128])
 
-'''
-data=[im1,im2,im3,im4]
-exif_lbl = np.ones((lenght(data),83))
-for i in lenght(data)
-    exif_lbl[i] = 
-
-'''
 exif_lbl = np.ones((2,83))
 exif_lbl[1] = np.random.randint(0,2,(1,83))
 cls_lbl = np.zeros((1,1))
@@ -57,10 +50,3 @@ exif_solver.ExifSolver.train(solver)
  #                                    'init_summary':True,
   #                                   'exp_name':'eval'})
 
-"""
-im = np.zeros((256, 256, 3))
-
-bu = benchmark_utils.EfficientBenchmark(solver, nc, params, im, auto_close_sess=False, 
-                                                     mirror_pred=False, dense_compute=False, stride=None, n_anchors=10,
-                                                    patch_size=128, num_per_dim=30)
-"""
