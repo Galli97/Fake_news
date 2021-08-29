@@ -2,7 +2,7 @@ from models import exif
 from PIL import Image
 import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import ResNet50
-from tensorflow.keras import Input, ImageDataGenerator,flow
+from tensorflow.keras import Input,flow
 from keras import Model
 from keras.layers import Dense,Flatten,Dropout
 from tensorflow.keras.optimizers import Adam
@@ -68,7 +68,7 @@ list1,list2 = get_np_arrays('cropped_arrays.npy')
 X_train = list1
 Y_train = list2
 cls_lbl= len(exif_lbl)
-training_generator = ImageDataGenerator(rotation_range=20, zoom_range=0.15,
+training_generator = tf.keras.ImageDataGenerator(rotation_range=20, zoom_range=0.15,
 	width_shift_range=0.2, height_shift_range=0.2, shear_range=0.15,
 	horizontal_flip=True, fill_mode="nearest")
  
