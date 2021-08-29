@@ -63,7 +63,7 @@ siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
 imagexs = image.imread('D01_img_orig_0001.jpg')
-imagexs=cv2.resize(imagexs, (64, 64, 3))
+imagexs=cv2.resize(imagexs, (64, 64))
 imagexs= np.asarray(imagexs)
 x = [imagexs]
 y = [imagexs]
