@@ -60,21 +60,21 @@ siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
 
-with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
-	exif_lbl = pickle.load(fp)
-fp.close()
+#with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
+#	exif_lbl = pickle.load(fp)
+#fp.close()
 
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 X_train = list1
 Y_train = list2
-cls_lbl= len(exif_lbl)
+#cls_lbl= len(exif_lbl)
 training_generator = tf.keras.ImageDataGenerator(rotation_range=20, zoom_range=0.15,
 	width_shift_range=0.2, height_shift_range=0.2, shear_range=0.15,
 	horizontal_flip=True, fill_mode="nearest")
  
 
 
-siamese_model.fit_generator(training_generator.tf.keras.flow(X_train,exif_lbl,batch_size=64),steps_per_epoch=1000,epochs=10,validation_data=training_generator)
+siamese_model.fit_generator(training_generator.tf.keras.flow(X_train,Y_train,batch_size=64),steps_per_epoch=1000,epochs=10,validation_data=training_generator)
                             #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
                             #validation_data=validation_data,
 
