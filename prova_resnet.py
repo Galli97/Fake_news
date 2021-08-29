@@ -73,7 +73,7 @@ siamese_model.fit((x),#steps_per_epoch=1000,
                             epochs=10,
                             verbose=1,
                             #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
-                            validation_data=(x,y))
+                            validation_data=x)
                             #max_q_size=3)
 
 siamese_model.save('siamese_model.h5')
