@@ -17,14 +17,14 @@ import numpy as np
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
     I1 = Input(shape=image_shape)
-    model = ResNet50(include_top=False, weights='imagenet', input_tensor=I1, pooling=None)
+    model = ResNet50(include_top=True, weights='imagenet', input_tensor=I1, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
-    model.layers[-1].outbound_nodes = []
+    model.layers[-1]._outbound_nodes = []
 
     for layer in model.layers:
-        layer.name = layer.name + str(suffix)
-        layer.trainable = False
+        layer._name = layer.name + str(suffix)
+        layer._trainable = False
 
     flatten_name = 'flatten' + str(suffix)
 
@@ -34,7 +34,6 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     x = Dropout(dropout_rate)(x)
     x = Dense(512, activation='relu')(x)
     x = Dropout(dropout_rate)(x)
-
 
     return x, model.input
 
@@ -57,7 +56,7 @@ def create_siamese_model(image_shape, dropout_rate):
 
     return siamese_model
 
-siamese_model = create_siamese_model(image_shape=(32, 32, 3),
+siamese_model = create_siamese_model(image_shape=(None,32, 32, 3),
                                          dropout_rate=0.2)
 
 siamese_model.compile(loss='binary_crossentropy',
