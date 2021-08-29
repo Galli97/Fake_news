@@ -56,7 +56,7 @@ def create_siamese_model(image_shape, dropout_rate):
 
     return siamese_model
 
-siamese_model = create_siamese_model(image_shape=(32, 32, 3),
+siamese_model = create_siamese_model(image_shape=(None,32, 32, 3),
                                          dropout_rate=0.2)
 
 siamese_model.compile(loss='binary_crossentropy',
@@ -71,8 +71,8 @@ siamese_model.fit((x,y),#steps_per_epoch=1000,
                             epochs=10,
                             verbose=1,
                             #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
-                            validation_data=(x,y)
-                            max_q_size=3)
+                            validation_data=(x,y))
+                            #max_q_size=3)
 
 siamese_model.save('siamese_model.h5')
 
