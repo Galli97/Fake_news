@@ -11,6 +11,7 @@ from tensorflow.keras.models import load_model
 from extract_exif import extract_exif, random_list,generate_label,cropping_list,get_np_arrays
 from matplotlib import image
 import pickle
+import cv2
 
 import numpy as np
 
