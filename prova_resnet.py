@@ -30,7 +30,7 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
 
     flatten_name = 'flatten' + str(suffix)
 
-    x = model.output
+    x = model.outputs
     x = Flatten(name=flatten_name)(x)
     x = Dense(1024, activation='relu')(x)
     x = Dropout(dropout_rate)(x)
@@ -58,7 +58,7 @@ def create_siamese_model(image_shape, dropout_rate):
 
     return siamese_model
 
-siamese_model = create_siamese_model(image_shape=(32, 32, 3),
+siamese_model = create_siamese_model(image_shape=(None,32, 32, 3),
                                          dropout_rate=0.2)
 
 siamese_model.compile(loss='binary_crossentropy',
