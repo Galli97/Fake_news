@@ -68,7 +68,7 @@ list1,list2 = get_np_arrays('cropped_arrays.npy')
 X_train = list1
 Y_train = list2
 cls_lbl= len(exif_lbl)
-training_generator = DataGenerator([X_train,Y_train], exif_lbl,n_classes=cls_lbl)
+training_generator = ([X_train,Y_train], exif_lbl,n_classes=cls_lbl)
 
 siamese_model.fit_generator(generator=training_generator,steps_per_epoch=1000,epochs=10,validation_data=training_generator)
                             #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
