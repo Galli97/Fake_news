@@ -17,7 +17,7 @@ import numpy as np
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
     I1 = Input(shape=image_shape)
-    model = ResNet50(include_top=True, weights='imagenet', input_tensor=I1, pooling=None)
+    model = ResNet50(include_top=True, weights='imagenet', input_tensor=(None,I1), pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
     model.layers[-1]._outbound_nodes = []
