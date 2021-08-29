@@ -16,7 +16,7 @@ import cv2
 import numpy as np
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
-    I1 = Input(shape=(None,image_shape))
+    I1 = Input(shape=image_shape)
     model = ResNet50(include_top=False, weights='imagenet', input_tensor=I1, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
@@ -41,7 +41,7 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
 def create_siamese_model(image_shape, dropout_rate):
 
     output_left, input_left = create_base_model(image_shape, dropout_rate)
-    output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
+    #output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
 
     L1_layer = Lambda(lambda tensors: tf.abs(tensors[0] - tensors[1]))
     L1_distance = L1_layer([output_left, output_right])
