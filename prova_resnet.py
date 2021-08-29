@@ -2,7 +2,7 @@ from models import exif
 from PIL import Image
 import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import ResNet50
-from tensorflow.keras import Input,flow
+from tensorflow.keras import Input
 from keras import Model
 from keras.layers import Dense,Flatten,Dropout
 from tensorflow.keras.optimizers import Adam
@@ -74,7 +74,7 @@ training_generator = tf.keras.ImageDataGenerator(rotation_range=20, zoom_range=0
  
 
 
-siamese_model.fit_generator(training_generator.flow(X_train,exif_lbl,batch_size=64),steps_per_epoch=1000,epochs=10,validation_data=training_generator)
+siamese_model.fit_generator(training_generator.tf.keras.flow(X_train,exif_lbl,batch_size=64),steps_per_epoch=1000,epochs=10,validation_data=training_generator)
                             #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
                             #validation_data=validation_data,
 
