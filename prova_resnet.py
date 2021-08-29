@@ -16,7 +16,7 @@ import cv2
 import numpy as np
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
-    I1 = Input(shape=(None,image_shape)
+    I1 = Input(shape=(None,image_shape))
     model = ResNet50(include_top=False, weights='imagenet', input_tensor=I1, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
