@@ -3,7 +3,7 @@ from PIL import Image
 import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras import Input
-from tensorflow.keras.layers import Sequential
+from tensorflow.keras import Sequential
 from keras import Model
 from keras.initializers import RandomNormal
 from keras.layers import Dense,Flatten,Dropout,Lambda
