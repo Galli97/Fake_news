@@ -67,12 +67,12 @@ imagexs=cv2.resize(imagexs, (32, 32))
 imagexs= np.asarray(imagexs)
 x = [imagexs]
 y = [imagexs]
-siamese_model.fit((None,x,y),#steps_per_epoch=1000,
+siamese_model.fit((x,y),#steps_per_epoch=1000,
                             epochs=10,
                             verbose=1,
                             #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
                             validation_data=(x,y))
-                            #max_q_size=3)
+                            max_q_size=3)
 
 siamese_model.save('siamese_model.h5')
 
