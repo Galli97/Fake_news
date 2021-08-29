@@ -2,7 +2,7 @@ from models import exif
 from PIL import Image
 import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import ResNet50
-from tensorflow.keras import Input
+from tensorflow.keras import Input, ImageDataGenerator,flow
 from keras import Model
 from keras.layers import Dense,Flatten,Dropout
 from tensorflow.keras.optimizers import Adam
@@ -68,9 +68,13 @@ list1,list2 = get_np_arrays('cropped_arrays.npy')
 X_train = list1
 Y_train = list2
 cls_lbl= len(exif_lbl)
-training_generator = ([X_train,Y_train], exif_lbl,n_classes=cls_lbl)
+training_generator = ImageDataGenerator(rotation_range=20, zoom_range=0.15,
+	width_shift_range=0.2, height_shift_range=0.2, shear_range=0.15,
+	horizontal_flip=True, fill_mode="nearest")
+ 
 
-siamese_model.fit_generator(generator=training_generator,steps_per_epoch=1000,epochs=10,validation_data=training_generator)
+
+siamese_model.fit_generator(training_generator.flow(X_train,exif_lbl,batch_size=64),steps_per_epoch=1000,epochs=10,validation_data=training_generator)
                             #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
                             #validation_data=validation_data,
 
