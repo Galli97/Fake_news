@@ -95,7 +95,7 @@ imagexs = np.expand_dims(imagexs,axis=0)
 model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
-    model.fit(x=(imagexs,imagexs),y=(imagexs),batch_size = 32,#steps_per_epoch=1000,
+model.fit(x=(imagexs,imagexs),y=(imagexs),batch_size = 32,#steps_per_epoch=1000,
                             epochs=10)
 
 siamese_model.save('siamese_model.h5')
