@@ -20,7 +20,7 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     left_input = Input(image_shape)
     right_input = Input(image_shape)
     
-    model = Sequential()
+   
     model = ResNet50(include_top=False, weights='imagenet', input_tensor=left_input, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
@@ -43,6 +43,7 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     nextinput = tf.concat([encoded_l,encoded_r],0)
     
     mlp_input = Input(nextinput.shape)
+    model = Sequential(model)
     model.add(Conv2D(4096, (10,10), activation='relu', input_shape=mlp_input,
                    kernel_initializer=initialize_weights, kernel_regularizer=l2(2e-4)))
     model.add(Flatten())
