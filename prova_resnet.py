@@ -43,9 +43,9 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
    
     nextinput = tf.concat([encoded_l,encoded_r],0)
     
-    mlp_input = Input((1,4096*2))
+    mlp_input = Input(nextinput.shape)
     model = Sequential(model)
-    model.add(Conv2D(4096, (10,10), activation='relu', input_shape=mlp_input))
+    model.add(Conv2D(4096, (10,10), activation='relu', input_shape=nextinput))
     model.add(Flatten())
     model.add(Conv2D(2048, (7,7), activation='relu'))
     model.add(Flatten())
