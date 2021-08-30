@@ -51,9 +51,9 @@ def create_siamese_model(image_shape):
    
     return model
     
-create_base_model
-encoded_l = create_base_model(left_input)
-encoded_r = create_base_model(right_input)
+
+encoded_l = create_base_model(image_shape=(64,64,3))
+encoded_r = create_base_model(image_shape=(64,64,3))
 
 input_mlp = tf.concat([encoded_l,encoded_r],0)
 
