@@ -45,15 +45,11 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     
     mlp_input = Input(nextinput.shape)
     model = Sequential(model)
-    model.add(Conv2D(4096, (10,10), activation='relu', input_shape=mlp_input,
-                   kernel_initializer=initialize_weights, kernel_regularizer=l2(2e-4)))
+    model.add(Conv2D(4096, (10,10), activation='relu', input_shape=mlp_input))
     model.add(Flatten())
-    model.add(Conv2D(2048, (7,7), activation='relu',
-                     kernel_initializer=initialize_weights,
-                     bias_initializer=initialize_bias, kernel_regularizer=l2(2e-4)))
+    model.add(Conv2D(2048, (7,7), activation='relu'))
     model.add(Flatten())
-    model.add(Conv2D(1024, (4,4), activation='relu', kernel_initializer=initialize_weights,
-                     bias_initializer=initialize_bias, kernel_regularizer=l2(2e-4)))
+    model.add(Conv2D(1024, (4,4), activation='relu'))
     
     siamese_model=model
 
