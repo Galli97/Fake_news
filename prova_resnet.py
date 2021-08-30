@@ -19,7 +19,6 @@ import numpy as np
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
     left_input = Input(image_shape)
-    model = Sequential()
     model = ResNet50(include_top=False, weights='imagenet', input_tensor=left_input, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
@@ -36,20 +35,21 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     x = Dense(4096, activation='relu')(x)
     x = Dropout(dropout_rate)(x)
    
-    return model
+    return x
 
 
 def create_siamese_model(image_shape):
     
     image_shape1 = Input(image_shape)
-    model = Sequential()
-    model.add(Conv2D(4096, (10,10), activation='relu', input_shape=image_shape1))
-    model.add(Flatten())
-    model.add(Conv2D(2048, (7,7), activation='relu'))
-    model.add(Flatten())
-    model.add(Conv2D(1024, (4,4), activation='relu'))
+    
+    model = Conv2D(4096, (10,10), activation='relu', input_shape=image_shape1)
+    y = model.output
+    y = Flatten(name=flatten_name)(y)
+    y = Conv2D(2048, (7,7), activation='relu')(y)
+    y = Flatten(name=flatten_name)(y)
+    y = Conv2D(1024, (4,4), activation='relu')(y)
    
-    return model
+    return y
     
 
 encoded_l = create_base_model(image_shape=(64, 64, 3),dropout_rate=0.2)
