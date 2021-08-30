@@ -56,7 +56,7 @@ def create_siamese_model(image_shape, dropout_rate):
                           name='weighted-average')(L1_distance)
     prediction = Dropout(0.2)(L1_prediction)
 """
-    siamese_model = Model(inputs=[input_left, input_right], outputs=output)
+    siamese_model = Model(inputs=[input_left, input_right], outputs=[output_left, output_right])
 
     return siamese_model
 
