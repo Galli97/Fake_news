@@ -82,7 +82,7 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
 
     # return siamese_model
 
-siamese_model = create_siamese_model(image_shape=(64, 64, 3),
+siamese_model = create_base_model(image_shape=(64, 64, 3),
                                          dropout_rate=0.2)
 
 siamese_model.compile(loss='binary_crossentropy',
