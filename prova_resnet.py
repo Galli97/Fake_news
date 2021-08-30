@@ -55,8 +55,8 @@ def create_siamese_model(image_shape):
 encoded_l = create_base_model(image_shape=(64, 64, 3),dropout_rate=0.2)
 encoded_r = create_base_model(image_shape=(64, 64, 3),dropout_rate=0.2)
 
-input_mlp = tf.concat([encoded_l,encoded_r],0)
-input_mlp=tf.convert_to_tensor(input_mlp)
+#input_mlp = tf.concat([encoded_l,encoded_r],0)
+input_mlp=tf.convert_to_tensor(encoded_l)
 siamese_model = create_siamese_model(input_mlp)
                                          # dropout_rate=0.2)
     # output = create_base_model(image_shape, dropout_rate)
