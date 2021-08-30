@@ -19,7 +19,7 @@ import numpy as np
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
     left_input = Input(image_shape)
-
+    model = Sequential()
     model = ResNet50(include_top=False, weights='imagenet', input_tensor=left_input, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
