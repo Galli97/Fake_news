@@ -42,7 +42,7 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
    
     nextinput = tf.concat([encoded_l,encoded_r],0)
     
-    mlp_input = Input(nextinput)
+    mlp_input = Input(nextinput.shape)
     model.add(Conv2D(4096, (10,10), activation='relu', input_shape=mlp_input,
                    kernel_initializer=initialize_weights, kernel_regularizer=l2(2e-4)))
     model.add(Flatten())
