@@ -63,9 +63,9 @@ def create_siamese_model(image_shape, dropout_rate):
 siamese_model = create_siamese_model(image_shape=(64, 64, 3),
                                          dropout_rate=0.2)
 
-# siamese_model.compile(loss='binary_crossentropy',
-                      # optimizer=Adam(lr=0.0001),
-                      # metrics=['binary_crossentropy', 'acc'])
+siamese_model.compile(loss='binary_crossentropy',
+                      optimizer=Adam(lr=0.0001),
+                      metrics=['binary_crossentropy', 'acc'])
 
 imagexs =cv2.imread('D01_img_orig_0001.jpg')[:,:,[2,1,0]]
 
