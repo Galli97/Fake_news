@@ -39,7 +39,7 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     return model
 
 
- def create_siamese_model(image_shape):
+def create_siamese_model(image_shape):
     
     image_shape1 = Input(image_shape)
     model = Sequential()
