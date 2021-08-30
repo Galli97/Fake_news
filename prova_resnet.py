@@ -45,7 +45,7 @@ def create_siamese_model(image_shape, dropout_rate):
     print("------------------------------------------------------------------------------")
     print(output_left)
     print("------------------------------------------------------------------------------")
-    output = tf.concat([output_left,output_right],0)
+    #output = tf.concat([output_left,output_right],0)
     """
     L1_layer = Lambda(lambda tensors: tf.abs(tensors[0] - tensors[1]))
     L1_distance = L1_layer([output_left, output_right])
