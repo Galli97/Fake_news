@@ -19,9 +19,7 @@ import numpy as np
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
     left_input = Input(image_shape)
-    right_input = Input(image_shape)
-    
-   
+
     model = ResNet50(include_top=False, weights='imagenet', input_tensor=left_input, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
@@ -38,26 +36,29 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     x = Dense(4096, activation='relu')(x)
     x = Dropout(dropout_rate)(x)
    
-    encoded_l = model(left_input)
-    encoded_r = model(right_input)
-   
-    nextinput = tf.concat([encoded_l,encoded_r],0)
+    return model
+
+
+ def create_siamese_model(image_shape):
     
-    mlp_input = Input(nextinput.shape)
-    model = Sequential(model)
-    model.add(Conv2D(4096, (10,10), activation='relu', input_shape=nextinput))
+    image_shape1 = Input(image_shape)
+    model = Sequential()
+    model.add(Conv2D(4096, (10,10), activation='relu', input_shape=image_shape1))
     model.add(Flatten())
     model.add(Conv2D(2048, (7,7), activation='relu'))
     model.add(Flatten())
     model.add(Conv2D(1024, (4,4), activation='relu'))
+   
+    return model
     
-    siamese_model=model
+create_base_model
+encoded_l = create_base_model(left_input)
+encoded_r = create_base_model(right_input)
 
-    return siamese_model
+input_mlp = tf.concat([encoded_l,encoded_r],0)
 
-
-# def create_siamese_model(image_shape, dropout_rate):
-
+siamese_model = create_siamese_model(input_mlp)
+                                         # dropout_rate=0.2)
     # output = create_base_model(image_shape, dropout_rate)
    
     # print("------------------------------------------------------------------------------")
@@ -79,8 +80,8 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
 
     # return siamese_model
 
-siamese_model = create_base_model(image_shape=(64, 64, 3),
-                                         dropout_rate=0.2)
+# siamese_model = create_base_model(image_shape=(64, 64, 3),
+                                         # dropout_rate=0.2)
 
 
 
@@ -90,10 +91,10 @@ imagexs = np.array(imagexs,np.float32)
 imagexs = util.random_crop(imagexs,[64,64])
 imagexs = np.expand_dims(imagexs,axis=0)
 
-model.compile(loss='binary_crossentropy',
+siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
-model.fit(x=(imagexs,imagexs),y=(imagexs),batch_size = 32,#steps_per_epoch=1000,
+siamese_model.fit(x=(imagexs,imagexs),y=(imagexs),batch_size = 32,
                             epochs=10)
 
 siamese_model.save('siamese_model.h5')
