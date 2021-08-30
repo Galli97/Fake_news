@@ -16,8 +16,11 @@ import cv2
 import numpy as np
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
-    I1 = Input(image_shape)
-    model = ResNet50(include_top=False, weights='imagenet', input_tensor=I1, pooling=None)
+    left_input = Input(image_shape)
+    right_input = Input(image_shape)
+    
+    model = Sequential()
+    model = ResNet50(include_top=False, weights='imagenet', input_tensor=left_input, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
     model.layers[-1]._outbound_nodes = []
@@ -30,35 +33,54 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
 
     x = model.output
     x = Flatten(name=flatten_name)(x)
-    x = Dense(1024, activation='relu')(x)
+    x = Dense(4096, activation='relu')(x)
     x = Dropout(dropout_rate)(x)
-    x = Dense(512, activation='relu')(x)
-    x = Dropout(dropout_rate)(x)
+   
+    encoded_l = model(left_input)
+    encoded_r = model(right_input)
+   
+    output = tf.concat([encoded_l,encoded_r],0)
+    
+    mlp_input = Input(output)
+    y = model.add(Conv2D(4096, (10,10), activation='relu', input_shape=mlp_input,
+                   kernel_initializer=initialize_weights, kernel_regularizer=l2(2e-4)))
+    y = model.add(Flatten())
+    y = model.add(Conv2D(2048, (7,7), activation='relu',
+                     kernel_initializer=initialize_weights,
+                     bias_initializer=initialize_bias, kernel_regularizer=l2(2e-4)))
+    y = model.add(Flatten())
+    y = model.add(Conv2D(1024, (4,4), activation='relu', kernel_initializer=initialize_weights,
+                     bias_initializer=initialize_bias, kernel_regularizer=l2(2e-4)))
+    
+    #siamese_net = Model(inputs=[left_input,right_input],outputs=prediction)
+    # x = Dense(512, activation='relu')(x)
+    # x = Dropout(dropout_rate)(x)
+    siamese_model = Model(inputs = mlp_input, outputs = y)
+    return siamese_model
 
-    return x, model.input
 
+# def create_siamese_model(image_shape, dropout_rate):
 
-def create_siamese_model(image_shape, dropout_rate):
-
-    output_left, input_left = create_base_model(image_shape, dropout_rate)
-    output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
-    print("------------------------------------------------------------------------------")
-    print(output_left)
-    print("------------------------------------------------------------------------------")
-    #output = tf.concat([output_left,output_right],0)
-    outputs=[output_left, output_right]
+    # output = create_base_model(image_shape, dropout_rate)
+   
+    # print("------------------------------------------------------------------------------")
+    # print(output_left)
+    # print("------------------------------------------------------------------------------")
+    # output = tf.concat([output_left,output_right],0)
+    
+    
     # L1_layer = Lambda(lambda tensors: tf.abs(tensors[0] - tensors[1]))
     # L1_distance = L1_layer([output_left, output_right])
-    L1_prediction = Dense(1, use_bias=True,
-                          activation='sigmoid',
-                          input_shape = image_shape,
-                          kernel_initializer=RandomNormal(mean=0.0, stddev=0.001),
-                          name='weighted-average')(outputs)
-    prediction = Dropout(0.2)(L1_prediction)
+    # L1_prediction = Dense(1, use_bias=True,
+                          # activation='sigmoid',
+                          # input_shape = image_shape,
+                          # kernel_initializer=RandomNormal(mean=0.0, stddev=0.001),
+                          # name='weighted-average')(L1_distance)
+    # prediction = Dropout(0.2)(L1_prediction)
 
-    siamese_model = Model(inputs=[input_left, input_right], outputs=prediction)
+    # siamese_model = Model(inputs=[input_left, input_right], outputs=prediction)
 
-    return siamese_model
+    # return siamese_model
 
 siamese_model = create_siamese_model(image_shape=(64, 64, 3),
                                          dropout_rate=0.2)
@@ -73,7 +95,7 @@ imagexs = np.array(imagexs,np.float32)
 imagexs = util.random_crop(imagexs,[64,64])
 imagexs = np.expand_dims(imagexs,axis=0)
 
-siamese_model.fit(x=(imagexs,imagexs),y=(imagexs),batch_size = None,#steps_per_epoch=1000,
+siamese_model.fit(x=(imagexs,imagexs),y=(imagexs),batch_size = 32,#steps_per_epoch=1000,
                             epochs=10)
                             #verbose=1,
                             #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
