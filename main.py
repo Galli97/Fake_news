@@ -42,7 +42,10 @@ im1_merge = {'im_a':list1,'im_b':list2,'exif_lbl': exif_lbl,'cls_lbl': cls_lbl}
 exif_solver.ExifSolver.setup_data(solver,list1,im1_merge)
 exif_solver.ExifSolver.train(solver)
 
-
+#scrittura
+with open("exif_lbl.txt", "wb") as fp:   #Picklingpickle.dump(l, fp)
+	pickle.dump(exif_lbl,fp)
+fp.close()
 '''
 from models.exif import exif_solver,exif_net
 from load_models import initialize_exif
