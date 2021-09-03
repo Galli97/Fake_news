@@ -120,6 +120,12 @@ siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
 
+
+#scrittura
+with open("exif_lbl.txt", "wb") as fp:   #Picklingpickle.dump(l, fp)
+	pickle.dump(exif_lbl,fp)
+fp.close()
+#lettura
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	exif_lbl = pickle.load(fp)
 fp.close()
