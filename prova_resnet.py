@@ -16,6 +16,23 @@ import cv2
 import numpy as np
 import keras
 import pickle
+from extract_exif import extract_exif, random_list,generate_label,cropping_list
+from PIL import Image
+
+
+#extract exif data
+dict,image_list,dict_keys = extract_exif()
+
+#generate second random list
+second_image_list = random_list(image_list)
+
+#generate labels for each pair of images
+
+exif_lbl = generate_label(dict_keys,image_list,image_list)
+
+#crop images to 128x128
+
+list1,list2 = cropping_list(image_list,second_image_list)
 
 def datagenerator(images, labels, batchsize, mode="train"):
     ssad = 1
