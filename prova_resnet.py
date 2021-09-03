@@ -126,9 +126,9 @@ siamese_model.compile(loss='binary_crossentropy',
 
 
 #lettura
-with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
-	exif_lbl = pickle.load(fp)
-fp.close()
+# with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
+	# exif_lbl = pickle.load(fp)
+# fp.close()
 
 #######################################################################################à
 #crop images to 128x128
