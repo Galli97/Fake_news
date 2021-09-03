@@ -143,9 +143,9 @@ with open("exif_lbl.txt", "wb") as fp:   #Picklingpickle.dump(l, fp)
 	pickle.dump(exif_lbl,fp)
 fp.close()
 #lettura
-with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
-	exif_lbl = pickle.load(fp)
-fp.close()
+# with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
+	# exif_lbl = pickle.load(fp)
+# fp.close()
 
 #######################################################################################à
 #crop images to 128x128
