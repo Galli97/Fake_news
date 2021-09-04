@@ -16,10 +16,6 @@ import cv2
 import numpy as np
 import keras
 import pickle
-from extract_exif import extract_exif, random_list,generate_label,cropping_list
-from PIL import Image
-
-
 
 def datagenerator(images, labels, batchsize, mode="train"):
     ssad = 1
@@ -124,16 +120,14 @@ siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
 
-
-#lettura
-# with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
-	# exif_lbl = pickle.load(fp)
-# fp.close()
+with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
+	exif_lbl = pickle.load(fp)
+fp.close()
 
 #######################################################################################à
 #crop images to 128x128
 #######################################################################################à
-llist1,list2 = cropping_list(image_list,second_image_list)
+list1,list2 = get_np_arrays('cropped_arrays.npy')
 
 x_train = datagenerator(list1,exif_lbl,32)
 
