@@ -84,7 +84,7 @@ def create_mlp_model(output_siamese_shape):
 
     num_classes=71;
     #input_shape=Input((None,8192))
-    input_shape = keras_tensor.KerasTensor(type_spec=tf.TensorSpec(shape=(1,8192), dtype=tf.float32))
+    input_shape = keras_tensor.KerasTensor(type_spec=tf.TensorSpec(shape=(1,None,8192), dtype=tf.float32))
     print('output siamese shape')
     print(input_shape.shape)
     
