@@ -16,7 +16,7 @@ import cv2
 import numpy as np
 import keras
 import pickle
-
+from keras.engine import keras_tensor
 
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 imagexs = np.expand_dims(list1[0],axis=0)
@@ -83,8 +83,8 @@ def create_siamese_model(image_shape, dropout_rate):
 def create_mlp_model(output_siamese_shape):
 
     num_classes=71;
-    input_shape=Input((None,8192))
-
+    #input_shape=Input((None,8192))
+    input_shape = keras_tensor.KerasTensor(type_spec=tf.TensorSpec(shape=(1,8192), dtype=tf.float32))
     print('output siamese shape')
     print(input_shape.shape)
     
