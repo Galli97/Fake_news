@@ -100,8 +100,8 @@ def create_mlp_model(output_siamese_shape):
     model2.add(Dense(num_classes, activation='softmax'))
     
     
-    output_siamese=Input(output_siamese_shape)
-    out=model2(np.array(output_siamese))
+    output_siamese=np.array(output_siamese_shape)
+    out=model2(output_siamese)
     
     return model2.input, out
     
