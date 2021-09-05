@@ -60,8 +60,8 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
 
     x = model.output
     x = Flatten(name=flatten_name)(x)
-    x = Dense(4096, activation='relu')(x)
-    x = Dropout(dropout_rate)(x)
+    # x = Dense(4096, activation='relu')(x)
+    # x = Dropout(dropout_rate)(x)
     
     
     #x = Dense(512, activation='relu')(x)
@@ -96,7 +96,7 @@ def create_siamese_model(image_shape, dropout_rate):
 def create_mlp(image_shape):
 
     num_classes=71;
-
+    # image_shape = image_shape.reshape(image_shape.shape[0], image_shape[1]*image_shape[2])
     # Set the input shape
     input_shape =  Input(image_shape)
 
