@@ -96,7 +96,7 @@ def create_mlp_model(output_siamese_shape):
     
     model2.summary()
     
-    out_siamese=tf.convert_to_tensor(output_siamese_shape)
+    out_siamese=Input(output_siamese_shape)
     out = model2(out_siamese)
     
     return out
