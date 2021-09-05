@@ -17,6 +17,13 @@ import numpy as np
 import keras
 import pickle
 
+
+list1,list2 = get_np_arrays('cropped_arrays.npy')
+imagexs = np.expand_dims(list1[0],axis=0)
+imagexs2 = np.expand_dims(list2[0],axis=0)
+with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
+	exif_lbl = pickle.load(fp)
+fp.close()
 def datagenerator(images, labels, batchsize, mode="train"):
     ssad = 1
     while True:
@@ -136,14 +143,14 @@ siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
 
-with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
-	exif_lbl = pickle.load(fp)
-fp.close()
+# with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
+	# exif_lbl = pickle.load(fp)
+# fp.close()
 
 #######################################################################################à
 #crop images to 128x128
 #######################################################################################à
-list1,list2 = get_np_arrays('cropped_arrays.npy')
+# list1,list2 = get_np_arrays('cropped_arrays.npy')
 
 x_train = datagenerator(list1,exif_lbl,32)
 
@@ -152,8 +159,8 @@ x_train = datagenerator(list1,exif_lbl,32)
 #                            #validation_data=x_train)
                             #max_q_size=3)
                             # 
-imagexs = np.expand_dims(list1[0],axis=0)
-imagexs2 = np.expand_dims(list2[0],axis=0)
+# imagexs = np.expand_dims(list1[0],axis=0)
+# imagexs2 = np.expand_dims(list2[0],axis=0)
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
 label=np.zeros(len(exif_lbl));
 # for i in range(len(exif_lbl)):
