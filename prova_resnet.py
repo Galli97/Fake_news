@@ -92,8 +92,8 @@ def create_mlp_model(output_siamese_shape):
     model2 = Sequential()
     model2.add(Dense(8192, input_shape=output_siamese_shape, activation='relu'))
     model2.add(Dense(4096, activation='relu'))
-    model2.add(Dense(2048, activation='relu'))
-    model2.add(Dense(1024, activation='relu'))
+    #model2.add(Dense(2048, activation='relu'))
+    #model2.add(Dense(1024, activation='relu'))
     model2.add(Dense(num_classes, activation='softmax'))
     
     model2.summary()
