@@ -120,8 +120,9 @@ def create_mlp(image_shape):
 
     # prediction = Dropout(0.2)(L1_prediction)
     model2.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    
-    model2.fit(x = np.asarray(np.array(input_shape)).astype(np.float32),y = np.array(exif_lbl[0]),epochs=10)
+    fit_x = np.asarray(np.array(input_shape)).astype(np.float32)
+    fit_y = np.array(exif_lbl[0])
+    model2.fit(x = fit_x,y = fit_x,epochs=10)
     
     return 
     
