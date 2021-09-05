@@ -80,10 +80,11 @@ def create_siamese_model(image_shape, dropout_rate):
     return siamese_model,output
     
     
-def create_mlp_model(image_shape):
+def create_mlp_model(output_siamese_shape):
 
     num_classes=71;
-    input_shape=image_shape
+    input_shape=output_siamese_shape
+    
     # input_shape =  np.array(image_shape)
     # image_shape = image_shape.reshape(1, image_shape[1])
     # Set the input shape
@@ -98,8 +99,8 @@ def create_mlp_model(image_shape):
     model2.add(Dense(1024, activation='relu'))
     model2.add(Dense(num_classes, activation='softmax'))
     
-    input_shape2=Input(input_shape)
-    out=model2(input_shape2)
+    output_siamese=Input(output_siamese_shape)
+    out=model2(output_siamese_shape)
     
     return model2.input, out
     
