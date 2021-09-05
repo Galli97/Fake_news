@@ -101,7 +101,8 @@ def create_mlp(image_shape):
     # image_shape = image_shape.reshape(1, image_shape[1])
     # Set the input shape
     # input_shape =  np.array(image_shape)
-
+    print('Eccola')
+    print(input_shape)
     # Create the model
     model2 = Sequential()
     model2.add(Dense(8192, input_shape=input_shape, activation='relu'))
