@@ -97,7 +97,7 @@ def create_siamese_model(image_shape, dropout_rate):
 def create_mlp(image_shape):
 
     num_classes=71;
-    # image_shape = image_shape.reshape(image_shape.shape[0], image_shape[1]*image_shape[2])
+    image_shape = image_shape.reshape(1, image_shape[1])
     # Set the input shape
     input_shape =  Input(image_shape)
 
@@ -164,7 +164,7 @@ siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
 
-mlp_model=create_mlp(output_siamese.shape[1],)
+mlp_model=create_mlp(output_siamese.shape)
 
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
