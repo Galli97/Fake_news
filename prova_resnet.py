@@ -98,7 +98,7 @@ def create_mlp(image_shape):
     num_classes=71;
 
     # Set the input shape
-    input_shape =  Input(output.shape)
+    input_shape =  Input(image_shape)
 
     # Create the model
     model2 = Sequential()
