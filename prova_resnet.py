@@ -101,7 +101,7 @@ def create_mlp_model(output_siamese_shape):
     
     
     output_siamese=Input(output_siamese_shape)
-    out=model2(output_siamese)
+    out=model2(np.array(output_siamese))
     
     return model2.input, out
     
