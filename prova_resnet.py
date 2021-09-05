@@ -149,9 +149,9 @@ result = siamese_net.predict_on_batch(batch)
 siamese_model, output_siamese = create_siamese_model(image_shape=(128,128, 3),
                                          dropout_rate=0.2)
 
-siamese_model.compile(loss='binary_crossentropy',
-                      optimizer=Adam(lr=0.0001),
-                      metrics=['binary_crossentropy', 'acc'])
+# siamese_model.compile(loss='binary_crossentropy',
+                      # optimizer=Adam(lr=0.0001),
+                      # metrics=['binary_crossentropy', 'acc'])
                       
 # siamese_model.fit(x = (imagexs,imagexs2),y = output_siamese,epochs=10)
 
