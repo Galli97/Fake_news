@@ -116,7 +116,7 @@ def create_mlp_model(image_shape):
     
     return model2.input, out
     
- def create_mlp(image_shape):
+def create_mlp(image_shape):
 
     input_mlp, output_mlp= create_mlp_model(image_shape)
 
