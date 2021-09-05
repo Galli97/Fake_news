@@ -21,7 +21,7 @@ import pickle
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
-imagexs=tf.stack([imagexs,imagexs2],axis=0)
+# imagexs=tf.stack([imagexs,imagexs2],axis=0)
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	exif_lbl = pickle.load(fp)
 fp.close()
