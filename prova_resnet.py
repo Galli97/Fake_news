@@ -83,7 +83,7 @@ def create_siamese_model(image_shape, dropout_rate):
 def create_mlp_model(output_siamese_shape):
 
     num_classes=71;
-    input_shape=(None,8192)
+    input_shape=(None,None,8192)
 
     print('output siamese shape')
     print(output_siamese.shape)
