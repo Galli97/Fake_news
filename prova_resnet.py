@@ -99,14 +99,15 @@ def create_mlp_model(output_siamese_shape):
     model2.add(Dense(1024, activation='relu'))
     model2.add(Dense(num_classes, activation='softmax'))
     
+    
     output_siamese=Input(output_siamese_shape)
     out=model2(output_siamese)
     
     return model2.input, out
     
-def create_mlp(image_shape):
-
-    input_mlp, output_mlp= create_mlp_model(image_shape)
+def create_mlp(output_siamese_shape):
+ 
+    input_mlp, output_mlp= create_mlp_model(output_siamese_shape)
 
     mlp_model = Model(inputs=input_mlp, outputs=output_mlp)
     
