@@ -144,4 +144,4 @@ label=np.zeros(len(exif_lbl));
        # label[i]=[exif_lbl[i]]
    
     
-siamese_model.fit(x = imagexs,y = exif_lbl[0],epochs=10)
+siamese_model.fit(x = (imagexs,imagexs2),y = exif_lbl[0],epochs=10)
