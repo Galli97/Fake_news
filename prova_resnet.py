@@ -86,7 +86,7 @@ def create_mlp_model(output_siamese_shape):
     output_siamese=Input(output_siamese_shape)
 
     print('output siamese shape')
-    print(output_siamese)
+    print(output_siamese.shape)
     
     # Create the model
     model2 = Sequential()
