@@ -56,7 +56,7 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     x = Dropout(dropout_rate)(x)
     
     print('x shape=')
-    print(x shape)
+    print(x.shape)
     #x = Dense(512, activation='relu')(x)
     #x = Dropout(dropout_rate)(x)
 
