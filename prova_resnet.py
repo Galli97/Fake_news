@@ -98,7 +98,8 @@ def create_mlp_model(image_shape):
     model2.add(Dense(1024, activation='relu'))
     model2.add(Dense(num_classes, activation='softmax'))
     
-    out=model2(input_shape)
+    input_shape2=Input(input_shape)
+    out=model2(input_shape2)
     out=Input(out)
     return model2.input, out
     
