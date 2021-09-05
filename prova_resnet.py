@@ -89,8 +89,8 @@ def create_siamese_model(image_shape, dropout_rate):
 
     # prediction = Dropout(0.2)(L1_prediction)
 
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    model.fit(X_train, Y_train, epochs=10, batch_size=250, verbose=1, validation_split=0.2)
+    model2.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model2.fit(X_train, Y_train, epochs=10, batch_size=250, verbose=1, validation_split=0.2)
     siamese_model = Model(inputs=[input_left, input_right], outputs=prediction)
 
     return siamese_model
