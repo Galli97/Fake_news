@@ -98,8 +98,8 @@ def create_mlp_model(output_siamese_shape):
     
     model2.summary()
     
-    output_siamese=Input(output_siamese_shape)
-    out = model2(output_siamese)
+    out_siamese=Input(output_siamese_shape)
+    out = model2(out_siamese)
     
     return out
     
