@@ -138,10 +138,10 @@ x_train = datagenerator(list1,exif_lbl,32)
                             # 
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
-imagexs=tf.stack([imagexs,imagexs2],axis=0)
+#imagexs=tf.stack([imagexs,imagexs2],axis=0)
 label=np.zeros(len(exif_lbl));
 # for i in range(len(exif_lbl)):
        # label[i]=[exif_lbl[i]]
    
     
-siamese_model.fit(x = imagexs,y = imagexs2,epochs=10)
+siamese_model.fit(x = imagexs,y = exif_lbl[0],epochs=10)
