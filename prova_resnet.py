@@ -84,15 +84,12 @@ def create_mlp_model(output_siamese_shape):
 
     num_classes=71;
     #input_shape=Input((None,8192))
-    input_shape = keras_tensor.KerasTensor(type_spec=tf.TensorSpec(shape=(1,8192), dtype=tf.float32))
-    input_shape=Input(input_shape)
-    print('output siamese shape')
-    print(input_shape.shape)
+  
     
     # Create the model
     model2 = Sequential()
     #model2.add(Dense(8192, input_shape=output_siamese_shape, activation='relu'))
-    model2.add(Dense(4096, input_shape=input_shape,activation='relu'))
+    model2.add(Dense(4096, input_shape=output_siamese_shape,activation='relu'))
     model2.add(Dense(2048, activation='relu'))
     model2.add(Dense(1024, activation='relu'))
     model2.add(Dense(num_classes, activation='softmax'))
