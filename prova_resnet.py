@@ -120,9 +120,10 @@ def create_mlp(image_shape):
 
     # prediction = Dropout(0.2)(L1_prediction)
     model2.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    imagexs = np.expand_dims(np.asarray(np.array(input_shape)).astype(np.float32),axis=0)
-    imagexs2 = np.expand_dims(np.asarray(np.array(input_shape)).astype(np.float32),axis=0)
-    model2.fit(x = imagexs,y = imagexs2,epochs=10)
+    imagexs = np.expand_dims(image_shape,axis=0)
+    imagexs2 = np.expand_dims(image_shape,axis=0)
+    np.asarray(np.array(input_shape)).astype(np.float32)
+    model2.fit(x = np.asarray(np.array(imagexs)).astype(np.float32),y = imagexs2,epochs=10)
     
     return 
     
@@ -188,9 +189,9 @@ x_train = datagenerator(list1,exif_lbl,32)
 # imagexs = np.expand_dims(list1[0],axis=0)
 # imagexs2 = np.expand_dims(list2[0],axis=0)
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
-label=np.zeros(len(exif_lbl));
+# label=np.zeros(len(exif_lbl));
 # for i in range(len(exif_lbl)):
        # label[i]=[exif_lbl[i]]
 
     
-siamese_model.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
+# siamese_model.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
