@@ -121,7 +121,7 @@ def create_mlp(image_shape):
     # prediction = Dropout(0.2)(L1_prediction)
     model2.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
     
-    model2.fit(x = input_shape,y = exif_lbl[0],epochs=10)
+    model2.fit(x = np.array(input_shape),y = np.array(exif_lbl[0]),epochs=10)
     
     return 
     
