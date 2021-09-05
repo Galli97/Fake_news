@@ -97,9 +97,10 @@ def create_siamese_model(image_shape, dropout_rate):
 def create_mlp(image_shape):
 
     num_classes=71;
-    image_shape = image_shape.reshape(1, image_shape[1])
+    input_shape =  np.array(image_shape)
+    # image_shape = image_shape.reshape(1, image_shape[1])
     # Set the input shape
-    input_shape =  Input(image_shape)
+    # input_shape =  np.array(image_shape)
 
     # Create the model
     model2 = Sequential()
