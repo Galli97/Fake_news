@@ -21,6 +21,7 @@ import pickle
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
+imagexs=tf.stack([imagexs,imagexs2],axis=0)
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	exif_lbl = pickle.load(fp)
 fp.close()
@@ -97,7 +98,7 @@ def create_siamese_model(image_shape, dropout_rate):
     # prediction = Dropout(0.2)(L1_prediction)
 
     model2.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    model2.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
+    model2.fit(x = imagexs,y = imagexs2,epochs=10)
     
     
     siamese_model = Model(inputs=[input_left, input_right], outputs=prediction)
