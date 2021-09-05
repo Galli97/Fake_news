@@ -100,7 +100,7 @@ def create_mlp_model(image_shape):
     
     input_shape2=Input(input_shape)
     out=model2(input_shape2)
-    out=Input(out)
+    
     return model2.input, out
     
 def create_mlp(image_shape):
