@@ -164,7 +164,7 @@ siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
 
-mlp_model=create_mlp(output_siamese.shape)
+mlp_model=create_mlp((1,output_siamese.shape[1]))
 
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
