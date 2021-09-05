@@ -72,11 +72,31 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
 
 def create_siamese_model(image_shape, dropout_rate):
 
-    num_classes=71;
+    
     output_left, input_left = create_base_model(image_shape, dropout_rate)
     output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
-    output = tf.concat([output_left,output_right],0)
     
+    output = tf.concat([output_left,output_right],0)
+    # L1_layer = Lambda(lambda tensors: tf.abs(tensors[0] - tensors[1]))
+    # L1_distance = L1_layer([output_left, output_right])
+    # L1_prediction = Dense(1, use_bias=True,
+                          # activation='sigmoid',
+                          # input_shape = image_shape,
+                          # kernel_initializer=RandomNormal(mean=0.0, stddev=0.001),
+                          # name='weighted-average')(L1_distance)
+
+    # prediction = Dropout(0.2)(L1_prediction)
+    print('Dimensione in output')
+    print(output.shape)
+    siamese_model = Model(inputs=[input_left, input_right], outputs=output)
+
+    return siamese_model,output
+    
+    
+def create_mlp(image_shape):
+
+    num_classes=71;
+
     # Set the input shape
     input_shape =  Input(output.shape)
 
@@ -87,24 +107,22 @@ def create_siamese_model(image_shape, dropout_rate):
     model2.add(Dense(2048, activation='relu'))
     model2.add(Dense(1024, activation='relu'))
     model2.add(Dense(num_classes, activation='softmax'))
-    
+
     # L1_layer = Lambda(lambda tensors: tf.abs(tensors[0] - tensors[1]))
     # L1_distance = L1_layer([output_left, output_right])
     # L1_prediction = Dense(1, use_bias=True,
-                          # activation='sigmoid',
-                          # input_shape = image_shape,
-                          # kernel_initializer=RandomNormal(mean=0.0, stddev=0.001),
-                          # name='weighted-average')(L1_distance)
+                      # activation='sigmoid',
+                      # input_shape = image_shape,
+                      # kernel_initializer=RandomNormal(mean=0.0, stddev=0.001),
+                      # name='weighted-average')(L1_distance)
 
     # prediction = Dropout(0.2)(L1_prediction)
-
     model2.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    
     model2.fit(x = output,y = exif_lbl[0],epochs=10)
     
+    return 
     
-    siamese_model = Model(inputs=[input_left, input_right], outputs=prediction)
-
-    return siamese_model
 """
 siamese_model = create_siamese_model(image_shape=(128,128, 3),
                                          dropout_rate=0.2)
@@ -138,12 +156,15 @@ batch = [markers, X_1]
 result = siamese_net.predict_on_batch(batch)
 ############################################################################################### FINE
 """
-siamese_model = create_siamese_model(image_shape=(128,128, 3),
+siamese_model, output_siamese = create_siamese_model(image_shape=(128,128, 3),
                                          dropout_rate=0.2)
 
 siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
+
+mlp_model=create_mlp(output_siamese.shape)
+
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	# exif_lbl = pickle.load(fp)
