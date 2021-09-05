@@ -54,7 +54,9 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     x = Flatten(name=flatten_name)(x)
     x = Dense(4096, activation='relu')(x)
     x = Dropout(dropout_rate)(x)
-
+    
+    print('x shape=')
+    print(x shape)
     #x = Dense(512, activation='relu')(x)
     #x = Dropout(dropout_rate)(x)
 
@@ -142,6 +144,6 @@ imagexs2 = np.expand_dims(list2[0],axis=0)
 label=np.zeros(len(exif_lbl));
 # for i in range(len(exif_lbl)):
        # label[i]=[exif_lbl[i]]
-   
+
     
 siamese_model.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
