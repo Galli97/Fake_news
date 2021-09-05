@@ -60,7 +60,6 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
 
     x = model.output
     x = Flatten(name=flatten_name)(x)
-    x = Dense(4096, activation='relu')(x)
 
     return x, model.input
 
@@ -93,14 +92,14 @@ def create_mlp_model(output_siamese_shape):
     print(input_shape)
     # Create the model
     model2 = Sequential()
-    #model2.add(Dense(8192, input_shape=input_shape, activation='relu'))
+    model2.add(Dense(8192, input_shape=input_shape, activation='relu'))
     model2.add(Dense(4096, input_shape=input_shape, activation='relu'))
     model2.add(Dense(2048, activation='relu'))
     model2.add(Dense(1024, activation='relu'))
     model2.add(Dense(num_classes, activation='softmax'))
     
     
-    output_siamese=np.array(output_siamese_shape)
+    output_siamese=Input(output_siamese_shape)
     out=model2(output_siamese)
     
     return model2.input, out
