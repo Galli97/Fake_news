@@ -78,7 +78,7 @@ def create_siamese_model(image_shape, dropout_rate):
     output = tf.concat([output_left,output_right],0)
     
     # Set the input shape
-    input_shape = (output.shape)
+    input_shape =  Input(output.shape)
 
     # Create the model
     model2 = Sequential()
