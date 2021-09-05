@@ -99,7 +99,7 @@ def create_mlp_model(image_shape):
     model2.add(Dense(num_classes, activation='softmax'))
     
     out=model2(input_shape)
-    
+    out=Input(out)
     return model2.input, out
     
 def create_mlp(image_shape):
