@@ -82,6 +82,7 @@ def create_siamese_model(image_shape, dropout_rate):
 
     # Create the model
     model2 = Sequential()
+    model2.add(Dense(8192, input_shape=input_shape, activation='relu'))
     model2.add(Dense(4096, input_shape=input_shape, activation='relu'))
     model2.add(Dense(2048, activation='relu'))
     model2.add(Dense(1024, activation='relu'))
@@ -98,7 +99,7 @@ def create_siamese_model(image_shape, dropout_rate):
     # prediction = Dropout(0.2)(L1_prediction)
 
     model2.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-    model2.fit(x = imagexs,y = imagexs2,epochs=10)
+    model2.fit(x = output,y = exif_lbl[0],epochs=10)
     
     
     siamese_model = Model(inputs=[input_left, input_right], outputs=prediction)
