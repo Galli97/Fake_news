@@ -123,7 +123,7 @@ def create_mlp(image_shape):
     imagexs = np.expand_dims(image_shape,axis=0)
     imagexs2 = np.expand_dims(image_shape,axis=0)
     np.asarray(np.array(input_shape)).astype(np.float32)
-    model2.fit(x = np.asarray(np.array(imagexs)).astype(np.float32),y = imagexs2,epochs=10)
+    model2.fit(x = np.asarray(np.array(imagexs)).astype(np.float32),y = np.asarray(np.array(imagexs)).astype(np.float32),epochs=10)
     
     return 
     
