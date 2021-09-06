@@ -142,9 +142,10 @@ imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
-#extract exif data
-dict,dict_keys = extract_exif()
-#generate labels for each pair of images
-label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
+# extract exif data
+# dict,dict_keys = extract_exif()
+# generate labels for each pair of images
+# label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 
-siamese_model.fit(x = (exif1,exif2),y = np.array(exif_lbl[0]),epochs=10)
+
+siamese_model.fit(x = (exif_lbl[0],exif_lbl[0]),y = np.array(exif_lbl[0]),epochs=10)
