@@ -149,5 +149,5 @@ imagexs2 = np.expand_dims(list2[0],axis=0)
 
 exif=np.random.random((1, 71))
 for i in range(len(exif_lbl)):
-    exif[0,i]=np.array(exif_lbl[i])
+    np.array(exif[0,i])=np.array(exif_lbl[i])
 siamese_model.fit(x = (imagexs,imagexs2),y = exif[1,0] ,epochs=10)
