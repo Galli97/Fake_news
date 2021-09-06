@@ -141,10 +141,10 @@ x_train = datagenerator(list1,exif_lbl,32)
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
-label, exif1, exif2 = generate_label(keys,imagexs,imagexs2)
+
 #extract exif data
 dict,dict_keys = extract_exif()
 #generate labels for each pair of images
-exif_lbl,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
+label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 
 siamese_model.fit(x = (exif1,exif2),y = np.array(exif_lbl[0]),epochs=10)
