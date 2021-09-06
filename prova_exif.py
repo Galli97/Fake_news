@@ -25,8 +25,8 @@ def image_exif(im1,im2):
     
     
     # extract EXIF data
-    exifdata1 = image1.getexif()
-    exifdata2 = image2.getexif()
+    exifdata1 = im1.getexif()
+    exifdata2 = im2.getexif()
     # iterating over all EXIF data fields
     for tag_id in exifdata1:
         # get the tag name, instead of human unreadable tag id
