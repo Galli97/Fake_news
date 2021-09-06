@@ -140,4 +140,4 @@ imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 
 
-siamese_model.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
+siamese_model.fit(x = (exif_lbl[3],exif_lbl[1]),y = exif_lbl[0],epochs=10)
