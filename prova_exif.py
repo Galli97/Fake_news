@@ -162,7 +162,7 @@ x_train = datagenerator(list1,exif_lbl,32)
 
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
-exif1,exif2= image_exif(imagexs,imagexs2) 
+exif1,exif2= image_exif(list1[0],list2[0]) 
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
 # extract exif data
