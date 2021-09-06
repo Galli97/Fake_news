@@ -16,6 +16,8 @@ import cv2
 import numpy as np
 import keras
 import pickle
+from PIL.ExifTags import TAGS
+
 
 def image_exif(im1,im2):
 
