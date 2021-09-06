@@ -62,7 +62,7 @@ def extract_exif():
         dict[right_tags[i]] = x
 
     print("[INFO] Extracted dict")
-    return dict,image_list,list(dict.keys())
+    return dict,list(dict.keys())
 
 def random_list(list):
     second_list = []
