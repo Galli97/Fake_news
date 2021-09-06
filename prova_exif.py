@@ -147,5 +147,7 @@ imagexs2 = np.expand_dims(list2[0],axis=0)
 # generate labels for each pair of images
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 
-
-siamese_model.fit(x = (imagexs,imagexs2),y = exif_lbl[0,0] ,epochs=10)
+exif=np.random.random((1, 71))
+for i in len(exif_lbl):
+    exif[1,i]=exif_lbl[i]
+siamese_model.fit(x = (imagexs,imagexs2),y = exif[1,0] ,epochs=10)
