@@ -176,5 +176,6 @@ print(exif1)
 # dict,dict_keys = extract_exif()
 # generate labels for each pair of images
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
-
+exif1=np.asarray(exif1).astype('float32')
+exif2=np.asarray(exif2).astype('float32')
 siamese_model.fit(x = (exif1,exif2),y = exif_lbl[0] ,epochs=10)
