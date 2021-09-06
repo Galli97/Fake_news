@@ -20,13 +20,13 @@ import pickle
 def image_exif(im1,im2):
 
     # read the image data using PIL
-    # image1 = Image.open(im1)
-    # image2 = Image.open(im2)
+    image1 = Image.open(im1)
+    image2 = Image.open(im2)
     
     
     # extract EXIF data
-    exifdata1 = im1.getexif()
-    exifdata2 = im2.getexif()
+    exifdata1 = image1.getexif()
+    exifdata2 = image2.getexif()
     # iterating over all EXIF data fields
     for tag_id in exifdata1:
         # get the tag name, instead of human unreadable tag id
@@ -165,7 +165,7 @@ imagexs2 =cv2.imread('D02_img_orig_0001.jpg')
 #imagexs2 = np.expand_dims(imagexs2,axis=0)
 # imagexs = np.expand_dims(list1[0],axis=0)
 # imagexs2 = np.expand_dims(list2[0],axis=0)
-exif1,exif2= image_exif(imagexs,imagexs2) 
+exif1,exif2= image_exif('D02_img_orig_0001.jpg','D01_img_orig_0001.jpg') 
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
 # extract exif data
