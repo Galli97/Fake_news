@@ -17,6 +17,27 @@ import numpy as np
 import keras
 import pickle
 
+def image_exif(im1,im2):
+
+    # read the image data using PIL
+    image1 = Image.open(im1)
+    image2 = Image.open(im2)
+    
+    
+    # extract EXIF data
+    exifdata1 = image1.getexif()
+    exifdata2 = image2.getexif()
+    # iterating over all EXIF data fields
+    for tag_id in exifdata1:
+        # get the tag name, instead of human unreadable tag id
+        tag = TAGS.get(tag_id, tag_id)
+        data1 = exifdata1.get(tag_id)
+        data2 = exifdata1.get(tag_id)
+                
+                 
+
+    print("[INFO] Exif")
+    return data1,data2
 
 def datagenerator(images, labels, batchsize, mode="train"):
     ssad = 1
@@ -137,7 +158,8 @@ x_train = datagenerator(list1,exif_lbl,32)
 #                            #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
 #                            #validation_data=x_train)
                             #max_q_size=3)
-                            # 
+ 
+exif1,exif2= image_exif(imagexs,imagexs2) 
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
@@ -147,4 +169,4 @@ imagexs2 = np.expand_dims(list2[0],axis=0)
 # generate labels for each pair of images
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 
-siamese_model.fit(x = (imagexs,imagexs2),y = imagexs ,epochs=10)
+siamese_model.fit(x = (exif1,exif2),y = imagexs ,epochs=10)
