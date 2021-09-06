@@ -30,16 +30,18 @@ def image_exif(im1,im2):
     exifdata1 = image1.getexif()
     exifdata2 = image2.getexif()
     # iterating over all EXIF data fields
+    exif1 = []
+    exif2 = []
     for tag_id in exifdata1:
         # get the tag name, instead of human unreadable tag id
         tag = TAGS.get(tag_id, tag_id)
         data1 = exifdata1.get(tag_id)
         data2 = exifdata1.get(tag_id)
-                
-                 
+        exif1.append(data1)
+        exif2.append(data2)    
 
     print("[INFO] Exif")
-    return data1,data2
+    return exif1,exif2
 
 def datagenerator(images, labels, batchsize, mode="train"):
     ssad = 1
