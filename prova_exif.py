@@ -131,6 +131,7 @@ list1,list2 = get_np_arrays('cropped_arrays.npy')
 
 x_train = datagenerator(list1,exif_lbl,32)
 
+
 #siamese_model.fit_generator(datagenerator(list1,exif_lbl,32),steps_per_epoch=32,epochs=10,verbose=1)
 #                            #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
 #                            #validation_data=x_train)
@@ -139,5 +140,6 @@ x_train = datagenerator(list1,exif_lbl,32)
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
+label, exif1, exif2 = generate_label(keys,imagexs,imagexs2)
 
 siamese_model.fit(x = (imagexs,imagexs2),y = np.array(exif_lbl[0]),epochs=10)

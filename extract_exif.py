@@ -104,7 +104,7 @@ def generate_label(keys,first,second):
         
         print("[INFO] Label extracted")
         
-        return exif_lbl
+        return exif_lbl, exif1, exif2
 
 
 def save_np_arrays(tmp1,tmp2):
