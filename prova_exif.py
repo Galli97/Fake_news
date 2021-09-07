@@ -19,7 +19,7 @@ import pickle
 from PIL.ExifTags import TAGS
 
 def labels(im1,im2):
-    label[]
+    label=[]
     for i in range(len(im1)):
        if(im1[i]==im2[i]):
        label[i]=1
