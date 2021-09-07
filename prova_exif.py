@@ -18,6 +18,12 @@ import keras
 import pickle
 from PIL.ExifTags import TAGS
 
+def labels(im1,im2):
+    if(im1=im2):
+       label=1
+    else:
+       label=0;
+    return label
 
 def image_exif(im1,im2):
 
@@ -163,9 +169,12 @@ x_train = datagenerator(list1,exif_lbl,32)
 #                            #validation_data=x_train)
                             #max_q_size=3)
  
+
+
 imagexs =cv2.imread('D01_img_orig_0001.jpg')
 #imagexs = np.expand_dims(imagexs,axis=0)
 imagexs2 =cv2.imread('D02_img_orig_0001.jpg')
+label=label(imagexs,imagexs2)
 #imagexs2 = np.expand_dims(imagexs2,axis=0)
 # imagexs = np.expand_dims(list1[0],axis=0)
 # imagexs2 = np.expand_dims(list2[0],axis=0)
@@ -178,4 +187,4 @@ print(len(exif2))
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 #exif1=np.array(exif1)
 exif2=np.array(exif2)
-siamese_model.fit(x = ('D02_img_orig_0001.jpg','D01_img_orig_0001.jpg'),y = exif_lbl[0],epochs=10)
+siamese_model.fit(x = (imagexs,imagexs2),y = label,epochs=10)
