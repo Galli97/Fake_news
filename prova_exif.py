@@ -190,4 +190,4 @@ imagexs2 = np.expand_dims(list2[0],axis=0)
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 #exif1=np.array(exif1)
 
-siamese_model.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
+siamese_model.fit(x = (imagexs,imagexs2),y = (,1),epochs=10)
