@@ -150,7 +150,7 @@ result = siamese_net.predict_on_batch(batch)
 siamese_model = create_siamese_model(image_shape=(128,128, 3),
                                          dropout_rate=0.2)
 
-siamese_model.compile(loss='binary_crossentropy',
+siamese_model.compile(loss='categorical_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
 
@@ -190,4 +190,4 @@ print(imagexs.shape)
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 #exif1=np.array(exif1)
 exif2=np.array(exif2)
-siamese_model.fit(x = np.array(imagexs,imagexs2),y = exif_lbl,epochs=10)
+siamese_model.fit(x = (imagexs,imagexs2),y = exif_lbl[0],epochs=10)
