@@ -22,9 +22,9 @@ def labels(im1,im2):
     label=[]
     for i in range(len(im1)):
        if(im1[i]==im2[i]):
-       label[i]=1
+        label[i]=1
        else:
-       label[i]=0;
+        label[i]=0;
     return label
 
 def image_exif(im1,im2):
