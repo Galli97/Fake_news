@@ -19,10 +19,12 @@ import pickle
 from PIL.ExifTags import TAGS
 
 def labels(im1,im2):
-    if(im1==im2):
-       label=1
-    else:
-       label=0;
+    label[]
+    for i in range(len(im1)):
+       if(im1[i]==im2[i]):
+       label[i]=1
+       else:
+       label[i]=0;
     return label
 
 def image_exif(im1,im2):
@@ -171,13 +173,13 @@ x_train = datagenerator(list1,exif_lbl,32)
  
 
 
-imagexs =cv2.imread('D01_img_orig_0001.jpg')
+#imagexs =cv2.imread('D01_img_orig_0001.jpg')
 #imagexs = np.expand_dims(imagexs,axis=0)
-imagexs2 =cv2.imread('D02_img_orig_0001.jpg')
-label=labels(imagexs,imagexs2)
+#imagexs2 =cv2.imread('D02_img_orig_0001.jpg')
+label=labels(list1,list2)
 #imagexs2 = np.expand_dims(imagexs2,axis=0)
-# imagexs = np.expand_dims(list1[0],axis=0)
-# imagexs2 = np.expand_dims(list2[0],axis=0)
+imagexs = np.expand_dims(list1,axis=0)
+imagexs2 = np.expand_dims(list2,axis=0)
 exif1,exif2= image_exif('D02_img_orig_0001.jpg','D01_img_orig_0001.jpg') 
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
 print(len(label))
