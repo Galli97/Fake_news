@@ -182,7 +182,7 @@ imagexs = np.expand_dims(list1,axis=0)
 imagexs2 = np.expand_dims(list2,axis=0)
 exif1,exif2= image_exif('D02_img_orig_0001.jpg','D01_img_orig_0001.jpg') 
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
-print(len(label))
+#print(len(label))
 print(imagexs.shape)
 # extract exif data
 # dict,dict_keys = extract_exif()
