@@ -189,5 +189,5 @@ print(imagexs.shape)
 # generate labels for each pair of images
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 #exif1=np.array(exif1)
-exif2=np.array(exif2)
+
 siamese_model.fit(x = (imagexs,imagexs2),y = exif_lbl[0],epochs=10)
