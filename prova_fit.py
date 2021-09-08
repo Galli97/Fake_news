@@ -125,4 +125,4 @@ y = np.array(y)
 print(y.shape)
 # y = tf.constant(exif_lbl[0])
 
-siamese_model.fit(x = (imagexs,imagexs2),y=(y[0],y[1],y[2]),epochs=10)
+siamese_model.fit(x = (imagexs,imagexs2),y=(y[0],y[1]),epochs=10)
