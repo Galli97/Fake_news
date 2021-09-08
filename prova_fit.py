@@ -142,7 +142,7 @@ for epoch in range(epochs):
 
         # Use the gradient tape to automatically retrieve
         # the gradients of the trainable variables with respect to the loss.
-        grads = tape.gradient(loss_value, model.trainable_weights)
+        grads = tape.gradient(loss_value, siamese_model.trainable_weights)
 
         # Run one step of gradient descent by updating
         # the value of the variables to minimize the loss.
