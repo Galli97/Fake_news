@@ -121,6 +121,7 @@ imagexs2 = np.expand_dims(list2[0],axis=0)
 # print(len(exif1))
 # y=tf.stack(exif_lbl[0],exif_lbl[1])
 y=np.reshape(exif_lbl[0],(1,71))
+print(y.shape)
 # y = tf.constant(exif_lbl[0])
 
 siamese_model.fit(x = (imagexs,imagexs2),y = np.array(y),epochs=10)
