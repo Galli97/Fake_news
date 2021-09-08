@@ -95,9 +95,11 @@ fp.close()
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
 labels=[]
+somma=0
 for i in range(len(exif_lbl)):
-     listToStr = ' '.join([str(elem) for elem in exif_lbl[i]])
-     labels.append(int(listToStr))
+     for j in range(len(exif_lbl[0])):
+        somma = exif_lbl[0][j]+somma
+        labels.append(somma)
 # Instantiate an optimizer.
 optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 # Instantiate a loss function.
