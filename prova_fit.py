@@ -139,4 +139,4 @@ y = np.array(y)
 print(y.shape)
 
 x_train = datagenerator(list1,list2,exif_lbl,32)
-siamese_model.fit_generator(x =x_train,epochs=10)
+siamese_model.fit_generator(x_train,epochs=10)
