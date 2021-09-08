@@ -18,7 +18,7 @@ import keras
 import pickle
 from PIL.ExifTags import TAGS
 
-def etichette(exif_label)
+def etichette(exif_label):
     etichetta=sum(exif_label9
     
     return etichetta
