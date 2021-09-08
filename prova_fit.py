@@ -96,7 +96,8 @@ list1,list2 = get_np_arrays('cropped_arrays.npy')
 
 labels=[]
 for i in range(len(exif_lbl)):
-     labels[i]=listToString(exif_lbl[i])
+     listToStr = ' '.join([str(elem) for elem in exif_lbl[i]])
+     labels.append(listToStr)
 # Instantiate an optimizer.
 optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 # Instantiate a loss function.
