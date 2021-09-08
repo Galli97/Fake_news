@@ -106,25 +106,15 @@ fp.close()
 #crop images to 128x128
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
-
-le = preprocessing.LabelEncoder()
-
-# for i in range(len(exif_lbl)):
-   # le.fit(exif_lbl[i])
-   # sum_label.append[le.classes_]
    
 
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
-imagexs = np.reshape(imagexs,(64,49152))
-imagexs2 = np.reshape(imagexs2,(64,49152))
-# exif1,exif2= image_exif('D02_img_orig_0001.jpg','D01_img_orig_0001.jpg') 
-# exif1=np.array(exif1)
-# print(len(exif1))
-# y=tf.stack(exif_lbl[0],exif_lbl[1])
-y=np.reshape(exif_lbl[0],(64,71))
+
+
+y=np.reshape(exif_lbl[0],(1,71))
 y = np.array(y)
 print(y.shape)
-# y = tf.constant(exif_lbl[0])
 
-siamese_model.fit(x = (imagexs,imagexs2),y=y,epochs=10)
+
+siamese_model.fit_generator(x = (imagexs,imagexs2),y=y,epochs=10)
