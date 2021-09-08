@@ -94,9 +94,9 @@ def create_siamese_model(image_shape, dropout_rate):
 siamese_model = create_siamese_model(image_shape=(128,128, 3),
                                          dropout_rate=0.2)
 
-siamese_model.compile(loss='sparse_categorical_crossentropy',
+siamese_model.compile(loss='categorical_crossentropy',
                       optimizer=Adam(lr=0.0001),
-                      metrics=['sparse_categorical_crossentropy', 'acc'])
+                      metrics=['categorical_crossentropy', 'acc'])
 
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	exif_lbl = pickle.load(fp)
@@ -120,7 +120,7 @@ imagexs2 = np.expand_dims(list2[0],axis=0)
 # exif1=np.array(exif1)
 # print(len(exif1))
 # y=tf.stack(exif_lbl[0],exif_lbl[1])
-y=np.reshape(exif_lbl[0],(36,71))
+y=np.reshape(exif_lbl[0],(1,71))
 y = np.array(y)
 print(y.shape)
 # y = tf.constant(exif_lbl[0])
