@@ -92,10 +92,10 @@ batch_size = 64
 x1_train=list1
 x2_train=list2
 y_train=exif_lbl
-y_train=np.reshape(y_train, (-1, 1))
+y_train=np.reshape(y_train, (-1, 1/71))
 #x1_train = np.reshape(x1_train, (-1, 16384,3)) #(128x128x3)
 #x2_train = np.reshape(x2_train, (-1, 16384,3))#(128x128x3)
-train_dataset = tf.data.Dataset.from_tensor_slices(((x1_train,x2_train), y_train/71))
+train_dataset = tf.data.Dataset.from_tensor_slices(((x1_train,x2_train), y_train))
 
 
 epochs = 2
