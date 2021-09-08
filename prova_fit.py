@@ -113,12 +113,12 @@ train_dataset = tf.data.Dataset.from_tensor_slices(((x1_train,x2_train), y_train
 ##########
 # Prepare the validation dataset.
 # Reserve 10,000 samples for validation.
-x1_val = x1_train[-10000:]
-x2_val = x2_train[-10000:]
-y_val = y_train[-10000:]
-x1_train = x1_train[:-10000]
-x2_train = x2_train[:-10000]
-y_train = y_train[:-10000]
+x1_val = x1_train[-1000:]
+x2_val = x2_train[-1000:]
+y_val = y_train[-1000:]
+x1_train = x1_train[:-1000]
+x2_train = x2_train[:-1000]
+y_train = y_train[:-1000]
 val_dataset = tf.data.Dataset.from_tensor_slices(((x1_val,x2_val), y_val))
 val_dataset = val_dataset.batch(64)
 ##########
