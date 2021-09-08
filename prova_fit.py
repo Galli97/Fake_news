@@ -88,11 +88,13 @@ loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
 # Prepare the training dataset.
 batch_size = 64
-x_train=(list1,list2)
+x1_train=list1
+x2_train=list2
 y_train=exif_lbl
 
-x_train = np.reshape(x_train, (-1, 98304)) #(128x128x3)x2
-train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
+x1_train = np.reshape(x_train, (-1, 49.152)) #(128x128x3)
+x2_train = np.reshape(x_train, (-1, 49.152))#(128x128x3)
+train_dataset = tf.data.Dataset.from_tensor_slices(((x1_train,x2_train), y_train))
 
 
 epochs = 2
@@ -110,7 +112,7 @@ for epoch in range(epochs):
             # The operations that the layer applies
             # to its inputs are going to be recorded
             # on the GradientTape.
-            logits = siamese_model([x_batch_train[0],x_batch_train[1]], training=True)  # Logits for this minibatch
+            logits = siamese_model([x1_batch_train,x2_batch_train], training=True)  # Logits for this minibatch
 
             # Compute the loss value for this minibatch.
             loss_value = loss_fn(y_batch_train, logits)
