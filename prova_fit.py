@@ -31,8 +31,8 @@ def datagenerator(images1,images2, labels, batchsize, mode="train"):
             # load your images from numpy arrays or read from directory
             #else:
             x1 = images1[start:end] 
-            x2 = images1[start:end]
-            x=(x1,x2)
+            x2 = images2[start:end]
+            x=[x1,x2]
             y = labels[start:end]
             
             yield x, y
