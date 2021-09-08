@@ -65,7 +65,7 @@ def create_siamese_model(image_shape, dropout_rate):
 
     return siamese_model
 	
-siamese_model = create_siamese_model(image_shape=(128,128, 3),
+siamese_model = create_siamese_model(image_shape=(49152),
                                          dropout_rate=0.2)
 
 siamese_model.compile(loss='categorical_crossentropy',
