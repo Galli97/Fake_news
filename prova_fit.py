@@ -122,7 +122,7 @@ for epoch in range(epochs):
     print("\nStart of epoch %d" % (epoch,))
 
     # Iterate over the batches of the dataset.
-    for step in range(step)#, ((x1_batch_train,x2_batch_train), y_batch_train) in enumerate(train_dataset):
+    for step in range(step):#, ((x1_batch_train,x2_batch_train), y_batch_train) in enumerate(train_dataset):
 
         # Open a GradientTape to record the operations run
         # during the forward pass, which enables auto-differentiation.
