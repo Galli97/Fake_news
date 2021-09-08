@@ -18,15 +18,10 @@ import keras
 import pickle
 from PIL.ExifTags import TAGS
 
-
-def list_to_set(int_list):
-    my_set = set()
-    for each in int_list:
-        my_set.add(each)
+def etichette(exif_label)
+    etichetta=sum(exif_label9
     
-    return my_set
-    
-    
+    return etichetta
 def create_base_model(image_shape, dropout_rate, suffix=''):
     I1 = Input(image_shape)
     model = ResNet50(include_top=False, weights='imagenet', input_tensor=I1, pooling=None)
@@ -87,10 +82,8 @@ fp.close()
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
-a=list_to_set(list1)
-b=list_to_set(list2)
-
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
-print(len(exif_lbl[0]))
-siamese_model.fit(x = (a,b),y = np.array(exif_lbl),epochs=10)
+
+etc=etichette(exif_lbl[0])
+siamese_model.fit(x = (imagexs,imagexs2),y = etc,epochs=10)
