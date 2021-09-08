@@ -22,7 +22,7 @@ from sklearn import preprocessing
 
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
-    image_shape=np.reshape(image_shape,(128,128,3))
+    image_shape=(image_shape[0]/2,image_shape[0]/2,image_shape[1])
     I1 = Input(image_shape)
     model = ResNet50(include_top=False, weights='imagenet', input_tensor=I1, pooling=None)
     model.layers.pop()
