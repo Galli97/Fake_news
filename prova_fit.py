@@ -20,55 +20,6 @@ from PIL.ExifTags import TAGS
 from sklearn import preprocessing
 
 
-def datagenerator(images1,images2, labels, batchsize, mode="train"):
-    ssad = 1
-    while True:
-        start = 0
-        end = batchsize
-        while start  < len(images1):
-            #if(len(images)-start < batchsize):
-            #    break
-            # load your images from numpy arrays or read from directory
-            #else:
-            x1 = images1[start:end] 
-            x2 = images2[start:end]
-            x=[x1,x2]
-            y = labels[start:end]
-            
-            yield x, y
-
-            start += batchsize
-            end += batchsize
-
-
-def image_exif(im1,im2):
-
-    # read the image data using PIL
-    image1 = Image.open(im1)
-    image2 = Image.open(im2)
-    
-    
-    # extract EXIF data
-    exifdata1 = image1.getexif()
-    exifdata2 = image2.getexif()
-    # iterating over all EXIF data fields
-    exif1 = []
-    exif2 = []
-    for tag_id in exifdata1:
-        # get the tag name, instead of human unreadable tag id
-        tag = TAGS.get(tag_id, tag_id)
-        data1 = exifdata1.get(tag_id)
-        data2 = exifdata1.get(tag_id)
-        exif1.append(data1)
-        exif2.append(data2)    
-
-    print("[INFO] Exif")
-    return exif1,exif2
-    
-def etichette(exif_label):
-    etichetta=sum(exif_label)
-    
-    return etichetta
 def create_base_model(image_shape, dropout_rate, suffix=''):
     I1 = Input(image_shape)
     model = ResNet50(include_top=False, weights='imagenet', input_tensor=I1, pooling=None)
@@ -129,10 +80,55 @@ fp.close()
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
+# Instantiate an optimizer.
+optimizer = keras.optimizers.SGD(learning_rate=1e-3)
+# Instantiate a loss function.
+loss_fn = keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+
+# Prepare the training dataset.
+batch_size = 64
+x_train=(list1,list2)
+y_train=exif_lbl
+
+x_train = np.reshape(x_train, (-1, 16.384))
+train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
 
 
+epochs = 2
+for epoch in range(epochs):
+    print("\nStart of epoch %d" % (epoch,))
 
+    # Iterate over the batches of the dataset.
+    for step, (x_batch_train, y_batch_train) in enumerate(train_dataset):
 
+        # Open a GradientTape to record the operations run
+        # during the forward pass, which enables auto-differentiation.
+        with tf.GradientTape() as tape:
+
+            # Run the forward pass of the layer.
+            # The operations that the layer applies
+            # to its inputs are going to be recorded
+            # on the GradientTape.
+            logits = model(x_batch_train, training=True)  # Logits for this minibatch
+
+            # Compute the loss value for this minibatch.
+            loss_value = loss_fn(y_batch_train, logits)
+
+        # Use the gradient tape to automatically retrieve
+        # the gradients of the trainable variables with respect to the loss.
+        grads = tape.gradient(loss_value, model.trainable_weights)
+
+        # Run one step of gradient descent by updating
+        # the value of the variables to minimize the loss.
+        optimizer.apply_gradients(zip(grads, model.trainable_weights))
+
+        # Log every 200 batches.
+        if step % 200 == 0:
+            print(
+                "Training loss (for one batch) at step %d: %.4f"
+                % (step, float(loss_value))
+            )
+            print("Seen so far: %s samples" % ((step + 1) * 64))
 
 
 
