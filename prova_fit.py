@@ -99,7 +99,7 @@ somma=0
 for i in range(len(exif_lbl)):
      for j in range(len(exif_lbl[0])):
         somma = exif_lbl[0][j]+somma
-        labels.append(somma)
+    labels.append(somma)
 # Instantiate an optimizer.
 optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 # Instantiate a loss function.
