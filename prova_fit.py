@@ -103,7 +103,7 @@ for i in range(len(exif_lbl)):
 # Instantiate an optimizer.
 optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 # Instantiate a loss function.
-loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+loss_fn = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
 
 # Prepare the training dataset.
 batch_size = 64
@@ -120,7 +120,7 @@ epochs = 2
 g=0
 for epoch in range(epochs):
     print("\nStart of epoch %d" % (epoch,))
-
+    g=0
     # Iterate over the batches of the dataset.
     for step, ((x1_batch_train,x2_batch_train), y_batch_train) in enumerate(train_dataset):
         g=g+1
