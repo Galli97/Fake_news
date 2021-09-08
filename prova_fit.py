@@ -103,7 +103,7 @@ for i in range(len(exif_lbl)):
 # Instantiate an optimizer.
 optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 # Instantiate a loss function.
-loss_fn = tf.keras.losses.CategoricalCrossentropy(from_logits=True)
+loss_fn = tf.keras.losses.BinaryCrossentropy(from_logits=True)
 
 # Prepare the training dataset.
 batch_size = 64
@@ -113,7 +113,7 @@ y_train=labels
 #y_train=np.reshape(y_train, (-1, 273421))
 #x1_train = np.reshape(x1_train, (-1, 16384,3)) #(128x128x3)
 #x2_train = np.reshape(x2_train, (-1, 16384,3))#(128x128x3)
-train_dataset = tf.data.Dataset.from_tensor_slices((tf.stack(x1_train,x2_train), y_train))
+train_dataset = tf.data.Dataset.from_tensor_slices(((x1_train,x2_train), y_train))
 
 
 epochs = 2
