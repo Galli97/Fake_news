@@ -113,7 +113,7 @@ y_train=labels
 #y_train=np.reshape(y_train, (-1, 273421))
 #x1_train = np.reshape(x1_train, (-1, 16384,3)) #(128x128x3)
 #x2_train = np.reshape(x2_train, (-1, 16384,3))#(128x128x3)
-train_dataset = tf.data.Dataset.from_tensor_slices(((x1_train,x2_train), y_train))
+train_dataset = tf.data.Dataset.from_tensor_slices((tf.stack(x1_train,x2_train), y_train))
 
 
 epochs = 2
