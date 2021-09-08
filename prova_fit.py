@@ -22,7 +22,7 @@ from sklearn import preprocessing
 
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
-    image_shape=(128,128,3)
+    
     I1 = Input(image_shape)
     model = ResNet50(include_top=False, weights='imagenet', input_tensor=I1, pooling=None)
     model.layers.pop()
@@ -103,7 +103,7 @@ for epoch in range(epochs):
     print("\nStart of epoch %d" % (epoch,))
 
     # Iterate over the batches of the dataset.
-    for step, (x_batch_train, y_batch_train) in enumerate(train_dataset):
+    for step, ((x1_batch_train,x2_batch_train) y_batch_train) in enumerate(train_dataset):
 
         # Open a GradientTape to record the operations run
         # during the forward pass, which enables auto-differentiation.
@@ -115,7 +115,7 @@ for epoch in range(epochs):
             # on the GradientTape.
             x_batch_train = np.expand_dims(x_batch_train,axis=0)
 
-            logits = siamese_model((x_batch_train[0],x_batch_train[0]), training=True)  # Logits for this minibatch
+            logits = siamese_model((x1_batch_train,x2_batch_train), training=True)  # Logits for this minibatch
 
             # Compute the loss value for this minibatch.
             loss_value = loss_fn(y_batch_train, logits)
