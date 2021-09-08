@@ -88,6 +88,8 @@ somma=0
 for i in range(len(exif_lbl)):
      for j in range(len(exif_lbl[0])):
          somma = exif_lbl[0][j]+somma
+         if j % 300 == 0:
+            somma=somma+1
      labels.append(somma)
      somma=0
 print(labels)
