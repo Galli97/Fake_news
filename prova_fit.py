@@ -96,8 +96,8 @@ loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
 #####
 # Prepare the metrics.
-train_acc_metric = keras.metrics.SparseCategoricalAccuracy()
-val_acc_metric = keras.metrics.SparseCategoricalAccuracy()
+# train_acc_metric = keras.metrics.SparseCategoricalAccuracy()
+# val_acc_metric = keras.metrics.SparseCategoricalAccuracy()
 ########
 
 # Prepare the training dataset.
@@ -111,23 +111,23 @@ y_train=labels
 train_dataset = tf.data.Dataset.from_tensor_slices(((x1_train,x2_train), y_train))
 
 ##########
-# Prepare the validation dataset.
-# Reserve 10,000 samples for validation.
-x1_val = x1_train[-1000:]
-x2_val = x2_train[-1000:]
-y_val = y_train[-1000:]
-x1_train = x1_train[:-1000]
-x2_train = x2_train[:-1000]
-y_train = y_train[:-1000]
-val_dataset = tf.data.Dataset.from_tensor_slices(((x1_val,x2_val), y_val))
-val_dataset = val_dataset.batch(64)
+# #Prepare the validation dataset.
+## Reserve 10,000 samples for validation.
+# x1_val = x1_train[-1000:]
+# x2_val = x2_train[-1000:]
+# y_val = y_train[-1000:]
+# x1_train = x1_train[:-1000]
+# x2_train = x2_train[:-1000]
+# y_train = y_train[:-1000]
+# val_dataset = tf.data.Dataset.from_tensor_slices(((x1_val,x2_val), y_val))
+# val_dataset = val_dataset.batch(64)
 ##########
 epochs = 2
 g=0
 for epoch in range(epochs):
     print("\nStart of epoch %d" % (epoch,))
     ##
-    start_time = time.time()
+    # start_time = time.time()
     ##
     g=0
     # Iterate over the batches of the dataset.
@@ -173,21 +173,21 @@ for epoch in range(epochs):
                 print("Seen so far: %s samples" % ((step + 1) * 64))
     ############   
     # Display metrics at the end of each epoch.
-    train_acc = train_acc_metric.result()
-    print("Training acc over epoch: %.4f" % (float(train_acc),))
+    # train_acc = train_acc_metric.result()
+    # print("Training acc over epoch: %.4f" % (float(train_acc),))
 
     # Reset training metrics at the end of each epoch
-    train_acc_metric.reset_states()
+    # train_acc_metric.reset_states()
     
     # Run a validation loop at the end of each epoch.
-    for (x1_batch_val,x2_batch_val), y_batch_val in val_dataset:
-        val_logits = siamese_model((x1_batch_val,x2_batch_val), training=False)
+    # for (x1_batch_val,x2_batch_val), y_batch_val in val_dataset:
+        # val_logits = siamese_model((x1_batch_val,x2_batch_val), training=False)
         # Update val metrics
-        val_acc_metric.update_state(y_batch_val, val_logits)
-    val_acc = val_acc_metric.result()
-    val_acc_metric.reset_states()
-    print("Validation acc: %.4f" % (float(val_acc),))
-    print("Time taken: %.2fs" % (time.time() - start_time))
+        # val_acc_metric.update_state(y_batch_val, val_logits)
+    # val_acc = val_acc_metric.result()
+    # val_acc_metric.reset_states()
+    # print("Validation acc: %.4f" % (float(val_acc),))
+    # print("Time taken: %.2fs" % (time.time() - start_time))
     ###########
 
 
