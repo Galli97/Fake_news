@@ -19,19 +19,8 @@ import keras
 import pickle
 from PIL.ExifTags import TAGS
 from sklearn import preprocessing
+import time
 
-# Function to convert  
-def listToString(s): 
-    
-    # initialize an empty string
-    str1 = "" 
-    
-    # traverse in the string  
-    for ele in s: 
-        str1 += ele  
-    
-    # return string  
-    return str1 
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
     
@@ -105,6 +94,12 @@ optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 # Instantiate a loss function.
 loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
+#####
+# Prepare the metrics.
+train_acc_metric = keras.metrics.SparseCategoricalAccuracy()
+val_acc_metric = keras.metrics.SparseCategoricalAccuracy()
+########
+
 # Prepare the training dataset.
 batch_size = 64
 x1_train=list1
@@ -115,11 +110,25 @@ y_train=labels
 #x2_train = np.reshape(x2_train, (-1, 16384,3))#(128x128x3)
 train_dataset = tf.data.Dataset.from_tensor_slices(((x1_train,x2_train), y_train))
 
-
+##########
+# Prepare the validation dataset.
+# Reserve 10,000 samples for validation.
+x1_val = x1_train[-10000:]
+x2_val = x2_train[-10000:]
+y_val = y_train[-10000:]
+x1_train = x1_train[:-10000]
+x2_train = x2_train[:-10000]
+y_train = y_train[:-10000]
+val_dataset = tf.data.Dataset.from_tensor_slices((x1_val,x2_val), y_val))
+val_dataset = val_dataset.batch(64)
+##########
 epochs = 2
 g=0
 for epoch in range(epochs):
     print("\nStart of epoch %d" % (epoch,))
+    ##
+    start_time = time.time()
+    ##
     g=0
     # Iterate over the batches of the dataset.
     for step, ((x1_batch_train,x2_batch_train), y_batch_train) in enumerate(train_dataset):
@@ -149,6 +158,11 @@ for epoch in range(epochs):
             # Run one step of gradient descent by updating
             # the value of the variables to minimize the loss.
             optimizer.apply_gradients(zip(grads, siamese_model.trainable_weights))
+            
+            ####
+            # Update training metric.
+            train_acc_metric.update_state(y_batch_train, logits)
+            ####
 
             # Log every 200 batches.
             if step % 200 == 0:
@@ -157,9 +171,24 @@ for epoch in range(epochs):
                     % (step, float(loss_value))
                 )
                 print("Seen so far: %s samples" % ((step + 1) * 64))
-        
+    ############   
+    # Display metrics at the end of each epoch.
+    train_acc = train_acc_metric.result()
+    print("Training acc over epoch: %.4f" % (float(train_acc),))
 
-
+    # Reset training metrics at the end of each epoch
+    train_acc_metric.reset_states()
+    
+    # Run a validation loop at the end of each epoch.
+    for x1_batch_val,x2_batch_val, y_batch_val in val_dataset:
+        val_logits = model((x1_batch_val,x2_batch_val), training=False)
+        # Update val metrics
+        val_acc_metric.update_state(y_batch_val, val_logits)
+    val_acc = val_acc_metric.result()
+    val_acc_metric.reset_states()
+    print("Validation acc: %.4f" % (float(val_acc),))
+    print("Time taken: %.2fs" % (time.time() - start_time))
+    ###########
 
 
 
