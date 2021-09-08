@@ -139,4 +139,4 @@ y = np.array(y)
 print(y.shape)
 
 x_train = datagenerator(list1,list2,exif_lbl,32)
-siamese_model.train_on_batch(x = [imagexs,imagexs2],y=y)
+siamese_model.train_on_batch(x = [imagexs,imagexs2],y=y[0])
