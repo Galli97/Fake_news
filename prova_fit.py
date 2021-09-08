@@ -110,7 +110,7 @@ for epoch in range(epochs):
             # The operations that the layer applies
             # to its inputs are going to be recorded
             # on the GradientTape.
-            logits = siamese_model(x_batch_train[0],x_batch_train[1] training=True)  # Logits for this minibatch
+            logits = siamese_model(x_batch_train[0],x_batch_train[1], training=True)  # Logits for this minibatch
 
             # Compute the loss value for this minibatch.
             loss_value = loss_fn(y_batch_train, logits)
