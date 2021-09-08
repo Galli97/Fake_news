@@ -85,6 +85,7 @@ list1,list2 = get_np_arrays('cropped_arrays.npy')
 
 le = preprocessing.LabelEncoder()
 le.fit(exif_lbl[0])
+print(le.classes_)
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 
