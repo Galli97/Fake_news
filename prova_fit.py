@@ -91,7 +91,7 @@ batch_size = 64
 x_train=(list1,list2)
 y_train=exif_lbl
 
-x_train = np.reshape(x_train, (-1, 16.384))
+x_train = np.reshape(x_train, (-1, 16384))
 train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
 
 
