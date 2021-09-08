@@ -19,6 +19,30 @@ import pickle
 from PIL.ExifTags import TAGS
 from sklearn import preprocessing
 
+def image_exif(im1,im2):
+
+    # read the image data using PIL
+    image1 = Image.open(im1)
+    image2 = Image.open(im2)
+    
+    
+    # extract EXIF data
+    exifdata1 = image1.getexif()
+    exifdata2 = image2.getexif()
+    # iterating over all EXIF data fields
+    exif1 = []
+    exif2 = []
+    for tag_id in exifdata1:
+        # get the tag name, instead of human unreadable tag id
+        tag = TAGS.get(tag_id, tag_id)
+        data1 = exifdata1.get(tag_id)
+        data2 = exifdata1.get(tag_id)
+        exif1.append(data1)
+        exif2.append(data2)    
+
+    print("[INFO] Exif")
+    return exif1,exif2
+    
 def etichette(exif_label):
     etichetta=sum(exif_label)
     
@@ -84,13 +108,15 @@ fp.close()
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
 le = preprocessing.LabelEncoder()
-sum_label=[]
+
 # for i in range(len(exif_lbl)):
    # le.fit(exif_lbl[i])
    # sum_label.append[le.classes_]
    
-print(sum_label)
+
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
-
+exif1,exif2= image_exif('D02_img_orig_0001.jpg','D01_img_orig_0001.jpg') 
+exif1=np.array(exif1)
+print(exif1)
 siamese_model.fit(x = (imagexs,imagexs2),y = np.array(exif_lbl[0]),epochs=10)
