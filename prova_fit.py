@@ -20,6 +20,18 @@ import pickle
 from PIL.ExifTags import TAGS
 from sklearn import preprocessing
 
+# Function to convert  
+def listToString(s): 
+    
+    # initialize an empty string
+    str1 = "" 
+    
+    # traverse in the string  
+    for ele in s: 
+        str1 += ele  
+    
+    # return string  
+    return str1 
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
     
@@ -82,6 +94,9 @@ fp.close()
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
+labels=[]
+for i in range(len(exif_lbl)):
+     labels[i]=listToString(exif_lbl[i])
 # Instantiate an optimizer.
 optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 # Instantiate a loss function.
@@ -91,7 +106,7 @@ loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 batch_size = 64
 x1_train=list1
 x2_train=list2
-y_train=exif_lbl
+y_train=labels
 #y_train=np.reshape(y_train, (-1, 273421))
 #x1_train = np.reshape(x1_train, (-1, 16384,3)) #(128x128x3)
 #x2_train = np.reshape(x2_train, (-1, 16384,3))#(128x128x3)
