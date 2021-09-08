@@ -119,6 +119,7 @@ for epoch in range(epochs):
             logits = siamese_model((x1_batch_train,x2_batch_train), training=True)  # Logits for this minibatch
 
             # Compute the loss value for this minibatch.
+            y_batch_train = np.expand_dims(y_batch_train,axis=0)
             loss_value = loss_fn(y_batch_train, logits)
 
         # Use the gradient tape to automatically retrieve
