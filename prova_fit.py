@@ -103,7 +103,7 @@ for i in range(len(exif_lbl)):
 # Instantiate an optimizer.
 optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 # Instantiate a loss function.
-loss_fn = tf.keras.losses.BinaryCrossentropy(from_logits=True)
+loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
 # Prepare the training dataset.
 batch_size = 64
