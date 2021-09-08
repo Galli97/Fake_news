@@ -82,9 +82,9 @@ fp.close()
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
 # Instantiate an optimizer.
-optimizer = keras.optimizers.SGD(learning_rate=1e-3)
+optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
 # Instantiate a loss function.
-loss_fn = keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
 # Prepare the training dataset.
 batch_size = 64
