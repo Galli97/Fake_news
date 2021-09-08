@@ -119,7 +119,7 @@ y_val = y_train[-10000:]
 x1_train = x1_train[:-10000]
 x2_train = x2_train[:-10000]
 y_train = y_train[:-10000]
-val_dataset = tf.data.Dataset.from_tensor_slices((x1_val,x2_val), y_val))
+val_dataset = tf.data.Dataset.from_tensor_slices(((x1_val,x2_val), y_val))
 val_dataset = val_dataset.batch(64)
 ##########
 epochs = 2
