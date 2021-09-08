@@ -19,6 +19,28 @@ import pickle
 from PIL.ExifTags import TAGS
 from sklearn import preprocessing
 
+
+def datagenerator(images1,images2, labels, batchsize, mode="train"):
+    ssad = 1
+    while True:
+        start = 0
+        end = batchsize
+        while start  < len(images1):
+            #if(len(images)-start < batchsize):
+            #    break
+            # load your images from numpy arrays or read from directory
+            #else:
+            x1 = images1[start:end] 
+            x2 = images1[start:end]
+            x=(x1,x2)
+            y = labels[start:end]
+            
+            yield x, y
+
+            start += batchsize
+            end += batchsize
+
+
 def image_exif(im1,im2):
 
     # read the image data using PIL
@@ -116,5 +138,5 @@ y=np.reshape(exif_lbl[0],(1,71))
 y = np.array(y)
 print(y.shape)
 
-
-siamese_model.fit_generator(x = (imagexs,imagexs2),y=y,epochs=10)
+x_train = datagenerator(list1,list2,exif_lbl,32)
+siamese_model.fit_generator(x =x_train,epochs=10)
