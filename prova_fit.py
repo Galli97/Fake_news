@@ -129,7 +129,6 @@ fp.close()
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
-x_train = datagenerator(list1,exif_lbl,32)
 
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
