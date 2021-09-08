@@ -65,7 +65,7 @@ def create_siamese_model(image_shape, dropout_rate):
 
     return siamese_model
 	
-siamese_model = create_siamese_model(image_shape=(49152),
+siamese_model = create_siamese_model(image_shape=(128,128, 3),
                                          dropout_rate=0.2)
 
 siamese_model.compile(loss='categorical_crossentropy',
@@ -92,8 +92,8 @@ x1_train=list1
 x2_train=list2
 y_train=exif_lbl
 
-x1_train = np.reshape(x1_train, (-1, 49152)) #(128x128x3)
-x2_train = np.reshape(x2_train, (-1, 49152))#(128x128x3)
+x1_train = np.reshape(x1_train, (-1, 16384)) #(128x128x3)
+x2_train = np.reshape(x2_train, (-1, 16384))#(128x128x3)
 train_dataset = tf.data.Dataset.from_tensor_slices(((x1_train,x2_train), y_train))
 
 
