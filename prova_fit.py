@@ -161,7 +161,7 @@ for epoch in range(epochs):
             
             ####
             # Update training metric.
-            train_acc_metric.update_state(y_batch_train, logits)
+            # train_acc_metric.update_state(y_batch_train, logits)
             ####
 
             # Log every 200 batches.
