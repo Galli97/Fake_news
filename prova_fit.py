@@ -137,7 +137,7 @@ for epoch in range(epochs):
     # Iterate over the batches of the dataset.
     for step, ((x1_batch_train,x2_batch_train), y_batch_train) in enumerate(train_dataset):
         g=g+1
-        if (g<128):
+        if (g<500):
             # Open a GradientTape to record the operations run
             # during the forward pass, which enables auto-differentiation.
             with tf.GradientTape() as tape:
