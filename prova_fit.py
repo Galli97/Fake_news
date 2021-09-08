@@ -19,7 +19,7 @@ import pickle
 from PIL.ExifTags import TAGS
 
 def etichette(exif_label):
-    etichetta=sum(exif_label9
+    etichetta=sum(exif_label)
     
     return etichetta
 def create_base_model(image_shape, dropout_rate, suffix=''):
