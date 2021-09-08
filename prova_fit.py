@@ -146,7 +146,7 @@ for epoch in range(epochs):
 
         # Run one step of gradient descent by updating
         # the value of the variables to minimize the loss.
-        optimizer.apply_gradients(zip(grads, model.trainable_weights))
+        optimizer.apply_gradients(zip(grads, siamese_model.trainable_weights))
 
         # Log every 200 batches.
         if step % 200 == 0:
