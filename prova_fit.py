@@ -20,7 +20,7 @@ import pickle
 from PIL.ExifTags import TAGS
 from sklearn import preprocessing
 import time
-
+from random import randint
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
     
