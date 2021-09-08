@@ -17,6 +17,7 @@ import numpy as np
 import keras
 import pickle
 from PIL.ExifTags import TAGS
+from sklearn import preprocessing
 
 def etichette(exif_label):
     etichetta=sum(exif_label)
@@ -82,7 +83,9 @@ fp.close()
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
+le = preprocessing.LabelEncoder()
+le.fit(exif_lbl)
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 
-siamese_model.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
+siamese_model.fit(x = (imagexs,imagexs2),y = le.classes_,epochs=10)
