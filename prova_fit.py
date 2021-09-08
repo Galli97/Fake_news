@@ -2,6 +2,7 @@ from re import I
 from models import exif
 from PIL import Image
 import tensorflow as tf
+from tensorflow import keras
 from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras import Input
 from keras import Model
