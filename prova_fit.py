@@ -117,12 +117,12 @@ train_dataset = tf.data.Dataset.from_tensor_slices(((x1_train,x2_train), y_train
 
 
 epochs = 2
-step=100
+step=128
 for epoch in range(epochs):
     print("\nStart of epoch %d" % (epoch,))
 
     # Iterate over the batches of the dataset.
-    for step in range(step):#, ((x1_batch_train,x2_batch_train), y_batch_train) in enumerate(train_dataset):
+    for step,((x1_batch_train,x2_batch_train), y_batch_train) in range(step):#, ((x1_batch_train,x2_batch_train), y_batch_train) in enumerate(train_dataset):
 
         # Open a GradientTape to record the operations run
         # during the forward pass, which enables auto-differentiation.
