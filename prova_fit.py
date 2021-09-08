@@ -181,7 +181,7 @@ for epoch in range(epochs):
     
     # Run a validation loop at the end of each epoch.
     for (x1_batch_val,x2_batch_val), y_batch_val in val_dataset:
-        val_logits = model((x1_batch_val,x2_batch_val), training=False)
+        val_logits = siamese_model((x1_batch_val,x2_batch_val), training=False)
         # Update val metrics
         val_acc_metric.update_state(y_batch_val, val_logits)
     val_acc = val_acc_metric.result()
