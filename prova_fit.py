@@ -65,7 +65,7 @@ def create_siamese_model(image_shape, dropout_rate):
 
     return siamese_model
 	
-siamese_model = create_siamese_model(image_shape=(16384, 3),
+siamese_model = create_siamese_model(image_shape=(128,128, 3),
                                          dropout_rate=0.2)
 
 siamese_model.compile(loss='categorical_crossentropy',
@@ -112,6 +112,8 @@ for epoch in range(epochs):
             # The operations that the layer applies
             # to its inputs are going to be recorded
             # on the GradientTape.
+            x_batch_train = np.expand_dims(x_batch_train,axis=0)
+
             logits = siamese_model(x_batch_train, training=True)  # Logits for this minibatch
 
             # Compute the loss value for this minibatch.
