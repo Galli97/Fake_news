@@ -87,7 +87,8 @@ le = preprocessing.LabelEncoder()
 sum_label=[]
 for i in range(len(exif_lbl)):
    le.fit(exif_lbl[i])
-   sum_label.append[sum(le.classes_)
+   sum_label.append[sum(le.classes_)]
+   
 print(sum_label)
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
