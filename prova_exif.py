@@ -18,7 +18,7 @@ import keras
 import pickle
 from PIL.ExifTags import TAGS
 from random import randint
-
+import random
 
 def random_list(list):
     second_list = []
