@@ -94,7 +94,7 @@ for i in range(len(exif_lbl)):
      somma=0
 print(labels)
 # Instantiate an optimizer.
-optimizer = tf.keras.optimizers.SGD(learning_rate=1e-3)
+optimizer = tf.keras.optimizers.SGD(learning_rate=1e-5)
 # Instantiate a loss function.
 loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
 
@@ -146,8 +146,8 @@ for epoch in range(epochs):
                 # The operations that the layer applies
                 # to its inputs are going to be recorded
                 # on the GradientTape.
-                x1_batch_train = np.expand_dims(x1_batch_train,axis=0)
-                x2_batch_train = np.expand_dims(x2_batch_train,axis=0)
+                #x1_batch_train = np.expand_dims(x1_batch_train,axis=0)
+                #x2_batch_train = np.expand_dims(x2_batch_train,axis=0)
 
                 logits = siamese_model((x1_batch_train,x2_batch_train), training=True)  # Logits for this minibatch
 
