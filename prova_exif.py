@@ -17,6 +17,7 @@ import numpy as np
 import keras
 import pickle
 from PIL.ExifTags import TAGS
+from random import randint
 
 def labels(im1,im2):
     label=[]
