@@ -19,6 +19,17 @@ import pickle
 from PIL.ExifTags import TAGS
 from random import randint
 
+
+def random_list(list):
+    second_list = []
+    for i in range(len(list)):
+        if i % 300 == 0:
+            second_list.append(list[i])
+        else:
+            second_list.append(random.choice(list))
+    print("[INFO] Generated second list")
+    return second_list
+    
 def labels(im1,im2):
     label=[]
     for i in range(len(im1)):
@@ -164,6 +175,8 @@ fp.close()
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
+
+list3=random_list(list1)
 x_train = datagenerator(list1,exif_lbl,32)
 
 
@@ -186,6 +199,7 @@ exif1,exif2= image_exif('D02_img_orig_0001.jpg','D01_img_orig_0001.jpg')
 #print(len(label))
 labels=[]
 somma=0
+print(exif_lbl)
 for i in range(len(exif_lbl)):
      for j in range(len(exif_lbl[0])):
          somma = exif_lbl[0][j]+somma
@@ -199,4 +213,4 @@ for i in range(len(exif_lbl)):
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 #exif1=np.array(exif1)
 
-siamese_model.fit(x = (list1,list2),y = np.array(labels),epochs=10)
+siamese_model.fit(x = (list1,list3),y = np.array(labels),epochs=10)
