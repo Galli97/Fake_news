@@ -176,6 +176,7 @@ fp.close()
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
 
+
 list3=random_list(list1)
 x_train = datagenerator(list1,exif_lbl,32)
 
@@ -232,5 +233,5 @@ print(labels)
 # generate labels for each pair of images
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 #exif1=np.array(exif1)
-
+assert not np.any(np.isnan(list1,list2))
 siamese_model.fit(x = (list1,list2),y = np.array(labels),epochs=10)
