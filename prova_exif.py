@@ -162,9 +162,9 @@ result = siamese_net.predict_on_batch(batch)
 siamese_model = create_siamese_model(image_shape=(128,128, 3),
                                          dropout_rate=0.2)
 
-siamese_model.compile(loss='sparse_categorical_crossentropy',
-                      optimizer=Adam(lr=0.0001),
-                      metrics=['sparse_categorical_crossentropy', 'acc'])
+siamese_model.compile(loss='categorical_crossentropy',
+                      optimizer=Adam(lr=0.001),
+                      metrics=['categorical_crossentropy', 'acc'])
 
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	exif_lbl = pickle.load(fp)
@@ -185,26 +185,26 @@ x_train = datagenerator(list1,exif_lbl,32)
 #                            #validation_data=x_train)
                             #max_q_size=3)
  
-def prepare_inputs(X_train):
-	ohe = OneHotEncoder()
-	ohe.fit(X_train)
-	X_train_enc = ohe.transform(X_train)
-	return X_train_enc
+# def prepare_inputs(X_train):
+	# ohe = OneHotEncoder()
+	# ohe.fit(X_train)
+	# X_train_enc = ohe.transform(X_train)
+	# return X_train_enc
 
 # prepare target
-def prepare_targets(y_train):
-	le = LabelEncoder()
-	le.fit(y_train)
-	y_train_enc = le.transform(y_train)
-	return y_train_enc
+# def prepare_targets(y_train):
+	# le = LabelEncoder()
+	# le.fit(y_train)
+	# y_train_enc = le.transform(y_train)
+	# return y_train_enc
 
-x1_train=list1
-x1_train = np.reshape(x1_train, (-1, 16384)) #(128x128x3) 
+# x1_train=list1
+# x1_train = np.reshape(x1_train, (-1, 16384)) #(128x128x3) 
 # prepare input data
-X_train_enc = prepare_inputs(x1_train)
+# X_train_enc = prepare_inputs(x1_train)
 # prepare output data
-y_train=exif_lbl
-y_train_enc = prepare_targets(y_train)
+# y_train=exif_lbl
+# y_train_enc = prepare_targets(y_train)
 
 #imagexs =cv2.imread('D01_img_orig_0001.jpg')
 #imagexs = np.expand_dims(imagexs,axis=0)
@@ -222,7 +222,7 @@ print(exif_lbl)
 for i in range(len(exif_lbl)):
      for j in range(len(exif_lbl[0])):
          somma = exif_lbl[0][j]+somma
-         if j % 64 == 0:
+         if j % 15 == 0:
             somma=somma+randint(0, 1)
      labels.append(somma)
      somma=0
@@ -233,4 +233,4 @@ print(labels)
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 #exif1=np.array(exif1)
 
-siamese_model.fit(x = X_train_enc,y = y_train_enc,epochs=10)
+siamese_model.fit(x = (list1,list2),y = np.array(labels),epochs=10)
