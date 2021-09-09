@@ -199,7 +199,7 @@ def prepare_targets(y_train):
 	return y_train_enc
     
 # prepare input data
-X_train_enc = prepare_inputs((list1,list2))
+X_train_enc = prepare_inputs(list1)
 # prepare output data
 y_train_enc = prepare_targets(exif_lbl)
 #imagexs =cv2.imread('D01_img_orig_0001.jpg')
