@@ -149,7 +149,7 @@ for epoch in range(epochs):
                 #x1_batch_train = np.expand_dims(x1_batch_train,axis=0)
                 #x2_batch_train = np.expand_dims(x2_batch_train,axis=0)
 
-                logits = siamese_model((x1_batch_train,x2_batch_train), training=True)  # Logits for this minibatch
+                logits = siamese_model((Input(x1_batch_train),Input(x2_batch_train)), training=True)  # Logits for this minibatch
 
                 # Compute the loss value for this minibatch.
                 y_batch_train = np.expand_dims(y_batch_train,axis=0)
