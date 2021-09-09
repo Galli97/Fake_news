@@ -197,9 +197,11 @@ def prepare_targets(y_train):
 	le.fit(y_train)
 	y_train_enc = le.transform(y_train)
 	return y_train_enc
-    
+
+x1_train=list1
+x1_train = np.reshape(x1_train, (-1, 16384,3)) #(128x128x3) 
 # prepare input data
-X_train_enc = prepare_inputs(list1)
+X_train_enc = prepare_inputs(x1_train)
 # prepare output data
 y_train_enc = prepare_targets(exif_lbl)
 #imagexs =cv2.imread('D01_img_orig_0001.jpg')
