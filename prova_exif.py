@@ -204,7 +204,7 @@ x1_train = np.reshape(x1_train, (-1, 16384)) #(128x128x3)
 X_train_enc = prepare_inputs(x1_train)
 # prepare output data
 y_train=exif_lbl
-y_train=np.reshape(y_train, (-1, 273421))
+y_train=np.reshape(y_train, (-1, 16384))
 y_train_enc = prepare_targets(y_train)
 #imagexs =cv2.imread('D01_img_orig_0001.jpg')
 #imagexs = np.expand_dims(imagexs,axis=0)
