@@ -183,11 +183,19 @@ imagexs2 = np.expand_dims(list2[0],axis=0)
 exif1,exif2= image_exif('D02_img_orig_0001.jpg','D01_img_orig_0001.jpg') 
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
 #print(len(label))
-
+labels=[]
+somma=0
+for i in range(len(exif_lbl)):
+     for j in range(len(exif_lbl[0])):
+         somma = exif_lbl[0][j]+somma
+         if j % 64 == 0:
+            somma=somma+randint(0, 5)
+     labels.append(somma)
+     somma=0
 # extract exif data
 # dict,dict_keys = extract_exif()
 # generate labels for each pair of images
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 #exif1=np.array(exif1)
 
-siamese_model.fit(x = (exif1,exif2),y = np.array(exif_lbl[0]),epochs=10)
+siamese_model.fit(x = (list1,list2),y = labels,epochs=10)

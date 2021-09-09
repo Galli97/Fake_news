@@ -88,7 +88,7 @@ somma=0
 for i in range(len(exif_lbl)):
      for j in range(len(exif_lbl[0])):
          somma = exif_lbl[0][j]+somma
-         if j % 30 == 0:
+         if j % 64 == 0:
             somma=somma+randint(0, 5)
      labels.append(somma)
      somma=0
