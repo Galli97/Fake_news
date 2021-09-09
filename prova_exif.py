@@ -201,7 +201,7 @@ def prepare_targets(y_train):
 # prepare input data
 X_train_enc = prepare_inputs((list1,list2))
 # prepare output data
-y_train_enc = prepare_targets(y_train, y_test)
+y_train_enc = prepare_targets(exif_lbl)
 #imagexs =cv2.imread('D01_img_orig_0001.jpg')
 #imagexs = np.expand_dims(imagexs,axis=0)
 #imagexs2 =cv2.imread('D02_img_orig_0001.jpg')
