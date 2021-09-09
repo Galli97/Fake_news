@@ -204,9 +204,10 @@ for i in range(len(exif_lbl)):
      for j in range(len(exif_lbl[0])):
          somma = exif_lbl[0][j]+somma
          if j % 64 == 0:
-            somma=somma+randint(0, 5)
+            somma=somma+randint(0, 1)
      labels.append(somma)
      somma=0
+print(labels)
 # extract exif data
 # dict,dict_keys = extract_exif()
 # generate labels for each pair of images
