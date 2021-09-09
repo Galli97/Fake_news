@@ -19,7 +19,7 @@ import pickle
 from PIL.ExifTags import TAGS
 from random import randint
 import random
-
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 def random_list(list):
     second_list = []
     for i in range(len(list)):
@@ -185,8 +185,23 @@ x_train = datagenerator(list1,exif_lbl,32)
 #                            #validation_data=x_train)
                             #max_q_size=3)
  
+def prepare_inputs(X_train):
+	ohe = OneHotEncoder()
+	ohe.fit(X_train)
+	X_train_enc = ohe.transform(X_train)
+	return X_train_enc
 
-
+# prepare target
+def prepare_targets(y_train):
+	le = LabelEncoder()
+	le.fit(y_train)
+	y_train_enc = le.transform(y_train)
+	return y_train_enc
+    
+# prepare input data
+X_train_enc = prepare_inputs((list1,list2))
+# prepare output data
+y_train_enc = prepare_targets(y_train, y_test)
 #imagexs =cv2.imread('D01_img_orig_0001.jpg')
 #imagexs = np.expand_dims(imagexs,axis=0)
 #imagexs2 =cv2.imread('D02_img_orig_0001.jpg')
@@ -214,4 +229,4 @@ print(labels)
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 #exif1=np.array(exif1)
 
-siamese_model.fit(x = (list1,list2),y = np.array(labels),epochs=10)
+siamese_model.fit(x = X_train_enc,y = y_train_enc,epochs=10)
