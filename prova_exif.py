@@ -214,4 +214,4 @@ print(labels)
 # label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
 #exif1=np.array(exif1)
 
-siamese_model.fit(x = (list1,list3),y = np.array(labels),epochs=10)
+siamese_model.fit(x = (list1,list2),y = np.array(labels),epochs=10)
