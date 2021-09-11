@@ -240,8 +240,8 @@ images1=[]
 images2=[]
 for j in range (len(exif_lbl)):
     for i in range (len(exif_lbl[j])):
-         list1[j].append(list1[j])
-         list2[j].append(list2[j])
+         list1.append(list1[j])
+         list2.append(list2[j])
 
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
