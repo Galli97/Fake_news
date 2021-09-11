@@ -240,10 +240,14 @@ images1=[]
 images2=[]
 for j in range (len(exif_lbl)):
     for i in range (len(exif_lbl[j])):
-         list1.append(list1[j])
-         list2.append(list2[j])
-
+         images1.append(list1[j])
+         images2.append(list2[j])
+    image_1.append(images1)
+    image_2.append(images2)
+    images1=[]
+    images2=[]
+    
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
-siamese_model.fit(x = (list1,list2),y = np.array(exif_lbl),epochs=10)
+siamese_model.fit(x = (image_1,image_2),y = np.array(exif_lbl),epochs=10)
 
