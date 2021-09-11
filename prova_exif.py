@@ -236,6 +236,8 @@ print(labels)
 # assert not np.any(np.isnan(list1,list2))
 # siamese_model.fit(x = (list1,list2),y = np.array(labels),epochs=10)
 
+image_1=[]
+image_2=[]
 images1=[]
 images2=[]
 for j in range (len(exif_lbl)):
