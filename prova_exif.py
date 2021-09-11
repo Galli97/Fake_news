@@ -238,10 +238,10 @@ print(labels)
 
 images1=[]
 images2=[]
-
-for i in range (len(exif_lbl[0])):
-     images1.append(imagexs)
-     images2.append(imagexs2)
+for j in range (len(exif_lbl)):
+    for i in range (len(exif_lbl[j])):
+         list1[j].append(list1[j])
+         list2[j].append(list2[j])
 
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
