@@ -243,5 +243,5 @@ for i in range (len(exif_lbl[0])):
      images1.append(list1[0])
      images2.append(list2[0])
     
-siamese_model.fit(x = (images1,images2),y = exif_lbl,epochs=10)
+siamese_model.fit(x = (images1,images2),y = np.array(exif_lbl),epochs=10)
 
