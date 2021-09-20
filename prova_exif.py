@@ -121,7 +121,7 @@ def create_siamese_model(image_shape, dropout_rate):
                           input_shape = image_shape,
                           kernel_initializer=RandomNormal(mean=0.0, stddev=0.001),
                           name='weighted-average')(L1_distance)
-    prediction = Flatten(name=flatten_name)(L1_prediction)
+    prediction = Flatten()(L1_prediction)
     #prediction = Dropout(0.2)(L1_prediction)
     
     siamese_model = Model(inputs=[input_left, input_right], outputs= prediction)
