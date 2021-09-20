@@ -43,8 +43,8 @@ def labels(im1,im2):
 def image_exif(im1,im2):
 
     # read the image data using PIL
-    image1 = im1
-    image2 = im2
+    image1 = Image.open(im1)
+    image2 = Image.open(im2)
     
     
     # extract EXIF data
@@ -175,7 +175,9 @@ for i in range (len(exif_lbl[0])):
      images1.append(imagexs)
      images2.append(imagexs2)
 
-exif1,exif2=image_exif(list1[0],list2[0])
+im1 =cv2.imread('D01_img_orig_0001.jpg')[:,:,[2,1,0]]
+im2 =cv2.imread('D02_img_orig_0001.jpg')[:,:,[2,1,0]]
+exif1,exif2=image_exif(im1,im2)
 
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
