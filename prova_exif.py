@@ -123,7 +123,7 @@ def create_siamese_model(image_shape, dropout_rate):
 
     prediction = Dropout(0.2)(L1_prediction)
 
-    siamese_model = Model(inputs=[input_left, input_right], outputs=prediction)
+    siamese_model = Model(inputs=[input_left, input_right], outputs= L1_prediction)
 
     return siamese_model
 """
