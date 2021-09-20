@@ -43,8 +43,8 @@ def labels(im1,im2):
 def image_exif(im1,im2):
 
     # read the image data using PIL
-    image1 = Image.open(im1)
-    image2 = Image.open(im2)
+    image1 = im1
+    image2 = im2
     
     
     # extract EXIF data
