@@ -20,6 +20,7 @@ from PIL.ExifTags import TAGS
 from random import randint
 import random
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+
 def random_list(list):
     second_list = []
     for i in range(len(list)):
@@ -115,50 +116,19 @@ def create_siamese_model(image_shape, dropout_rate):
     
     L1_layer = Lambda(lambda tensors: tf.abs(tensors[0] - tensors[1]))
     L1_distance = L1_layer([output_left, output_right])
-    L1_prediction = Dense(71, use_bias=True,
+    L1_prediction = Dense(1, use_bias=True,
                           activation='sigmoid',
                           input_shape = image_shape,
                           kernel_initializer=RandomNormal(mean=0.0, stddev=0.001),
                           name='weighted-average')(L1_distance)
 
     prediction = Dropout(0.2)(L1_prediction)
-
-    siamese_model = Model(inputs=[input_left, input_right], outputs= L1_prediction)
+    out= np.zeros(71)
+    siamese_model = Model(inputs=[input_left, input_right], outputs= out)
 
     return siamese_model
-"""
-siamese_model = create_siamese_model(image_shape=(128,128, 3),
-                                         dropout_rate=0.2)
-siamese_model.compile(loss='binary_crossentropy',
-                      optimizer=Adam(lr=0.0001),
-                      metrics=['binary_crossentropy', 'acc'])
-imagexs =cv2.imread('D01_img_orig_0001.jpg')[:,:,[2,1,0]]
-imagexs = np.array(imagexs,np.float32)
-imagexs = util.random_crop(imagexs,[128,128])
-imagexs = np.expand_dims(imagexs,axis=0)
-siamese_model.summary()
-tmp1 = np.empty((5, 128, 128, 3), dtype=np.uint8)
-for i in range(len(tmp1)):
-    tmp1[i] = imagexs
-x  = (tmp1,tmp1)
-siamese_model.fit(x = (imagexs,imagexs),y=(imagexs),batch_size = 32,epochs=10)
-                            #verbose=1,
-                            #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
-                            #validation_data=(imagexs,imagexs))
-                            #max_q_size=3)
-#siamese_model.save('siamese_model.h5')
-# and the my prediction
-siamese_net = load_model('siamese_model.h5', custom_objects={"tf": tf})
-X_1 = [image, ] * len(markers)
-batch = [markers, X_1]
-result = siamese_net.predict_on_batch(batch)
-# I've tried also to check identical images 
-markers = [image]
-X_1 = [image, ] * len(markers)
-batch = [markers, X_1]
-result = siamese_net.predict_on_batch(batch)
-############################################################################################### FINE
-"""
+
+
 siamese_model = create_siamese_model(image_shape=(128,128, 3),
                                          dropout_rate=0.2)
 
@@ -181,42 +151,11 @@ list3=random_list(list1)
 x_train = datagenerator(list1,exif_lbl,32)
 
 
-#siamese_model.fit_generator(datagenerator(list1,exif_lbl,32),steps_per_epoch=32,epochs=10,verbose=1)
-#                            #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
-#                            #validation_data=x_train)
-                            #max_q_size=3)
- 
-# def prepare_inputs(X_train):
-	# ohe = OneHotEncoder()
-	# ohe.fit(X_train)
-	# X_train_enc = ohe.transform(X_train)
-	# return X_train_enc
 
-# prepare target
-# def prepare_targets(y_train):
-	# le = LabelEncoder()
-	# le.fit(y_train)
-	# y_train_enc = le.transform(y_train)
-	# return y_train_enc
-
-# x1_train=list1
-# x1_train = np.reshape(x1_train, (-1, 16384)) #(128x128x3) 
-# prepare input data
-# X_train_enc = prepare_inputs(x1_train)
-# prepare output data
-# y_train=exif_lbl
-# y_train_enc = prepare_targets(y_train)
-
-#imagexs =cv2.imread('D01_img_orig_0001.jpg')
-#imagexs = np.expand_dims(imagexs,axis=0)
-#imagexs2 =cv2.imread('D02_img_orig_0001.jpg')
-#label=labels(list1,list2)
-#imagexs2 = np.expand_dims(imagexs2,axis=0)
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 exif1,exif2= image_exif('D02_img_orig_0001.jpg','D01_img_orig_0001.jpg') 
-#imagexs=tf.stack([imagexs,imagexs2],axis=0)
-#print(len(label))
+
 labels=[]
 somma=0
 #print(exif_lbl)
@@ -227,27 +166,7 @@ for i in range(len(exif_lbl)):
             somma=somma+randint(0, 1)
      labels.append(somma)
      somma=0
-#print(labels)
-# extract exif data
-# dict,dict_keys = extract_exif()
-# generate labels for each pair of images
-# label,exif1,exif2 = generate_label(dict_keys,imagexs,imagexs2)
-#exif1=np.array(exif1)
-# assert not np.any(np.isnan(list1,list2))
-# siamese_model.fit(x = (list1,list2),y = np.array(labels),epochs=10)
 
-# image_1=[]
-# image_2=[]
-# images1=[]
-# images2=[]
-# for j in range (len(exif_lbl)):
-    # for i in range (len(exif_lbl[j])):
-         # images1.append(list1[j])
-         # images2.append(list2[j])
-    # image_1.append(images1)
-    # image_2.append(images2)
-    # images1=[]
-    # images2=[]
     
 images1=[]
 images2=[]
@@ -259,4 +178,3 @@ for i in range (len(exif_lbl[0])):
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
 siamese_model.fit(x = (imagexs,imagexs2),y = np.array(exif_lbl[0]),epochs=10)
-
