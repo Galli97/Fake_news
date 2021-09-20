@@ -115,7 +115,7 @@ def create_siamese_model(image_shape, dropout_rate):
     
     L1_layer = Lambda(lambda tensors: tf.abs(tensors[0] - tensors[1]))
     L1_distance = L1_layer([output_left, output_right])
-    L1_prediction = Dense(1, use_bias=True,
+    L1_prediction = Dense(71, use_bias=True,
                           activation='sigmoid',
                           input_shape = image_shape,
                           kernel_initializer=RandomNormal(mean=0.0, stddev=0.001),
