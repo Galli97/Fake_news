@@ -258,6 +258,5 @@ for i in range (len(exif_lbl[0])):
 
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
-y1=tf.stack(np.array(exif_lbl[0]))
-siamese_model.fit(x = (imagexs,imagexs2),y = y1,epochs=10)
+siamese_model.fit(x = (images1,images2),y = np.array(exif_lbl[0]),epochs=10)
 
