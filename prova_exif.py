@@ -178,7 +178,7 @@ for i in range (len(exif_lbl[0])):
 im1 ='D01_img_orig_0001.jpg'
 im2 ='D02_img_orig_0001.jpg'
 exif1,exif2=image_exif(im1,im2)
-
+print(exif1)
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
-siamese_model.fit(x = np.array(exif1,exif2),y = np.array(exif_lbl[0]),epochs=10)
+siamese_model.fit(x =(exif1,exif2),y = np.array(exif_lbl[0]),epochs=10)
