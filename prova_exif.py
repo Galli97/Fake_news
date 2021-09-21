@@ -16,72 +16,10 @@ import cv2
 import numpy as np
 import keras
 import pickle
-from PIL.ExifTags import TAGS
-from random import randint
-import random
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 
+EPOCHS = 100
 
-from tensorflow.compat.v1 import ConfigProto
-from tensorflow.compat.v1 import InteractiveSession
-
-
-def fix_gpu():
-    config = ConfigProto()
-    config.gpu_options.allow_growth = True
-    session = InteractiveSession(config=config)
-
-
-fix_gpu()
-
-gpus = tf.config.experimental.list_physical_devices('GPU') 
-tf.config.experimental.set_memory_growth(gpus[0], True)
-
-def random_list(list):
-    second_list = []
-    for i in range(len(list)):
-        if i % 300 == 0:
-            second_list.append(list[i])
-        else:
-            second_list.append(random.choice(list))
-    print("[INFO] Generated second list")
-    return second_list
-    
-def labels(im1,im2):
-    label=[]
-    for i in range(len(im1)):
-       if(im1[i]==im2[i]):
-        label[i]=1
-       else:
-        label[i]=0;
-    return label
-
-def image_exif(im1,im2):
-
-    # read the image data using PIL
-    image1 = Image.open(im1)
-    image2 = Image.open(im2)
-    
-    
-    # extract EXIF data
-    exifdata1 = image1.getexif()
-    exifdata2 = image2.getexif()
-    # iterating over all EXIF data fields
-    exif1 = []
-    exif2 = []
-    for tag_id in exifdata1:
-        # get the tag name, instead of human unreadable tag id
-        tag = TAGS.get(tag_id, tag_id)
-        data1 = exifdata1.get(tag_id)
-        data2 = exifdata1.get(tag_id)
-        exif1.append(data1)
-        exif2.append(data2)    
-
-    print("[INFO] Exif")
-    return exif1,exif2
-
-def datagenerator(images, labels, batchsize, mode="train"):
-    ssad = 1
+def datagenerator(images,images2, labels, batchsize, mode="train"):
     while True:
         start = 0
         end = batchsize
@@ -90,11 +28,10 @@ def datagenerator(images, labels, batchsize, mode="train"):
             #    break
             # load your images from numpy arrays or read from directory
             #else:
-            x1 = images[start:end]
-            #x2 = images2[start:end]
-            y = np.array(labels[start:end])
-            
-            yield x1, y
+            x = images[start:end] 
+            y = labels[start:end]
+            x2 = images2[start:end]
+            yield (x,x2),y
 
             start += batchsize
             end += batchsize
@@ -131,74 +68,38 @@ def create_siamese_model(image_shape, dropout_rate):
     
     L1_layer = Lambda(lambda tensors: tf.abs(tensors[0] - tensors[1]))
     L1_distance = L1_layer([output_left, output_right])
-    L1_prediction = Dense(71, use_bias=True,
+    L1_prediction = Dense(1, use_bias=True,
                           activation='sigmoid',
                           input_shape = image_shape,
                           kernel_initializer=RandomNormal(mean=0.0, stddev=0.001),
                           name='weighted-average')(L1_distance)
-    #prediction = Flatten()(L1_prediction)
+
     prediction = Dropout(0.2)(L1_prediction)
-    
-    siamese_model = Model(inputs=[input_left, input_right], outputs= prediction)
+
+    siamese_model = Model(inputs=[input_left, input_right], outputs=prediction)
 
     return siamese_model
-
 
 siamese_model = create_siamese_model(image_shape=(128,128, 3),
                                          dropout_rate=0.2)
 
-siamese_model.compile(optimizer = tf.keras.optimizers.Adam(learning_rate=0.001), loss = 'categorical_crossentropy', metrics = ["accuracy"])
+siamese_model.compile(loss='categorical_crossentropy',
+                      optimizer=Adam(lr=0.0001),
+                      metrics=['categorical_crossentropy', 'acc'])
 
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	exif_lbl = pickle.load(fp)
 fp.close()
 
+for i in range(len(exif_lbl)):
+    exif_lbl[i] = np.array(exif_lbl[i])
+exif_lbl = np.array(exif_lbl)
+
 #######################################################################################à
 #crop images to 128x128
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
+x_train = datagenerator(list1,list2,exif_lbl,32)
 
-
-
-list3=random_list(list1)
-#x_train = datagenerator(list1,exif_lbl,32)
-
-
-
-imagexs = np.expand_dims(list1[0],axis=0)
-imagexs2 = np.expand_dims(list2[0],axis=0)
-exif1,exif2= image_exif('D02_img_orig_0001.jpg','D01_img_orig_0001.jpg') 
-
-labels=[]
-somma=0
-#print(exif_lbl)
-for i in range(len(exif_lbl)):
-     for j in range(len(exif_lbl[0])):
-         somma = exif_lbl[0][j]+somma
-         if j % 15 == 0:
-            somma=somma+randint(0, 1)
-     labels.append(somma)
-     somma=0
-
-    
-images1=[]
-images2=[]
-
-for i in range (len(exif_lbl[0])):
-     images1.append(imagexs)
-     images2.append(imagexs2)
-
-im1 =cv2.imread('D01_img_orig_0001.jpg')
-im2 =cv2.imread('D02_img_orig_0001.jpg')
-#exif1,exif2=image_exif(im1,im2)
-#print(exif1)
-image1=tf.stack(images1,axis=0)
-image2=tf.stack(images2,axis=0)
-
-# tf.compat.v1.disable_eager_execution()
-# im1= tf.compat.v1.placeholder(im1, [None, 128, 128, 3])
-# im2  =  tf.compat.v1.placeholder(im2, [None, 128, 128, 3])
-#label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
-
-
-siamese_model.fit(datagenerator((list1,list2),exif_lbl,batchsize=64, mode="train"),epochs=10)
+steps = len(list1)/EPOCHS
+siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)

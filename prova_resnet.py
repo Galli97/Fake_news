@@ -161,9 +161,9 @@ mlp_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['a
 
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
-imagexs=tf.stack([imagexs,imagexs2],axis=0)
+#imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
-mlp_model.fit(x = imagexs,y = np.array(exif_lbl[0]),epochs=10)
+mlp_model.fit(x = imagexs,y = imagexs,epochs=10)
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	# exif_lbl = pickle.load(fp)
