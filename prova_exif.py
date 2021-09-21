@@ -78,7 +78,7 @@ def datagenerator(images,images2, labels, batchsize, mode="train"):
             x2 = images2[start:end]
             y = labels[start:end]
             
-            yield x1,x2, y
+            return x1,x2, y
 
             start += batchsize
             end += batchsize
