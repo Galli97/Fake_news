@@ -77,9 +77,9 @@ def create_siamese_model(image_shape, dropout_rate):
     
     output_siamese = tf.concat([output_left,output_right],1)
     
-    siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
+    #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
 
-    return siamese_model,output_siamese
+    return input_left,input_right,output_siamese
     
     
 def create_mlp_model(output_siamese_shape):
@@ -103,11 +103,13 @@ def create_mlp_model(output_siamese_shape):
     
     return model2.input,out
     
-def create_mlp(output_siamese_shape):
- 
+def create_mlp(image_shape,dropout_rate):
+    input_left,input_right, output_siamese = create_siamese_model(image_shape,
+                                      dropout_rate)
+                                      
     input_mlp,output_mlp= create_mlp_model(output_siamese_shape)
     #output_siamese=Input(output_siamese_shape)
-    mlp_model = Model(inputs=input_mlp, outputs=output_mlp)
+    mlp_model = Model(inputs=[input_left,input_right], outputs=output_mlp)
     
     return mlp_model
     
@@ -146,9 +148,7 @@ batch = [markers, X_1]
 result = siamese_net.predict_on_batch(batch)
 ############################################################################################### FINE
 """
-siamese_model, output_siamese = create_siamese_model(image_shape=(128,128, 3),
-                                      dropout_rate=0.2)
-                                      
+
 
 # siamese_model.compile(loss='binary_crossentropy',
                       # optimizer=Adam(lr=0.0001),
@@ -156,7 +156,7 @@ siamese_model, output_siamese = create_siamese_model(image_shape=(128,128, 3),
                       
 # siamese_model.fit(x = (imagexs,imagexs2),y = output_siamese,epochs=10)
 
-mlp_model=create_mlp(output_siamese.shape)
+mlp_model=create_mlp(image_shape=(128,128,3),dropout_rate=0.2)
 
 mlp_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
