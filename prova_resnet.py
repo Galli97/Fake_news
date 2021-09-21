@@ -78,7 +78,7 @@ def create_siamese_model(image_shape, dropout_rate):
     
     siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
 
-    return siamese_model,output
+    return siamese_model,output_siamese
     
     
 def create_mlp_model(output_siamese_shape):
@@ -162,7 +162,7 @@ imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
-#mlp_model.fit(x = imagexs,y = imagexs,epochs=10)
+mlp_model.fit(x = imagexs,y = imagexs,epochs=10)
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	# exif_lbl = pickle.load(fp)
@@ -183,9 +183,9 @@ x_train = datagenerator(list1,exif_lbl,32)
 # imagexs = np.expand_dims(list1[0],axis=0)
 # imagexs2 = np.expand_dims(list2[0],axis=0)
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
-label=np.zeros(len(exif_lbl));
+#label=np.zeros(len(exif_lbl));
 # for i in range(len(exif_lbl)):
        # label[i]=[exif_lbl[i]]
 
     
-siamese_model.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
+#siamese_model.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
