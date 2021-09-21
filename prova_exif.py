@@ -182,5 +182,8 @@ print(exif1)
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
 
+im1= tf.compat.v1.placeholder(im1, [None, 128, 128, 3])
+im2  =  tf.compat.v1.placeholder(im2, [None, 128, 128, 3])
+label =  tf.compat.v1.placeholder(exif_lbl[0], [None, 71])
 
-siamese_model.fit(x =(exif1,exif2),y = np.array(exif_lbl[0]),epochs=10)
+siamese_model.fit(x =(im1,im2),y = label,epochs=10)
