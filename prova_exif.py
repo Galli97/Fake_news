@@ -76,7 +76,7 @@ def datagenerator(images,images2, labels, batchsize, mode="train"):
             #else:
             x1 = images[start:end]
             x2 = images2[start:end]
-            y = labels[start:end]
+            y = np.array(labels[start:end])
             
             return x1,x2, y
 
