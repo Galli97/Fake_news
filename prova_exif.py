@@ -64,7 +64,7 @@ def image_exif(im1,im2):
     print("[INFO] Exif")
     return exif1,exif2
 
-def datagenerator(images,images2, labels, batchsize, mode="train"):
+def datagenerator(images, labels, batchsize, mode="train"):
     ssad = 1
     while True:
         start = 0
@@ -75,10 +75,10 @@ def datagenerator(images,images2, labels, batchsize, mode="train"):
             # load your images from numpy arrays or read from directory
             #else:
             x1 = images[start:end]
-            x2 = images2[start:end]
+            #x2 = images2[start:end]
             y = np.array(labels[start:end])
             
-            return x1,x2, y
+            return x1, y
 
             start += batchsize
             end += batchsize
@@ -187,4 +187,4 @@ image2=tf.stack(images2,axis=0)
 #label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
 
 
-siamese_model.fit(datagenerator(list1,list2,exif_lbl,batchsize=32, mode="train"),epochs=10)
+siamese_model.fit(datagenerator(list1,exif_lbl,batchsize=32, mode="train"),epochs=10)
