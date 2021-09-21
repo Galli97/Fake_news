@@ -78,7 +78,7 @@ def create_siamese_model(image_shape, dropout_rate):
     
     #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
 
-    return output_siamese
+    return output_siamese,input_left, input_right
     
     
 def create_mlp_model(output_siamese_shape):
@@ -102,7 +102,7 @@ def create_mlp_model(output_siamese_shape):
     
     return model2.input,out
     
-def create_mlp(output_siamese_shape):
+def create_mlp(output_siamese_shape, input_left, input_right):
  
     input_mlp,output_mlp= create_mlp_model(output_siamese_shape)
     #output_siamese=Input(output_siamese_shape)
@@ -145,7 +145,7 @@ batch = [markers, X_1]
 result = siamese_net.predict_on_batch(batch)
 ############################################################################################### FINE
 """
-output_siamese = create_siamese_model(image_shape=(128,128, 3),
+output_siamese,input_left,input_right = create_siamese_model(image_shape=(128,128, 3),
                                       dropout_rate=0.2)
                                       
 
@@ -155,7 +155,7 @@ output_siamese = create_siamese_model(image_shape=(128,128, 3),
                       
 # siamese_model.fit(x = (imagexs,imagexs2),y=imagexs,epochs=10)
 
-mlp_model=create_mlp(output_siamese.shape)
+mlp_model=create_mlp(output_siamese.shape,input_left,input_right)
 
 mlp_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
