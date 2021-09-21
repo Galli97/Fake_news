@@ -22,9 +22,17 @@ import random
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 
 
-import tensorflow as tf
-gpus = tf.config.experimental.list_physical_devices('GPU')
-tf.config.experimental.set_memory_growth(gpus[0], True)
+from tensorflow.compat.v1 import ConfigProto
+from tensorflow.compat.v1 import InteractiveSession
+
+
+def fix_gpu():
+    config = ConfigProto()
+    config.gpu_options.allow_growth = True
+    session = InteractiveSession(config=config)
+
+
+fix_gpu()
 
 
 def random_list(list):
