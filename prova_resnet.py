@@ -61,7 +61,7 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     flatten_name = 'flatten' + str(suffix)
 
     x = model.output
-    x = Dense(4096, activation='relu')(x)
+    x = Dense(128, activation='relu')(x)
     x = Flatten(name=flatten_name)(x)
     
 
