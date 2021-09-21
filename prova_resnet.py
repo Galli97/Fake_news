@@ -157,7 +157,7 @@ output_siamese = create_siamese_model(image_shape=(128,128, 3),
 
 mlp_model=create_mlp(output_siamese.shape)
 
-mlp_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+mlp_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
