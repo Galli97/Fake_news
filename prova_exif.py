@@ -199,4 +199,4 @@ image2=tf.stack(images2,axis=0)
 #label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
 
 
-siamese_model.fit(datagenerator((list1,list2),exif_lbl,batchsize=16, mode="train"),epochs=10)
+siamese_model.fit(datagenerator((list1,list2),labels,batchsize=16, mode="train"),epochs=10)
