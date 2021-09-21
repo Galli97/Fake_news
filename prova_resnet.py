@@ -129,7 +129,7 @@ def create_mlp(output_siamese_shape):
     return mlp_model
     
 
-i1,i2,o1= create_siamese_model(image_shape, dropout_rate)
+i1,i2,o1= create_siamese_model(image_shape=(128,128, 3),dropout_rate=0.2)
 net= Model(inputs=[i1,i2],outputs=o1)
 """
 siamese_model = create_siamese_model(image_shape=(128,128, 3),
