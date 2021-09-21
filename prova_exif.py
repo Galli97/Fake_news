@@ -182,7 +182,7 @@ im2 =cv2.imread('D02_img_orig_0001.jpg')
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
 
-#tf.compat.v1.disable_eager_execution()
+tf.compat.v1.disable_eager_execution()
 im1= tf.compat.v1.placeholder(im1, [None, 128, 128, 3])
 im2  =  tf.compat.v1.placeholder(im2, [None, 128, 128, 3])
 #label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
