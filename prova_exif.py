@@ -77,9 +77,7 @@ def datagenerator(images,images2, labels, batchsize, mode="train"):
             x1 = images[start:end]
             x2 = images2[start:end]
             y = labels[start:end]
-            if (ssad == 1):
-                print(x[0].shape)
-                ssad = 0
+            
             yield x1,x2, y
 
             start += batchsize
