@@ -34,6 +34,7 @@ def fix_gpu():
 
 fix_gpu()
 
+gpus = tf.config.experimental.list_physical_devices('GPU') tf.config.experimental.set_memory_growth(gpus[0], True)
 
 def random_list(list):
     second_list = []
