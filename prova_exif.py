@@ -186,5 +186,5 @@ tf.compat.v1.disable_eager_execution()
 im1= tf.compat.v1.placeholder(im1, [None, 128, 128, 3])
 im2  =  tf.compat.v1.placeholder(im2, [None, 128, 128, 3])
 #label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
-
-siamese_model.fit(x =(im1,im2),y = np.array(exif_lbl[0]),epochs=10)
+for i in range(len(exif_lbl)):
+ siamese_model.fit(x =(im1,im2),y = np.array(exif_lbl[0][i]),epochs=10)
