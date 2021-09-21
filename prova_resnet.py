@@ -78,7 +78,7 @@ def create_siamese_model(image_shape, dropout_rate):
     
     siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
 
-    return output_siamese,input_left, input_right
+    return siamese_model,output_siamese
     
     
 def create_mlp_model(output_siamese_shape):
@@ -102,11 +102,11 @@ def create_mlp_model(output_siamese_shape):
     
     return model2.input,out
     
-def create_mlp(output_siamese_shape, input_left, input_right):
+def create_mlp(output_siamese_shape):
  
     input_mlp,output_mlp= create_mlp_model(output_siamese_shape)
     #output_siamese=Input(output_siamese_shape)
-    mlp_model = Model(inputs=[input_left, input_right], outputs=output_mlp)
+    mlp_model = Model(inputs=input_mlp, outputs=output_mlp)
     
     return mlp_model
     
@@ -145,44 +145,48 @@ batch = [markers, X_1]
 result = siamese_net.predict_on_batch(batch)
 ############################################################################################### FINE
 """
-output_siamese,input_left,input_right = create_siamese_model(image_shape=(128,128, 3),
+siamese_model, output_siamese = create_siamese_model(image_shape=(128,128, 3),
                                       dropout_rate=0.2)
                                       
 
-# siamese_model.compile(loss='sparse_categorical_crossentropy',
-                       # optimizer=Adam(lr=0.0001),
-                       # metrics=['binary_crossentropy', 'acc'])
+# siamese_model.compile(loss='binary_crossentropy',
+                      # optimizer=Adam(lr=0.0001),
+                      # metrics=['binary_crossentropy', 'acc'])
                       
-# siamese_model.fit(x = (imagexs,imagexs2),y=imagexs,epochs=10)
+# siamese_model.fit(x = (imagexs,imagexs2),y = output_siamese,epochs=10)
 
-mlp_model=create_mlp(output_siamese.shape,input_left,input_right)
+mlp_model=create_mlp(output_siamese.shape)
 
-mlp_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+mlp_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
-#imagexs=tf.stack([imagexs,imagexs2],axis=0)
+imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
-
+mlp_model.fit(x = output_siamese,y = imagexs,epochs=10)
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	# exif_lbl = pickle.load(fp)
 # fp.close()
 
-with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
-	exif_lbl = pickle.load(fp)
-fp.close()
-
-for i in range(len(exif_lbl)):
-    exif_lbl[i] = np.array(exif_lbl[i])
-exif_lbl = np.array(exif_lbl)
-
 #######################################################################################à
 #crop images to 128x128
 #######################################################################################à
-list1,list2 = get_np_arrays('cropped_arrays.npy')
-x_train = datagenerator(list1,list2,exif_lbl,32)
+# list1,list2 = get_np_arrays('cropped_arrays.npy')
 
-# steps = len(list1)/EPOCHS
-# siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
-mlp_model.fit(x_train,epochs=10)
+x_train = datagenerator(list1,exif_lbl,32)
+
+#siamese_model.fit_generator(datagenerator(list1,exif_lbl,32),steps_per_epoch=32,epochs=10,verbose=1)
+#                            #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
+#                            #validation_data=x_train)
+                            #max_q_size=3)
+                            # 
+# imagexs = np.expand_dims(list1[0],axis=0)
+# imagexs2 = np.expand_dims(list2[0],axis=0)
+#imagexs=tf.stack([imagexs,imagexs2],axis=0)
+#label=np.zeros(len(exif_lbl));
+# for i in range(len(exif_lbl)):
+       # label[i]=[exif_lbl[i]]
+
+    
+#siamese_model.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
