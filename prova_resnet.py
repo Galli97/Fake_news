@@ -76,7 +76,7 @@ def create_siamese_model(image_shape, dropout_rate):
     
     output_siamese = tf.concat([output_left,output_right],1)
     
-    #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
+    siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
 
     return output_siamese,input_left, input_right
     
