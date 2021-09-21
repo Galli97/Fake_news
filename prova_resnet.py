@@ -31,8 +31,7 @@ with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	exif_lbl = pickle.load(fp)
 fp.close()
 
-def datagenerator(images, labels, batchsize, mode="train"):
-    ssad = 1
+def datagenerator(images,images2, labels, batchsize, mode="train"):
     while True:
         start = 0
         end = batchsize
@@ -43,10 +42,8 @@ def datagenerator(images, labels, batchsize, mode="train"):
             #else:
             x = images[start:end] 
             y = labels[start:end]
-            if (ssad == 1):
-                print(x[0].shape)
-                ssad = 0
-            yield x, y
+            x2 = images2[start:end]
+            yield (x,x2),y
 
             start += batchsize
             end += batchsize
