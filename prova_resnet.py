@@ -77,9 +77,9 @@ def create_siamese_model(image_shape, dropout_rate):
     
     output_siamese = tf.concat([output_left,output_right],1)
     
-    #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
+    siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
 
-    return input_left,input_right,output_siamese
+    return siamese_model,output_siamese
     
     
 def create_mlp_model(output_siamese_shape):
@@ -104,12 +104,12 @@ def create_mlp_model(output_siamese_shape):
     return model2.input,out
     
 def create_mlp(image_shape,dropout_rate):
-    input_left,input_right, output_siamese = create_siamese_model(image_shape,
+    siamese_model, output_siamese = create_siamese_model(image_shape,
                                       dropout_rate)
                                       
     input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
     #output_siamese=Input(output_siamese_shape)
-    mlp_model = Model(inputs=[input_left,input_right], outputs=output_mlp)
+    mlp_model = Model(inputs=input_mlp, outputs=output_mlp)
     
     return mlp_model
     
