@@ -181,7 +181,7 @@ imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
-mlp_model.fit((x_train,epochs=EPOCHS,steps_per_epoch=steps)
+mlp_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	# exif_lbl = pickle.load(fp)
