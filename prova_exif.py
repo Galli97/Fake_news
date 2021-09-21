@@ -186,4 +186,5 @@ print(exif_lbl[0][0])
 
 #label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
 for i in range(len(exif_lbl[0])):
- siamese_model.fit(x =(imagexs,imagexs2),y = np.array(exif_lbl[0][i]),epochs=10)
+ somma = exif_lbl[0][j]
+ siamese_model.fit(x =(imagexs,imagexs2),y = np.array(somma),epochs=10)
