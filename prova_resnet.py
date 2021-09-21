@@ -75,12 +75,12 @@ def create_siamese_model(image_shape, dropout_rate):
     output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
     
     output_siamese_shape = tf.concat([output_left,output_right],1)
-    print('Dimensione in output')
+    #print('Dimensione in output')
     #print(output.shape)
     # Create the model
     model2 = Sequential()
-    model2.add(Dense(8192, input_shape=output_siamese_shape.shape, activation='relu'))
-    model2.add(Dense(4096,activation='relu'))
+    #model2.add(Dense(8192, input_shape=output_siamese_shape.shape, activation='relu'))
+    model2.add(Dense(4096, input_shape=output_siamese_shape.shape,activation='relu'))
     model2.add(Dense(2048, activation='relu'))
     model2.add(Dense(1024, activation='relu'))
     model2.add(Dense(num_classes, activation='softmax'))
