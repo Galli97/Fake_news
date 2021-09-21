@@ -182,4 +182,5 @@ print(exif1)
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
 
+
 siamese_model.fit(x =(exif1,exif2),y = np.array(exif_lbl[0]),epochs=10)
