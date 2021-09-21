@@ -73,11 +73,22 @@ def create_siamese_model(image_shape, dropout_rate):
     output_left, input_left = create_base_model(image_shape, dropout_rate)
     output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
     
-    output = tf.concat([output_left,output_right],1)
+    output_siamese_shape = tf.concat([output_left,output_right],1)
     print('Dimensione in output')
     print(output.shape)
+    # Create the model
+    model2 = Sequential()
+    #model2.add(Dense(8192, input_shape=output_siamese_shape, activation='relu'))
+    model2.add(Dense(4096, input_shape=output_siamese_shape,activation='relu'))
+    model2.add(Dense(2048, activation='relu'))
+    model2.add(Dense(1024, activation='relu'))
+    model2.add(Dense(num_classes, activation='softmax'))
     
-    siamese_model = Model(inputs=[input_left, input_right], outputs=output)
+    model2.summary()
+    
+    out_siamese=Input(output_siamese_shape)
+    out = model2(out_siamese)
+    siamese_model = Model(inputs=[input_left, input_right], outputs=out)
 
     return siamese_model,output
     
@@ -155,15 +166,15 @@ siamese_model, output_siamese = create_siamese_model(image_shape=(128,128, 3),
                       
 # siamese_model.fit(x = (imagexs,imagexs2),y = output_siamese,epochs=10)
 
-mlp_model=create_mlp(output_siamese.shape)
+# mlp_model=create_mlp(output_siamese.shape)
 
-mlp_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+# mlp_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
-mlp_model.fit(x = imagexs,y = imagexs,epochs=10)
+#mlp_model.fit(x = imagexs,y = imagexs,epochs=10)
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	# exif_lbl = pickle.load(fp)
