@@ -185,4 +185,4 @@ image2=tf.stack(images2,axis=0)
 
 #label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
 for i in range(len(exif_lbl)):
- siamese_model.fit(x =(imagexs,imagexs2),y = np.array(exif_lbl[0][i]),epochs=10)
+ siamese_model.fit(x =(imagexs,imagexs2),y = np.array(exif_lbl[i][0]),epochs=10)
