@@ -182,7 +182,8 @@ im2 =cv2.imread('D02_img_orig_0001.jpg')
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
 
+print(exif_lbl[0][0])
 
 #label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
 for i in range(len(exif_lbl[0])):
- siamese_model.fit(x =(imagexs,imagexs2),y = exif_lbl[0][i],epochs=10)
+ siamese_model.fit(x =(imagexs,imagexs2),y = np.array(exif_lbl[0][i]),epochs=10)
