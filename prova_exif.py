@@ -64,7 +64,7 @@ def image_exif(im1,im2):
     print("[INFO] Exif")
     return exif1,exif2
 
-def datagenerator(images, labels, batchsize, mode="train"):
+def datagenerator(images,images2, labels, batchsize, mode="train"):
     ssad = 1
     while True:
         start = 0
@@ -74,12 +74,13 @@ def datagenerator(images, labels, batchsize, mode="train"):
             #    break
             # load your images from numpy arrays or read from directory
             #else:
-            x = images[start:end] 
+            x1 = images[start:end]
+            x2 = images2[start:end]
             y = labels[start:end]
             if (ssad == 1):
                 print(x[0].shape)
                 ssad = 0
-            yield x, y
+            yield x1,x2, y
 
             start += batchsize
             end += batchsize
@@ -182,15 +183,10 @@ im2 =cv2.imread('D02_img_orig_0001.jpg')
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
 
-tf.compat.v1.disable_eager_execution()
-im1= tf.compat.v1.placeholder(im1, [None, 128, 128, 3])
-im2  =  tf.compat.v1.placeholder(im2, [None, 128, 128, 3])
+# tf.compat.v1.disable_eager_execution()
+# im1= tf.compat.v1.placeholder(im1, [None, 128, 128, 3])
+# im2  =  tf.compat.v1.placeholder(im2, [None, 128, 128, 3])
 #label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
 
-import numpy as np
-from sklearn.multiclass import OneVsRestClassifier
-from sklearn.svm import SVC
 
-clf = siamese_model.OneVsRestClassifier(SVC()).fit(x =(im1,im2), y = np.array(exif_lbl[0]))
-
-siamese_model.fit(x =(im1,im2),y = np.array(exif_lbl[0]),epochs=10)
+siamese_model.fit(datagenerator(list1,list2,exif_lbl,64, mode="train"),epochs=10)
