@@ -153,7 +153,7 @@ siamese_model.compile(loss='sparse_categorical_crossentropy',
                        optimizer=Adam(lr=0.0001),
                        metrics=['binary_crossentropy', 'acc'])
                       
-siamese_model.fit(x = (imagexs,imagexs2),epochs=10)
+siamese_model.fit(x = (imagexs,imagexs2),y=imagexs,epochs=10)
 
 mlp_model=create_mlp(output_siamese.shape)
 
