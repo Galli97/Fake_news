@@ -182,9 +182,15 @@ im2 =cv2.imread('D02_img_orig_0001.jpg')
 image1=tf.stack(images1,axis=0)
 image2=tf.stack(images2,axis=0)
 
-print(exif_lbl[0][0])
-
+tf.compat.v1.disable_eager_execution()
+im1= tf.compat.v1.placeholder(im1, [None, 128, 128, 3])
+im2  =  tf.compat.v1.placeholder(im2, [None, 128, 128, 3])
 #label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
-for i in range(len(exif_lbl[0])):
- somma = exif_lbl[0][j]
- siamese_model.fit(x =(imagexs,imagexs2),y = np.array(somma),epochs=10)
+
+import numpy as np
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.svm import SVC
+
+clf = siamese_model.OneVsRestClassifier(SVC()).fit(x =(im1,im2), y = np.array(exif_lbl[0]))
+
+siamese_model.fit(x =(im1,im2),y = np.array(exif_lbl[0]),epochs=10)
