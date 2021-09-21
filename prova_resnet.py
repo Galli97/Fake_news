@@ -147,12 +147,13 @@ result = siamese_net.predict_on_batch(batch)
 """
 siamese_model, output_siamese = create_siamese_model(image_shape=(128,128, 3),
                                       dropout_rate=0.2)
+                                      
 
-# siamese_model.compile(loss='binary_crossentropy',
-                      # optimizer=Adam(lr=0.0001),
-                      # metrics=['binary_crossentropy', 'acc'])
+siamese_model.compile(loss='sparse_categorical_crossentropy',
+                       optimizer=Adam(lr=0.0001),
+                       metrics=['sparse_categorical_crossentropy', 'acc'])
                       
-# siamese_model.fit(x = (imagexs,imagexs2),y = output_siamese,epochs=10)
+siamese_model.fit(x = (imagexs,imagexs2),epochs=10)
 
 mlp_model=create_mlp(output_siamese.shape)
 
@@ -162,7 +163,7 @@ imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
-mlp_model.fit(x = output_siamese,y = imagexs,epochs=10)
+mlp_model.fit(x = np.array(output_siamese),y = np.array(exif_lbl[0]),epochs=10)
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	# exif_lbl = pickle.load(fp)
