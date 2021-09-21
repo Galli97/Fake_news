@@ -86,7 +86,7 @@ def create_siamese_model(image_shape, dropout_rate):
     
     model2.summary()
     
-    out_siamese=Input(output_siamese_shape)
+    out_siamese=Input(output_siamese_shape.shape)
     out = model2(out_siamese)
     siamese_model = Model(inputs=[input_left, input_right], outputs=out)
 
