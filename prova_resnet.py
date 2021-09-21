@@ -163,30 +163,26 @@ imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 #imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
-mlp_model.fit(x = imagexs,y = imagexs,epochs=10)
+
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	# exif_lbl = pickle.load(fp)
 # fp.close()
 
+with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
+	exif_lbl = pickle.load(fp)
+fp.close()
+
+for i in range(len(exif_lbl)):
+    exif_lbl[i] = np.array(exif_lbl[i])
+exif_lbl = np.array(exif_lbl)
+
 #######################################################################################à
 #crop images to 128x128
 #######################################################################################à
-# list1,list2 = get_np_arrays('cropped_arrays.npy')
+list1,list2 = get_np_arrays('cropped_arrays.npy')
+x_train = datagenerator(list1,list2,exif_lbl,32)
 
-x_train = datagenerator(list1,exif_lbl,32)
-
-#siamese_model.fit_generator(datagenerator(list1,exif_lbl,32),steps_per_epoch=32,epochs=10,verbose=1)
-#                            #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
-#                            #validation_data=x_train)
-                            #max_q_size=3)
-                            # 
-# imagexs = np.expand_dims(list1[0],axis=0)
-# imagexs2 = np.expand_dims(list2[0],axis=0)
-#imagexs=tf.stack([imagexs,imagexs2],axis=0)
-#label=np.zeros(len(exif_lbl));
-# for i in range(len(exif_lbl)):
-       # label[i]=[exif_lbl[i]]
-
-    
-#siamese_model.fit(x = (imagexs,imagexs2),y = imagexs2,epochs=10)
+# steps = len(list1)/EPOCHS
+# siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
+mlp_model.fit(x_train,epochs=10)
