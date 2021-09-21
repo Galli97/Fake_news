@@ -187,4 +187,4 @@ im1= tf.compat.v1.placeholder(im1, [None, 128, 128, 3])
 im2  =  tf.compat.v1.placeholder(im2, [None, 128, 128, 3])
 #label =  tf.compat.v1.placeholder(np.zeros(71), [None, 71])
 
-siamese_model.fit(x =(im1,im2),y = np.array(exif.lbl[0]),epochs=10)
+siamese_model.fit(x =(im1,im2),y = np.array(exif_lbl[0]),epochs=10)
