@@ -165,7 +165,7 @@ result = siamese_net.predict_on_batch(batch)
                       
 # siamese_model.fit(x = (imagexs,imagexs2),y = output_siamese,epochs=10)
 
-total_model=create_siamese_model(image_shape=(128,128,3),dropout_rate=0.2)
+total_model=create_mlp(image_shape=(128,128,3),dropout_rate=0.2)
 
 total_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
