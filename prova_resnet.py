@@ -66,29 +66,30 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     x = Flatten(name=flatten_name)(x)
     
 
-    return x, model.input, model
+    return x, model.input
 
 
 def create_siamese_model(image_shape, dropout_rate):
 
     
-    output_left, input_left, model = create_base_model(image_shape, dropout_rate)
-    output_right, input_right, model = create_base_model(image_shape, dropout_rate, suffix="_2")
+    output_left, input_left = create_base_model(image_shape, dropout_rate)
+    output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
     
     output_siamese = tf.concat([output_left,output_right],1)
     num_classes=71;
     
-    model.add(Dense(4096, input_shape=output_siamese.shape,activation='relu'))
-    model.add(Dense(2048, activation='relu'))
-    model.add(Dense(1024, activation='relu'))
-    model.add(Dense(num_classes, activation='softmax'))
+    x = output_siamese
+    x = Dense(4096, activation='relu')(x)
+    x = Dense(2048, activation='relu')(x)
+    x = Dense(1024, activation='relu')(x)
+    x = Dense(num_classes, activation='softmax')(x)
     
-    model.summary()
+    
+    #model.summary()
     #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
-    out = model.output
-    sm_model = Model(inputs=[input_left, input_right], outputs=out)
-    return sm_model
-    
+    #out = model.output
+    #sm_model = Model(inputs=[input_left, input_right], outputs=out)
+    return x,input_left,input_right
     
 def create_mlp_model(output_siamese_shape):
 
@@ -112,14 +113,14 @@ def create_mlp_model(output_siamese_shape):
     return model2.input,out
     
 def create_mlp(image_shape,dropout_rate):
-    siamese_model, output_siamese = create_siamese_model(image_shape,
+    x,input_left,input_right = create_siamese_model(image_shape,
                                       dropout_rate)
                                       
-    input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
+    #input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
     #output_siamese=Input(output_siamese_shape)
-    mlp_model = Model(inputs=input_mlp, outputs=output_mlp)
+    sm_model = Model(inputs=[input_left, input_right], outputs=x)
     
-    return mlp_model
+    return sm_model
     
 
 
