@@ -66,20 +66,28 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     x = Flatten(name=flatten_name)(x)
     
 
-    return x, model.input
+    return x, model.input, model
 
 
 def create_siamese_model(image_shape, dropout_rate):
 
     
-    output_left, input_left = create_base_model(image_shape, dropout_rate)
+    output_left, input_left, model = create_base_model(image_shape, dropout_rate)
     output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
     
     output_siamese = tf.concat([output_left,output_right],1)
+    num_classes=71;
     
-    siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
-
-    return siamese_model,output_siamese
+    model.add(Dense(4096, input_shape=output_siamese.shape,activation='relu'))
+    model.add(Dense(2048, activation='relu'))
+    model.add(Dense(1024, activation='relu'))
+    model.add(Dense(num_classes, activation='softmax'))
+    
+    model.summary()
+    #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
+    out = model.output
+    sm_model = Model(inputs=[input_left, input_right], outputs=out)
+    return sm_model
     
     
 def create_mlp_model(output_siamese_shape):
@@ -156,9 +164,9 @@ result = siamese_net.predict_on_batch(batch)
                       
 # siamese_model.fit(x = (imagexs,imagexs2),y = output_siamese,epochs=10)
 
-mlp_model=create_mlp(image_shape=(128,128,3),dropout_rate=0.2)
+total_model=create_siamese_model(image_shape=(128,128,3),dropout_rate=0.2)
 
-mlp_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+total_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
@@ -182,7 +190,7 @@ imagexs = np.expand_dims(list1[0],axis=0)
 imagexs2 = np.expand_dims(list2[0],axis=0)
 imagexs=tf.stack([imagexs,imagexs2],axis=0)
 
-mlp_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
+total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
 
 # with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	# exif_lbl = pickle.load(fp)
