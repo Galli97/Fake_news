@@ -125,7 +125,7 @@ def create_mlp(image_shape,dropout_rate):
 
 
 
-total_model=create_mlp(image_shape=(128,128,3),dropout_rate=0.2)
+total_model=create_mlp(image_shape=(128,128,3),dropout_rate=0.1)
 
 total_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.01), metrics=['accuracy'])
 
