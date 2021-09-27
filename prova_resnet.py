@@ -147,9 +147,5 @@ x_train = datagenerator(list1,list2,exif_lbl,32)
 steps = len(list1)/EPOCHS
 
 
-# imagexs = np.expand_dims(list1[0],axis=0)
-# imagexs2 = np.expand_dims(list2[0],axis=0)
-# imagexs=tf.stack([imagexs,imagexs2],axis=0)
-
 total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
 
