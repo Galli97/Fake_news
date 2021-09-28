@@ -146,9 +146,9 @@ steps = len(list1)/EPOCHS
 output_siamese,siamese_model = create_siamese_model(image_shape,
                                       dropout_rate)
 
-siamese_model.compile(loss='categorical_crossentropy',
+siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
-                      metrics=['categorical_crossentropy', 'acc'])
+                      metrics=['binary_crossentropy', 'acc'])
 
 siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
 
