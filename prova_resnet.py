@@ -4,7 +4,7 @@ from PIL import Image
 import tensorflow as tf
 from tensorflow.keras.applications.resnet50 import ResNet50
 from tensorflow.keras import Input
-from keras import Model,Sequential
+from keras import Model
 from keras.initializers import RandomNormal
 from keras.layers import Dense,Flatten,Dropout,Lambda
 from tensorflow.keras.optimizers import Adam
@@ -16,20 +16,8 @@ import cv2
 import numpy as np
 import keras
 import pickle
-from keras.engine import keras_tensor
-
 
 EPOCHS = 100
-
-
-list1,list2 = get_np_arrays('cropped_arrays.npy')
-# imagexs = np.expand_dims(list1[0],axis=0)
-# imagexs2 = np.expand_dims(list2[0],axis=0)
-# num_classes=71
-
-with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
-	exif_lbl = pickle.load(fp)
-fp.close()
 
 def datagenerator(images,images2, labels, batchsize, mode="train"):
     while True:
@@ -62,90 +50,148 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     flatten_name = 'flatten' + str(suffix)
 
     x = model.output
-    x = Dense(2048, activation='softmax')(x)
     x = Flatten(name=flatten_name)(x)
-    
+    x = Dense(4096, activation='relu')(x)
+    x = Dropout(dropout_rate)(x)
+
+    #x = Dense(512, activation='relu')(x)
+    #x = Dropout(dropout_rate)(x)
 
     return x, model.input
 
 
 def create_siamese_model(image_shape, dropout_rate):
 
-    
     output_left, input_left = create_base_model(image_shape, dropout_rate)
     output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
+    #output = tf.concat([output_left,output_right],0)
     
-    output_siamese = tf.concat([output_left,output_right],1)
-    num_classes=71;
-    
-    x = output_siamese
-    x = Dense(4096, activation='relu')(x)
-    x = Dense(2048, activation='relu')(x)
-    x = Dense(1024, activation='relu')(x)
-    x = Dense(num_classes, activation='sigmoid')(x)
-    
-    
-    #model.summary()
-    #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
-    #out = model.output
-    #sm_model = Model(inputs=[input_left, input_right], outputs=out)
-    return x,input_left,input_right
-    
-# def create_mlp_model(output_siamese_shape):
+    L1_layer = Lambda(lambda tensors: tf.abs(tensors[0] - tensors[1]))
+    L1_distance = L1_layer([output_left, output_right])
+    L1_prediction = Dense(1, use_bias=True,
+                          activation='sigmoid',
+                          input_shape = image_shape,
+                          kernel_initializer=RandomNormal(mean=0.0, stddev=0.001),
+                          name='weighted-average')(L1_distance)
 
-    # num_classes=71;
-    # input_shape=Input((None,8192))
-  
-    
-    # Create the model
-    # model2 = Sequential()
-    # model2.add(Dense(8192, input_shape=output_siamese_shape, activation='relu'))
-    # model2.add(Dense(4096, input_shape=output_siamese_shape,activation='relu'))
-    # model2.add(Dense(2048, activation='relu'))
-    # model2.add(Dense(1024, activation='relu'))
-    # model2.add(Dense(num_classes, activation='softmax'))
-    
-    # model2.summary()
-    
-    # out_siamese=Input(output_siamese_shape)
-    # out = model2.output
-    
-    # return model2.input,out
-    
-def create_mlp(image_shape,dropout_rate):
-    x,input_left,input_right = create_siamese_model(image_shape,
-                                      dropout_rate)
-                                      
-    #input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
-    #output_siamese=Input(output_siamese_shape)
-    sm_model = Model(inputs=[input_left, input_right], outputs=x)
-    
-    return sm_model
-    
+    prediction = Dropout(0.2)(L1_prediction)
 
+    siamese_model = Model(inputs=[input_left, input_right], outputs=prediction)
 
+    return siamese_model
+"""
+siamese_model = create_siamese_model(image_shape=(128,128, 3),
+                                         dropout_rate=0.2)
+siamese_model.compile(loss='binary_crossentropy',
+                      optimizer=Adam(lr=0.0001),
+                      metrics=['binary_crossentropy', 'acc'])
+imagexs =cv2.imread('D01_img_orig_0001.jpg')[:,:,[2,1,0]]
+imagexs = np.array(imagexs,np.float32)
+imagexs = util.random_crop(imagexs,[128,128])
+imagexs = np.expand_dims(imagexs,axis=0)
+siamese_model.summary()
+tmp1 = np.empty((5, 128, 128, 3), dtype=np.uint8)
+for i in range(len(tmp1)):
+    tmp1[i] = imagexs
+x  = (tmp1,tmp1)
+siamese_model.fit(x = (imagexs,imagexs),y=(imagexs),batch_size = 32,epochs=10)
+                            #verbose=1,
+                            #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
+                            #validation_data=(imagexs,imagexs))
+                            #max_q_size=3)
+#siamese_model.save('siamese_model.h5')
+# and the my prediction
+siamese_net = load_model('siamese_model.h5', custom_objects={"tf": tf})
+X_1 = [image, ] * len(markers)
+batch = [markers, X_1]
+result = siamese_net.predict_on_batch(batch)
+# I've tried also to check identical images 
+markers = [image]
+X_1 = [image, ] * len(markers)
+batch = [markers, X_1]
+result = siamese_net.predict_on_batch(batch)
+############################################################################################### FINE
+"""
+###########################################################################################################
+#EXTRACTION#
+###########################################################################################################
+#extract exif data
+#dict,image_list,dict_keys = extract_exif()
 
-total_model=create_mlp(image_shape=(128,128,3),dropout_rate=0.1)
+#############################################SAVE DICT##############################################
+#with open("dict.pkl", "wb") as fp:   #Picklingpickle.dump(l, fp)#
+#	pickle.dump(dict,fp)
+#fp.close()
 
-total_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.01), metrics=['accuracy'])
-
-
-with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
-	exif_lbl = pickle.load(fp)
+with open("dict.pkl", "rb") as fp:   #Picklingpickle.dump(l, fp)
+	dict = pickle.load(fp)
 fp.close()
+#############################################SAVE IMAGE LIST##############################################
+#with open("list_img.pkl", "wb") as fp:   #Picklingpickle.dump(l, fp)#
+#	pickle.dump(image_list,fp)
+#fp.close()
+
+with open("list_img.pkl", "rb") as fp:   #Picklingpickle.dump(l, fp)
+	image_list = pickle.load(fp)
+fp.close()
+
+#############################################SAVE DICT_KEYS##############################################
+#with open("dict_keys.pkl", "wb") as fp:   #Picklingpickle.dump(l, fp)#
+#	pickle.dump(dict_keys,fp)
+#fp.close()
+
+with open("dict_keys.pkl", "rb") as fp:   #Picklingpickle.dump(l, fp)
+	dict_keys = pickle.load(fp)
+fp.close()
+
+#----------------------------------------------------------------------------------------------------------------------------------------
+
+#generate second random list
+second_image_list = random_list(image_list)
+
+#generate lab els for each pair of images
+
+exif_lbl = generate_label(dict_keys,image_list,second_image_list)
+
+with open("exif_lbl.txt", "wb") as fp:   #Picklingpickle.dump(l, fp)#
+	pickle.dump(exif_lbl,fp)
+fp.close()
+
+list1,list2 = cropping_list(image_list,second_image_list)
+
+#with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
+#	exif_lbl = pickle.load(fp)
+#fp.close()
 
 for i in range(len(exif_lbl)):
     exif_lbl[i] = np.array(exif_lbl[i])
 exif_lbl = np.array(exif_lbl)
 
-#######################################################################################à
-#crop images to 128x128
-#######################################################################################à
-list1,list2 = get_np_arrays('cropped_arrays.npy')
+#list1,list2 = get_np_arrays('cropped_arrays.npy')
+
+###########################################################################################################
+#MODEL#
+###########################################################################################################
+
+
+siamese_model = create_siamese_model(image_shape=(128,128, 3),
+                                         dropout_rate=0.2)
+
+siamese_model.compile(loss='binary_crossentropy',
+                      optimizer=Adam(lr=0.0001),
+                      metrics=['binary_crossentropy', 'accuracy'])
+
+
 x_train = datagenerator(list1,list2,exif_lbl,32)
 
-steps = len(list1)/EPOCHS
 
+#siamese_model.fit_generator(datagenerator(list1,exif_lbl,32),steps_per_epoch=32,epochs=10,verbose=1)
+#                            #callbacks=[checkpoint, tensor_board_callback, lr_reducer, early_stopper, csv_logger],
+#                            #validation_data=x_train)
+                            #max_q_size=3)
+                            # 
+#x_train = np.expand_dims(x_train,axis=0)
+steps = int(len(list1)/EPOCHS)
 
-total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
-
+siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
+#siamese_model.save('siamese_model.h5')
