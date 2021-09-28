@@ -151,4 +151,4 @@ x_train = datagenerator(list1,list2,exif_lbl,32)
 
 steps = int(len(list1)/EPOCHS)
 
-total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
+total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=50)
