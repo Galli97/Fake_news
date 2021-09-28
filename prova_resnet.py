@@ -139,21 +139,22 @@ exif_lbl = np.array(exif_lbl)
 #crop images to 128x128
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
-x_train = datagenerator(list1,list2,exif_lbl,32)
+
 steps = len(list1)/EPOCHS
 
 ###########Siamese##########
 output_siamese,siamese_model = create_siamese_model(image_shape,
                                       dropout_rate)
-
+x_train1 = datagenerator(list1,list2,output_siamese,32)
 siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
 
-siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
+siamese_model.fit(x_train1,epochs=EPOCHS,steps_per_epoch=steps)
 
 
 #########MLP#####################
+x_train = datagenerator(list1,list2,exif_lbl,32)
 mlp_model=create_mlp(output_siamese)
 
 mlp_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.01), metrics=['accuracy'])
