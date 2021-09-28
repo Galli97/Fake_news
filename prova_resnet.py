@@ -145,12 +145,12 @@ steps = len(list1)/EPOCHS
 ###########Siamese##########
 output_siamese,siamese_model = create_siamese_model(image_shape,
                                       dropout_rate)
-x_train1 = datagenerator(list1,list2,output_siamese,32)
+#x_train1 = datagenerator(list1,list2,32)
 siamese_model.compile(loss='binary_crossentropy',
                       optimizer=Adam(lr=0.0001),
                       metrics=['binary_crossentropy', 'acc'])
 
-siamese_model.fit(x_train1,epochs=EPOCHS,steps_per_epoch=steps)
+#siamese_model.fit(x_train1,epochs=EPOCHS,steps_per_epoch=steps)
 
 
 #########MLP#####################
