@@ -21,7 +21,7 @@ from keras.engine import keras_tensor
 
 EPOCHS = 100
 num_classes=45;
-
+image_shape=(128,128,3)
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 # imagexs = np.expand_dims(list1[0],axis=0)
 # imagexs2 = np.expand_dims(list2[0],axis=0)
