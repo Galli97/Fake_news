@@ -20,7 +20,7 @@ from keras.engine import keras_tensor
 
 
 EPOCHS = 100
-
+num_classes=45;
 
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 # imagexs = np.expand_dims(list1[0],axis=0)
@@ -76,7 +76,7 @@ def create_siamese_model(image_shape, dropout_rate):
     output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
     
     output_siamese = tf.concat([output_left,output_right],1)
-    num_classes=71;
+    
     
     # x = output_siamese
     # x = Dense(4096, activation='relu')(x)
