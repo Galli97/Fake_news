@@ -70,7 +70,7 @@ exif_lbl = np.array(exif_lbl)
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 x_train = datagenerator(list1,list2,exif_lbl,32)
-x_mlp = datagenerator_mlp(list1,exif_lbl,32)
+
 #steps = len(list1)/EPOCHS
 
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
@@ -172,9 +172,9 @@ def create_mlp(image_shape,dropout_rate):
     # input_mlp=Input(output_siamese.shape)
     # mlp_model = Model(inputs=input_mlp, outputs=x)
     
-    return model2
-    
-mlp_model = create_mlp(image_shape,dropout_rate)
+    return model2, out_siam
+x_mlp = datagenerator_mlp(out_siam,exif_lbl,32)
+mlp_model, out_siam = create_mlp(image_shape,dropout_rate)
     
 mlp_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.01), metrics=['accuracy'])
 mlp_model.fit(x_mlp,epochs=EPOCHS,steps_per_epoch=steps)
