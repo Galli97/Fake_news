@@ -111,7 +111,7 @@ exif_lbl = np.array(exif_lbl)
 #crop images to 128x128
 #######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
-x_train = datagenerator(list1,list2,exif_lbl,32)
+x_train = datagenerator(list1,list2,exif_lbl,16)
 
 steps = 80
 
