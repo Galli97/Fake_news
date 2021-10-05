@@ -137,7 +137,7 @@ def create_mlp(image_shape,dropout_rate):
     
     num_classes=45;
     input_mlp=Input(output_siamese.shape)
-    Create the model
+    #Create the model
     model2 = Sequential()
     model2.add(Dense(8192, input_shape=input_mlp, activation='relu'))
     model2.add(Dense(4096, input_shape=output_siamese_shape,activation='relu'))
