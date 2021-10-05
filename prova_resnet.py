@@ -145,7 +145,7 @@ def create_mlp(image_shape,dropout_rate):
     #input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
     #output_siamese=Input(output_siamese_shape)
     input_mlp=Input(output_siamese.shape)
-    mlp_model = Model(inputs=input_mlp, outputs=x)
+    mlp_model = Model2(inputs=input_mlp, outputs=x)
     
     return mlp_model
     
