@@ -113,7 +113,7 @@ exif_lbl = np.array(exif_lbl)
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 x_train = datagenerator(list1,list2,exif_lbl,32)
 
-steps = len(list1)/EPOCHS
+steps = 50
 
 total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
 
