@@ -171,8 +171,8 @@ def create_mlp(image_shape,dropout_rate):
     # output_siamese=Input(output_siamese_shape)
     # input_mlp=Input(output_siamese.shape)
     # mlp_model = Model(inputs=input_mlp, outputs=x)
-    
-    return model2, output_siamese
+    out_siam = output_siamese.eval(session=tf.Session())
+    return model2, out_siam
 
 mlp_model, out_siam = create_mlp(image_shape,dropout_rate)
 x_mlp = datagenerator_mlp(out_siam,exif_lbl,32) 
