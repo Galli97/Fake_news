@@ -22,10 +22,21 @@ from keras.engine import keras_tensor
 EPOCHS = 100
 
 
+with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
+	exif_lbl = pickle.load(fp)
+fp.close()
+
+for i in range(len(exif_lbl)):
+    exif_lbl[i] = np.array(exif_lbl[i])
+exif_lbl = np.array(exif_lbl)
+
+#######################################################################################à
+#crop images to 128x128
+#######################################################################################à
 list1,list2 = get_np_arrays('cropped_arrays.npy')
-# imagexs = np.expand_dims(list1[0],axis=0)
-# imagexs2 = np.expand_dims(list2[0],axis=0)
-# num_classes=71
+x_train = datagenerator(list1,list2,exif_lbl,32)
+
+steps = len(list1)/EPOCHS
 
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	exif_lbl = pickle.load(fp)
@@ -76,20 +87,14 @@ def create_siamese_model(image_shape, dropout_rate):
     output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
     
     output_siamese = tf.concat([output_left,output_right],1)
-    num_classes=45;
     
-    x = output_siamese
-    x = Dense(4096, activation='relu')(x)
-    x = Dense(2048, activation='relu')(x)
-    x = Dense(1024, activation='relu')(x)
-    x = Dense(num_classes, activation='sigmoid')(x)
     
     
     #model.summary()
     #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
     #out = model.output
-    #sm_model = Model(inputs=[input_left, input_right], outputs=out)
-    return x,input_left,input_right
+    sm_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
+    return x,input_left,input_right, sm_model
     
 # def create_mlp_model(output_siamese_shape):
 
@@ -113,39 +118,37 @@ def create_siamese_model(image_shape, dropout_rate):
     # return model2.input,out
     
 def create_mlp(image_shape,dropout_rate):
-    x,input_left,input_right = create_siamese_model(image_shape,
+    x,input_left,input_right, siamese_model = create_siamese_model(image_shape,
                                       dropout_rate)
-                                      
+    
+    siamese_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.01), metrics=['accuracy'])
+    siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
+    
+    num_classes=45;
+    
+    x = output_siamese
+    x = Dense(4096, activation='relu')(x)
+    x = Dense(2048, activation='relu')(x)
+    x = Dense(1024, activation='relu')(x)
+    x = Dense(num_classes, activation='sigmoid')(x)                               
     #input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
     #output_siamese=Input(output_siamese_shape)
-    sm_model = Model(inputs=[input_left, input_right], outputs=x)
+    mlp_model = Model(inputs=output_siamese, outputs=x)
     
-    return sm_model
+    return mlp_model
     
+mlp_model = create_siamese_model(image_shape,dropout_rate)
+    
+mlp_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.01), metrics=['accuracy'])
+mlp_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
 
 
 
-total_model=create_mlp(image_shape=(128,128,3),dropout_rate=0.1)
-
-total_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.01), metrics=['accuracy'])
 
 
-with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
-	exif_lbl = pickle.load(fp)
-fp.close()
-
-for i in range(len(exif_lbl)):
-    exif_lbl[i] = np.array(exif_lbl[i])
-exif_lbl = np.array(exif_lbl)
-
-#######################################################################################à
-#crop images to 128x128
-#######################################################################################à
-list1,list2 = get_np_arrays('cropped_arrays.npy')
-x_train = datagenerator(list1,list2,exif_lbl,32)
-
-steps = len(list1)/EPOCHS
 
 
-total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
+
+
+
 

@@ -77,7 +77,7 @@ def create_siamese_model(image_shape, dropout_rate):
     num_classes=45;
     
     y = output_siamese
-    y= Dense(4096, activation='relu')(y)
+    y = Dense(4096, activation='relu')(y)
     y = Dense(2048, activation='relu')(y)
     y = Dense(1024, activation='relu')(y)
     y = Dense(num_classes, activation='softmax')(y)
@@ -96,7 +96,7 @@ def create_mlp(image_shape,dropout_rate):
 
 total_model=create_mlp(image_shape=(128,128,3),dropout_rate=0.2)
 
-total_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+total_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
