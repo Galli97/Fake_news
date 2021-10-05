@@ -20,6 +20,22 @@ from keras.engine import keras_tensor
 
 
 EPOCHS = 100
+def datagenerator(images,images2, labels, batchsize, mode="train"):
+    while True:
+        start = 0
+        end = batchsize
+        while start  < len(images):
+            #if(len(images)-start < batchsize):
+            #    break
+            # load your images from numpy arrays or read from directory
+            #else:
+            x = images[start:end] 
+            y = labels[start:end]
+            x2 = images2[start:end]
+            yield (x,x2),y
+
+            start += batchsize
+            end += batchsize
 
 
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
@@ -42,22 +58,6 @@ with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	exif_lbl = pickle.load(fp)
 fp.close()
 
-def datagenerator(images,images2, labels, batchsize, mode="train"):
-    while True:
-        start = 0
-        end = batchsize
-        while start  < len(images):
-            #if(len(images)-start < batchsize):
-            #    break
-            # load your images from numpy arrays or read from directory
-            #else:
-            x = images[start:end] 
-            y = labels[start:end]
-            x2 = images2[start:end]
-            yield (x,x2),y
-
-            start += batchsize
-            end += batchsize
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
     I1 = Input(image_shape)
