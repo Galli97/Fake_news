@@ -136,19 +136,27 @@ def create_mlp(image_shape,dropout_rate):
     siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
     
     num_classes=45;
-    
-    model2 = output_siamese
-    x = model2
-    x = Dense(4096, activation='relu')(x)
-    x = Dense(2048, activation='relu')(x)
-    x = Dense(1024, activation='relu')(x)
-    x = Dense(num_classes, activation='sigmoid')(x)                               
-    #input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
-    #output_siamese=Input(output_siamese_shape)
     input_mlp=Input(output_siamese.shape)
-    mlp_model = Model2(inputs=input_mlp, outputs=x)
+    Create the model
+    model2 = Sequential()
+    model2.add(Dense(8192, input_shape=input_mlp, activation='relu'))
+    model2.add(Dense(4096, input_shape=output_siamese_shape,activation='relu'))
+    model2.add(Dense(2048, activation='relu'))
+    model2.add(Dense(1024, activation='relu'))
+    model2.add(Dense(num_classes, activation='softmax'))
     
-    return mlp_model
+    # model2 = output_siamese
+    # x = model2
+    # x = Dense(4096, activation='relu')(x)
+    # x = Dense(2048, activation='relu')(x)
+    # x = Dense(1024, activation='relu')(x)
+    # x = Dense(num_classes, activation='sigmoid')(x)                               
+    # input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
+    # output_siamese=Input(output_siamese_shape)
+    # input_mlp=Input(output_siamese.shape)
+    # mlp_model = Model(inputs=input_mlp, outputs=x)
+    
+    return model2
     
 mlp_model = create_mlp(image_shape,dropout_rate)
     
