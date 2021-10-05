@@ -19,7 +19,7 @@ import pickle
 from keras.engine import keras_tensor
 
 
-EPOCHS = 10
+EPOCHS = 1
 steps=40
 image_shape=(128,128,3)
 dropout_rate=0.2
