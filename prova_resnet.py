@@ -137,7 +137,8 @@ def create_mlp(image_shape,dropout_rate):
     
     num_classes=45;
     
-    x = output_siamese
+    model2 = output_siamese
+    x = model2
     x = Dense(4096, activation='relu')(x)
     x = Dense(2048, activation='relu')(x)
     x = Dense(1024, activation='relu')(x)
