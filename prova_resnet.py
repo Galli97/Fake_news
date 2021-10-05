@@ -19,7 +19,7 @@ import pickle
 from keras.engine import keras_tensor
 
 
-EPOCHS = 100
+EPOCHS = 10
 image_shape=(128,128,3)
 dropout_rate=0.2
 def datagenerator(images,images2, labels, batchsize, mode="train"):
