@@ -144,7 +144,8 @@ def create_mlp(image_shape,dropout_rate):
     x = Dense(num_classes, activation='sigmoid')(x)                               
     #input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
     #output_siamese=Input(output_siamese_shape)
-    mlp_model = Model(inputs=output_siamese, outputs=x)
+    input_mlp=Input(output_siamese)
+    mlp_model = Model(inputs=input_mlp, outputs=x)
     
     return mlp_model
     
