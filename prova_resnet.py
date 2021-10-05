@@ -136,11 +136,11 @@ def create_mlp(image_shape,dropout_rate):
     siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
     
     num_classes=45;
-    input_mlp=Input(output_siamese.shape)
+    #input_mlp=Input(output_siamese.shape)
     #Create the model
     model2 = Sequential()
-    model2.add(Dense(8192, input_shape=input_mlp, activation='relu'))
-    model2.add(Dense(4096, input_shape=output_siamese_shape,activation='relu'))
+    #model2.add(Dense(8192, input_shape=output_siamese.shape, activation='relu'))
+    model2.add(Dense(4096, input_shape=output_siamese.shape,activation='relu'))
     model2.add(Dense(2048, activation='relu'))
     model2.add(Dense(1024, activation='relu'))
     model2.add(Dense(num_classes, activation='softmax'))
