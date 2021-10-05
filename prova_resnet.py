@@ -176,6 +176,7 @@ def create_mlp(image_shape,dropout_rate):
 
 mlp_model, out_siam = create_mlp(image_shape,dropout_rate)
 x_mlp = datagenerator_mlp(out_siam,exif_lbl,32) 
+print(out_siam)
 mlp_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.01), metrics=['accuracy'])
 mlp_model.fit(x_mlp,epochs=EPOCHS,steps_per_epoch=steps)
 
