@@ -139,7 +139,7 @@ def create_mlp(image_shape,dropout_rate):
     
     return mlp_model
     
-mlp_model = create_siamese_model(image_shape,dropout_rate)
+mlp_model = create_mlp(image_shape,dropout_rate)
     
 mlp_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.01), metrics=['accuracy'])
 mlp_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
