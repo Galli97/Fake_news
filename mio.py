@@ -96,7 +96,7 @@ def create_mlp(image_shape,dropout_rate):
 
 total_model=create_mlp(image_shape=(128,128,3),dropout_rate=0.2)
 
-total_model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+total_model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
