@@ -20,6 +20,7 @@ from keras.engine import keras_tensor
 
 
 EPOCHS = 10
+steps=40
 image_shape=(128,128,3)
 dropout_rate=0.2
 def datagenerator(images,images2, labels, batchsize, mode="train"):
@@ -54,7 +55,7 @@ exif_lbl = np.array(exif_lbl)
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 x_train = datagenerator(list1,list2,exif_lbl,32)
 
-steps = len(list1)/EPOCHS
+#steps = len(list1)/EPOCHS
 
 with open("exif_lbl.txt", "rb") as fp:   #Picklingpickle.dump(l, fp)
 	exif_lbl = pickle.load(fp)
