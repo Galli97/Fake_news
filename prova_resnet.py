@@ -96,7 +96,7 @@ def create_siamese_model(image_shape, dropout_rate):
     #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
     #out = model.output
     sm_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
-    return x,input_left,input_right, sm_model
+    return output_siamese,input_left,input_right, sm_model
     
 # def create_mlp_model(output_siamese_shape):
 
@@ -120,7 +120,7 @@ def create_siamese_model(image_shape, dropout_rate):
     # return model2.input,out
     
 def create_mlp(image_shape,dropout_rate):
-    x,input_left,input_right, siamese_model = create_siamese_model(image_shape,
+    output_siamese,input_left,input_right, siamese_model = create_siamese_model(image_shape,
                                       dropout_rate)
     
     siamese_model.compile(loss='binary_crossentropy', optimizer=Adam(learning_rate=0.01), metrics=['accuracy'])
