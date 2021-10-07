@@ -73,7 +73,7 @@ def create_base_model(image_shape,weights, dropout_rate, suffix=''):
 def create_siamese_model(image_shape, dropout_rate):
 
     
-    output_left, input_left = create_base_model(image_shape,'siamese_weigths.h5'[1,128], dropout_rate)
+    output_left, input_left = create_base_model(image_shape,'siamese_weigths.h5'[:,128], dropout_rate)
     output_right, input_right = create_base_model(image_shape,'siamese_weigths.h5'[129,256], dropout_rate, suffix="_2")
     
     output_siamese = tf.concat([output_left,output_right],1)
