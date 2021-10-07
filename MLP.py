@@ -20,7 +20,7 @@ from keras.engine import keras_tensor
 
 
 EPOCHS = 20
-print(\'siamese_weigths.h5')
+
 
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 # imagexs = np.expand_dims(list1[0],axis=0)
@@ -73,8 +73,8 @@ def create_base_model(image_shape,weights, dropout_rate, suffix=''):
 def create_siamese_model(image_shape, dropout_rate):
 
     
-    output_left, input_left = create_base_model(image_shape,'siamese_weigths.h5'[128], dropout_rate)
-    output_right, input_right = create_base_model(image_shape,'siamese_weigths.h5'[256], dropout_rate, suffix="_2")
+    output_left, input_left = create_base_model(image_shape,'siamese_weigths.h5', dropout_rate)
+    output_right, input_right = create_base_model(image_shape,'siamese_weigths.h5', dropout_rate, suffix="_2")
     
     output_siamese = tf.concat([output_left,output_right],1)
     num_classes=45
