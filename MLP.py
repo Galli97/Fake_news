@@ -50,7 +50,7 @@ def datagenerator(images,images2, labels, batchsize, mode="train"):
 
 def create_base_model(image_shape, dropout_rate, suffix=''):
     I1 = Input(image_shape)
-    model = ResNet50(include_top=False, weights='imagenet', input_tensor=I1, pooling=None)
+    model = ResNet50(include_top=False, weights='siamese_weigths.h5', input_tensor=I1, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
     model.layers[-1]._outbound_nodes = []
@@ -89,36 +89,17 @@ def create_siamese_model(image_shape, dropout_rate):
     #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
     #out = model.output
     #sm_model = Model(inputs=[input_left, input_right], outputs=out)
-    return x,input_left,input_right
+    return x,input_left,input_right,output_siamese
     
-# def create_mlp_model(output_siamese_shape):
 
-    # num_classes=71;
-    # input_shape=Input((None,8192))
-  
-    
-    # Create the model
-    # model2 = Sequential()
-    # model2.add(Dense(8192, input_shape=output_siamese_shape, activation='relu'))
-    # model2.add(Dense(4096, input_shape=output_siamese_shape,activation='relu'))
-    # model2.add(Dense(2048, activation='relu'))
-    # model2.add(Dense(1024, activation='relu'))
-    # model2.add(Dense(num_classes, activation='softmax'))
-    
-    # model2.summary()
-    
-    # out_siamese=Input(output_siamese_shape)
-    # out = model2.output
-    
-    # return model2.input,out
     
 def create_mlp(image_shape,dropout_rate):
-    x,input_left,input_right = create_siamese_model(image_shape,
+    x,input_left,input_right,output_siamese.shape = create_siamese_model(image_shape,
                                       dropout_rate)
                                       
     #input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
     #output_siamese=Input(output_siamese_shape)
-    sm_model = Model(inputs=[input_left, input_right], outputs=x)
+    sm_model = Model(inputs=output_siamese.shape, outputs=x)
     
     return sm_model
     

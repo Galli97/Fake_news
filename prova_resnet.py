@@ -17,7 +17,7 @@ import numpy as np
 import keras
 import pickle
 
-EPOCHS = 100
+EPOCHS = 10
 
 def datagenerator(images,images2, labels, batchsize, mode="train"):
     while True:
@@ -175,7 +175,8 @@ steps = int(train_set/EPOCHS)
 
 siamese_model.fit(x = x_train,epochs=EPOCHS,steps_per_epoch=steps,validation_data = x_test,validation_steps=steps,validation_batch_size=32)
 #siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
-siamese_model.save('siamese_model.h5')
+#siamese_model.save('siamese_model.h5')
+siamese_model.save_weights('siamese_weigths.h5')
 
 
 
