@@ -20,7 +20,7 @@ from keras.engine import keras_tensor
 
 
 EPOCHS = 20
-print(/'siamese_weigths.h5')
+print(\'siamese_weigths.h5')
 
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 # imagexs = np.expand_dims(list1[0],axis=0)
