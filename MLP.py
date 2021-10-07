@@ -94,7 +94,7 @@ def create_siamese_model(image_shape, dropout_rate):
 
     
 def create_mlp(image_shape,dropout_rate):
-    x,input_left,input_right,output_siamese.shape = create_siamese_model(image_shape,
+    x,input_left,input_right,output_siamese = create_siamese_model(image_shape,
                                       dropout_rate)
                                       
     #input_mlp,output_mlp= create_mlp_model(output_siamese.shape)
