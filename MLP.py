@@ -50,8 +50,7 @@ def datagenerator(images,images2, labels, batchsize, mode="train"):
 
 def create_base_model(image_shape,weights, dropout_rate, suffix=''):
     I1 = Input(image_shape)
-   
-    model = ResNet50(include_top=False, weights=weights, input_tensor=I1, pooling=None)
+    model = ResNet50(include_top=False, weights='imagenet', input_tensor=I1, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
     model.layers[-1]._outbound_nodes = []
@@ -63,9 +62,9 @@ def create_base_model(image_shape,weights, dropout_rate, suffix=''):
     flatten_name = 'flatten' + str(suffix)
 
     x = model.output
-    x = Dense(256, activation='relu')(x)
     x = Flatten(name=flatten_name)(x)
-    
+    x = Dense(256, activation='relu')(x)
+    x = Dropout(dropout_rate)(x)
 
     return x, model.input
 
