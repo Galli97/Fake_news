@@ -171,7 +171,7 @@ exif_lbl2 = exif_lbl[train_set:]
 
 x_train = datagenerator(list1_train,list2_train,exif_lbl1,32)
 x_test = datagenerator(list1_test,list2_test,exif_lbl2,32)
-steps = int(train_set/EPOCHS)
+steps = int(train_set/100)
 
 siamese_model.fit(x = x_train,epochs=EPOCHS,steps_per_epoch=steps,validation_data = x_test,validation_steps=steps,validation_batch_size=32)
 #siamese_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
