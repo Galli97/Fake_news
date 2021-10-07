@@ -78,8 +78,8 @@ def create_siamese_model(image_shape, dropout_rate):
     output_siamese = tf.concat([output_left,output_right],1)
     num_classes=45
     
-    x = output_siamese
-    x = Dense(4096, activation='relu')(x)
+    in_siam = output_siamese
+    x = Dense(4096, activation='relu')(in_siam)
     x = Dense(2048, activation='relu')(x)
     x = Dense(1024, activation='relu')(x)
     x = Dense(num_classes, activation='softmax')(x)
@@ -89,7 +89,7 @@ def create_siamese_model(image_shape, dropout_rate):
     #siamese_model = Model(inputs=[input_left, input_right], outputs=output_siamese)
     #out = model.output
     #sm_model = Model(inputs=[input_left, input_right], outputs=out)
-    return x,input_left,input_right,output_siamese
+    return x,input_left,input_right,in_siam
     
 
     
