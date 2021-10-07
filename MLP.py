@@ -48,9 +48,10 @@ def datagenerator(images,images2, labels, batchsize, mode="train"):
             start += batchsize
             end += batchsize
 
-def create_base_model(image_shape, dropout_rate, suffix=''):
+def create_base_model(image_shape,weights, dropout_rate, suffix=''):
     I1 = Input(image_shape)
-    model = ResNet50(include_top=False, weights='siamese_weigths.h5', input_tensor=I1, pooling=None)
+   
+    model = ResNet50(include_top=False, weights=weights, input_tensor=I1, pooling=None)
     model.layers.pop()
     model.outputs = [model.layers[-1].output]
     model.layers[-1]._outbound_nodes = []
@@ -62,7 +63,7 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
     flatten_name = 'flatten' + str(suffix)
 
     x = model.output
-    x = Dense(128, activation='relu')(x)
+    x = Dense(256, activation='relu')(x)
     x = Flatten(name=flatten_name)(x)
     
 
@@ -72,8 +73,8 @@ def create_base_model(image_shape, dropout_rate, suffix=''):
 def create_siamese_model(image_shape, dropout_rate):
 
     
-    output_left, input_left = create_base_model(image_shape, dropout_rate)
-    output_right, input_right = create_base_model(image_shape, dropout_rate, suffix="_2")
+    output_left, input_left = create_base_model(image_shape,'siamese_weigths.h5'[0,127], dropout_rate)
+    output_right, input_right = create_base_model(image_shape,'siamese_weigths.h5'[128,256], dropout_rate, suffix="_2")
     
     output_siamese = tf.concat([output_left,output_right],1)
     num_classes=45
