@@ -122,6 +122,9 @@ def create_final(image_shape):
     input_left = Input(image_shape)
     input_right = Input(image_shape)
     y = tf.keras.models.load_model('siamese_model.h5')
+    y.layers.pop()
+    y.outputs = [y.layers[-1].output]
+    y.layers[-1]._outbound_nodes = []
     for layer in y.layers:
         layer.trainable = False
     z = y.output
