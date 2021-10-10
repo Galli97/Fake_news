@@ -21,7 +21,7 @@ from keras.engine import keras_tensor
 
 EPOCHS = 1
 
-
+image_shape=(128,128,3)
 list1,list2 = get_np_arrays('cropped_arrays.npy')
 
 
@@ -130,6 +130,6 @@ def create_final(image_shape):
     
     final_model = Model(inputs=[input_left, input_right], outputs=z)
     return final_model
-fin_model=create_final(out_fin.shape)
+fin_model=create_final(image_shape)
 fin_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 fin_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
