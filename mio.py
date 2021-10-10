@@ -116,14 +116,17 @@ x_train = datagenerator(list1,list2,exif_lbl,16)
 steps = 80
 
 total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
-
+total_model.save('siamese_model.h5')
 def create_final(input_final):
-
-    y = Input(input_final)
-    y = Dense(512, activation='relu')(y)
-    y = Dense(1, activation='sigmoid')(y)
+    y = tf.keras.models.load_model('siamese_model.h5')
+    for layer in y.layers:
+        layer._name = layer.name + str(suffix)
+        layer._trainable = False
+    z = y.output
+    z = Dense(512, activation='relu')(z)
+    z = Dense(1, activation='sigmoid')(z)
     
-    final_model = Model(inputs=Input(input_final), outputs=y)
+    final_model = Model(inputs=Input(input_final), outputs=z)
     return final_model
 fin_model=create_final(out_fin.shape)
 fin_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
