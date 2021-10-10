@@ -115,12 +115,12 @@ x_train = datagenerator(list1,list2,exif_lbl,16)
 
 steps = 80
 
-total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
+total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=10)
 total_model.save('siamese_model.h5')
 def create_final(image_shape):
-    I1 = Input(image_shape)
-    input_left = I1
-    input_right = I1
+    
+    input_left = Input(image_shape)
+    input_right = Input(image_shape)
     y = tf.keras.models.load_model('siamese_model.h5')
     for layer in y.layers:
         layer.trainable = False
