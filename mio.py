@@ -19,7 +19,7 @@ import pickle
 from keras.engine import keras_tensor
 
 
-EPOCHS = 100
+EPOCHS = 1
 
 
 list1,list2 = get_np_arrays('cropped_arrays.npy')
@@ -91,10 +91,10 @@ def create_mlp(image_shape,dropout_rate):
                                       
     sm_model = Model(inputs=[input_left, input_right], outputs=out)
     
-    return sm_model
+    return sm_model,out
     
 
-total_model=create_mlp(image_shape=(128,128,3),dropout_rate=0.2)
+total_model,out_fin =create_mlp(image_shape=(128,128,3),dropout_rate=0.2)
 
 total_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
@@ -117,3 +117,14 @@ steps = 80
 
 total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
 
+def create_final(input_final):
+
+    y = input_final
+    y = Dense(512, activation='relu')(y)
+    y = Dense(1, activation='relu')(y)
+    
+    final_model = Model(inputs=input_final, outputs=y)
+    return final_model
+fin_model=create_final(out_fin)
+fin_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+fin_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
