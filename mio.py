@@ -123,7 +123,7 @@ def create_final(input_final):
     y = Dense(512, activation='relu')(y)
     y = Dense(1, activation='sigmoid')(y)
     
-    final_model = Model(inputs=input_final, outputs=y)
+    final_model = Model(inputs=Input(input_final), outputs=y)
     return final_model
 fin_model=create_final(out_fin.shape)
 fin_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
