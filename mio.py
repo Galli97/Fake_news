@@ -120,7 +120,6 @@ total_model.save('siamese_model.h5')
 def create_final(input_final):
     y = tf.keras.models.load_model('siamese_model.h5')
     for layer in y.layers:
-        layer._name = layer.name + str(suffix)
         layer._trainable = False
     z = y.output
     z = Dense(512, activation='relu')(z)
