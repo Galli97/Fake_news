@@ -119,7 +119,7 @@ total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
 
 def create_final(input_final):
 
-    y = input_final
+    y = Input(input_final)
     y = Dense(512, activation='relu')(y)
     y = Dense(1, activation='sigmoid')(y)
     
