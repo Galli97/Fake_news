@@ -121,7 +121,7 @@ def create_final(input_final):
 
     y = input_final
     y = Dense(512, activation='relu')(y)
-    y = Dense(1, activation='relu')(y)
+    y = Dense(1, activation='sigmoid')(y)
     
     final_model = Model(inputs=input_final, outputs=y)
     return final_model
