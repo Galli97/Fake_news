@@ -117,7 +117,10 @@ steps = 80
 
 total_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
 total_model.save('siamese_model.h5')
-def create_final(input_final):
+def create_final(image_shape):
+    I1 = Input(image_shape)
+    input_left = I1
+    input_right = I1
     y = tf.keras.models.load_model('siamese_model.h5')
     for layer in y.layers:
         layer.trainable = False
@@ -125,7 +128,7 @@ def create_final(input_final):
     z = Dense(512, activation='relu')(z)
     z = Dense(1, activation='sigmoid')(z)
     
-    final_model = Model(inputs=Input(input_final), outputs=z)
+    final_model = Model(inputs=[input_left, input_right], outputs=z)
     return final_model
 fin_model=create_final(out_fin.shape)
 fin_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
