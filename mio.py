@@ -125,6 +125,6 @@ def create_final(input_final):
     
     final_model = Model(inputs=input_final, outputs=y)
     return final_model
-fin_model=create_final(out_fin)
+fin_model=create_final(out_fin.shape)
 fin_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 fin_model.fit(x_train,epochs=EPOCHS,steps_per_epoch=steps)
